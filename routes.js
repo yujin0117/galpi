@@ -1,0 +1,2 @@
+/* Hash links can switch between memory-only modules without reloading. */
+(()=>{const routes={toolkit:['.toolkit',()=>window.GalpiToolkit.open()],ripple:['.ripple',()=>window.GalpiRipple.open()],finance:['.finance',()=>window.GalpiFinance.open()],intervention:['.intervention',()=>window.GalpiIntervention.open()],trade:['.trade',()=>window.GalpiTrade.open()]};window.addEventListener('hashchange',()=>{const route=routes[location.hash.slice(1)];if(route&&!document.querySelector('#content '+route[0]))route[1]();});})();

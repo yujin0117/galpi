@@ -1,0 +1,23 @@
+/* Identical hierarchy across the five learning modules; safe Korean wrapping. */
+#content .curriculum-path,
+#content .curriculum-detail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0;
+  color: #536556;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+#content .curriculum-path {
+  color: #00462a;
+  font-weight: 600;
+}
+#content .curriculum-chapter { max-width: 100%; }
+#content .curriculum-detail { margin: 6px 0 12px; }
+#content .curriculum-pages { white-space: nowrap; }
