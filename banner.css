@@ -12,3 +12,10 @@
 @media(max-width:650px){.home-section-head small{max-width:none;white-space:nowrap}.home-section-head{margin-bottom:14px}}
 /* Keep existing learning launch controls comfortable for touch. */
 .module-row button{min-height:44px}
+
+/* A slightly quieter home banner on MacBook and wider screens. */
+@media(min-width:1025px){
+  .brand-banner{min-height:270px}
+  .banner-copy{padding-top:30px;padding-bottom:30px}
+  .banner-copy h1{font-size:clamp(25.5px,2.72vw,37.4px)}
+}
