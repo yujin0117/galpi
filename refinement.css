@@ -130,3 +130,25 @@ body.teacher-mode #content .btn,
 
 /* Keep every learning module's return row clear of the main navigation. */
 #content > :is(.ripple, .finance, .expansion){padding-top:20px}
+
+/* Compact, distinct navigation and teaching controls across learning pages. */
+#content .page-return,#content :is(.fn-top,.ex-top)>button[data-action]{display:inline-flex;align-items:center;min-height:44px;padding:9px 16px;background:#fffefa;border:1px solid #bdcbbd;border-radius:8px;color:#00462a;font-size:14px;font-weight:600;line-height:1.4;box-shadow:0 2px 3px #00462a05}
+#content .page-return:hover,#content :is(.fn-top,.ex-top)>button[data-action]:hover{background:#e9eee7}
+#content .curriculum-card{padding:12px 14px;margin:0 0 16px;background:#edf1e8;border:1px solid #d1dccb;border-left:3px solid #789477;border-radius:8px}
+#content .curriculum-card .curriculum-detail{margin:5px 0 0;font-size:13px}
+#content .teacher-setting{display:inline-flex;align-items:center;gap:2px;align-self:flex-start;max-width:100%;background:#fffefa;border:1px solid #bdcbbd;border-radius:8px;padding:0 4px 0 10px;color:#234c3b;font-size:14px;line-height:20px}
+#content .teacher-setting label{display:inline-flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;margin:0}
+#content .teacher-setting input{width:20px;height:20px;margin:0;accent-color:#00462a;flex-shrink:0}
+#content .teacher-help{display:grid;place-items:center;width:44px;min-height:44px;padding:0;border:0;background:transparent;color:#00462a;cursor:pointer}
+#content .teacher-help span{display:grid;place-items:center;width:21px;height:21px;border:1.5px solid currentColor;border-radius:50%;font-size:13px;font-weight:700}
+#content .teacher-help:hover{background:#edf1e8;border-radius:6px}
+.teacher-help-panel{position:fixed;z-index:100;bottom:max(20px,env(safe-area-inset-bottom));left:16px;right:16px;max-width:440px;margin:0 auto;padding:16px 18px;background:#fffefa;border:1px solid #aabcaa;border-radius:12px;box-shadow:0 8px 40px #153e3233;color:#153e32;font-size:14px;line-height:1.7}
+.teacher-help-panel[hidden]{display:none}
+.teacher-help-panel>div{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.teacher-help-panel button{min-width:44px;min-height:44px;border:0;border-radius:6px;background:#edf1e8;color:#00462a;font-size:24px}
+.teacher-help-panel p{margin:8px 0 0}
+#content .fn-tabs{gap:6px;padding:6px;background:#e5ebe1;border:1px solid #d1dccb;border-radius:12px}
+#content .fn-tabs button{min-height:52px;border:1px solid transparent;border-radius:8px;white-space:normal;word-break:keep-all;line-height:1.4;background:#f4f6ef;color:#536556}
+#content .fn-tabs button[aria-selected=true]{background:#00462a;color:#fffefa;border-color:#00462a;box-shadow:0 2px 5px #00462a18}
+#content .fn-tabs small{font-size:12px;opacity:.85}
+@media(max-width:650px){#content .curriculum-card{padding:10px 12px}#content .fn-tabs button{font-size:14px;padding:8px 6px}#content .fn-top,#content .ex-top,#content .rr-top{gap:12px}}
