@@ -127,3 +127,6 @@ body.teacher-mode #content .btn,
   body.teacher-mode #content .book-table,
   body.teacher-mode #content .answer-option { font-size: 16px; }
 }
+
+/* Keep every learning module's return row clear of the main navigation. */
+#content > :is(.ripple, .finance, .expansion){padding-top:20px}
