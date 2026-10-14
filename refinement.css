@@ -63,7 +63,10 @@
   line-height: 1.4;
 }
 #content .btn.small { min-height: 36px; padding: 5.6px 13px; }
+#content .module-row > div { flex: 1 1 0; min-width: 0; }
+#content .module-row .soon { flex: 0 0 auto; }
 #content .module-row button {
+  flex: 0 0 auto;
   min-height: 36px;
   padding: 7.2px 14px;
   border-radius: 6px;
