@@ -30,19 +30,20 @@ const courses = {
     ['무역의 갈피 · 비교우위 무역 시뮬레이터','90~95쪽 · 국제 분업과 무역','trade']
   ],
   history: [
-    ['대한민국 경제 변화 연구소','경제 성장 · 석유 파동 · 외환 위기','soon'],
+    ['대한민국 경제 변화 연구소 (기본)','그림으로 이해하는 한국 경제사 · 경제 개발·석유 파동·3저·외환위기','historyBasic'],
+    ['대한민국 경제 변화 연구소 (심화)','데이터와 사료로 탐구하는 한국 경제사 · 산업 구조·경제위기·성과와 한계','historyResearch'],
     ['한반도 평화 연대기','남북 관계와 통일 정책','soon']
   ]
 };
 function setNav(which){document.querySelectorAll('.topnav [data-nav]').forEach(el=>{el.classList.toggle('nav-active',el.dataset.nav===which);});}
 function courseCard(which){
   const social=which==='social';const arr=courses[which];
-  return `<article class="subject-card ${social?'':'history'}"><div class="subject-card-head"><div><h3>${social?'통합사회2':'한국사2'}</h3><p>${social?'Ⅲ. 시장경제와 지속가능발전':'대한민국의 발전 · 오늘날의 대한민국'}</p></div><span class="subject-label" aria-hidden="true">${social?'◈':'⌑'}</span></div><div class="module-list">${arr.map(([n,desc,status])=>`<div class="module-row"><div><strong>${n}</strong><small>${desc}</small></div>${['ready','ripple','finance','intervention','trade'].includes(status)?`<button type="button" data-action="${({ripple:'openRipple',finance:'openFinance',intervention:'openIntervention',trade:'openTrade'})[status]||'openModule'}">시작하기 →</button>`:`<span class="soon" aria-label="추후 추가 예정">준비 중</span>`}</div>`).join('')}</div></article>`;
+  return `<article class="subject-card ${social?'':'history'}"><div class="subject-card-head"><div><h3>${social?'통합사회2':'한국사2'}</h3><p>${social?'Ⅲ. 시장경제와 지속가능발전':'대한민국의 발전 · 오늘날의 대한민국'}</p></div><span class="subject-label" aria-hidden="true">${social?'◈':'⌑'}</span></div><div class="module-list">${arr.map(([n,desc,status])=>`<div class="module-row"><div><strong>${n}</strong><small>${desc}</small></div>${['ready','ripple','finance','intervention','trade','historyBasic','historyResearch'].includes(status)?`<button type="button" data-action="${({ripple:'openRipple',finance:'openFinance',intervention:'openIntervention',trade:'openTrade',historyBasic:'openHistoryBasic',historyResearch:'openHistoryResearch'})[status]||'openModule'}">시작하기 →</button>`:`<span class="soon" aria-label="추후 추가 예정">준비 중</span>`}</div>`).join('')}</div></article>`;
 }
 function renderHome(){
   setNav(state.filter==='all'?'home':state.filter);
   const isAll=state.filter==='all';
-  root.innerHTML=`${isAll?window.GalpiBanner.render():window.GalpiBanner.subject(state.filter)}${isAll?'<div class="home-section-head"><h2>학습 콘텐츠</h2><small>하나씩 펼쳐 보는 개념의 갈피</small></div>':''}<section class="subject-grid" aria-label="과목별 학습 콘텐츠">${isAll||state.filter==='social'?courseCard('social'):''}${isAll||state.filter==='history'?courseCard('history'):''}</section><aside class="note-panel"><strong>다섯 가지 갈피를 펼쳐 보세요.</strong> 통합사회2의 ‘기회비용 계산 실험실’, ‘선택의 파장’, ‘금융 생활 시뮬레이터’, ‘정부의 개입 실험실’, ‘무역의 갈피’를 이용할 수 있습니다. 나머지 콘텐츠는 차례대로 추가됩니다.</aside>`;
+  root.innerHTML=`${isAll?window.GalpiBanner.render():window.GalpiBanner.subject(state.filter)}${isAll?'<div class="home-section-head"><h2>학습 콘텐츠</h2><small>하나씩 펼쳐 보는 개념의 갈피</small></div>':''}<section class="subject-grid" aria-label="과목별 학습 콘텐츠">${isAll||state.filter==='social'?courseCard('social'):''}${isAll||state.filter==='history'?courseCard('history'):''}</section><aside class="note-panel"><strong>일곱 가지 학습 갈피를 펼쳐 보세요.</strong> 통합사회2의 다섯 콘텐츠와 한국사2 ‘대한민국 경제 변화 연구소’ 기본편·심화편을 이용할 수 있습니다. 기본편은 그림으로 관계를 이해하고, 심화편은 자료로 근거를 탐구합니다.</aside>`;
 }
 function switchTab(tab){state.tab=tab; renderModule();document.querySelector(`[data-tab="${tab}"][role=tab]`)?.focus({preventScroll:true});announce(document.querySelector(`[data-tab="${tab}"][role=tab]`)?.textContent+' 화면');}
 function renderModule(){
@@ -152,7 +153,7 @@ app.addEventListener('click',event=>{
   const answer=event.target.closest('[data-answer]');if(answer){const qz=state.quiz;if(qz&&!qz.checked){qz.selected=Number(answer.dataset.answer);renderBody();}return;}
   const cmd=event.target.closest('[data-action]');if(!cmd)return;
   switch(cmd.dataset.action){
-    case 'openIntervention':window.GalpiIntervention.open();break;case 'openTrade':window.GalpiTrade.open();break;case 'openFinance':window.GalpiFinance.open();break;case 'openRipple':window.GalpiRipple.open();break;case 'openModule':openModule();break;case 'goHome':goHome();break;
+    case 'openHistoryBasic':window.GalpiHistory.open('basic','industry');break;case 'openHistoryResearch':window.GalpiHistory.open('research','industry');break;case 'openIntervention':window.GalpiIntervention.open();break;case 'openTrade':window.GalpiTrade.open();break;case 'openFinance':window.GalpiFinance.open();break;case 'openRipple':window.GalpiRipple.open();break;case 'openModule':openModule();break;case 'goHome':goHome();break;
     case 'conceptPrev':state.conceptStep=Math.max(0,state.conceptStep-1);renderBody();break;
     case 'conceptNext':state.conceptStep=(state.conceptStep+1)%conceptSteps.length;renderBody();break;
     case 'bookPrev':state.bookStep=Math.max(0,state.bookStep-1);renderBody();break;
