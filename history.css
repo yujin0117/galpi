@@ -80,3 +80,10 @@
 
 /* Keep the current step number legible above the neutral badge style. */
 .history-lab .hl-step-nav li[aria-current="step"]>span{background:#00462a;color:#fff;border-color:#00462a}
+
+/* Filled subject illustrations support the historical relationship diagrams. */
+.history-lab .hl-scene>.learning-scene-art.hl-icon{width:240px;height:auto;border-radius:0;padding:0;background:none;align-self:center;max-width:40%;flex:none}
+.history-lab .hl-scene{background:#f4f5e9;border-color:#dfe5d1}
+.history-lab .hl-low-cards .learning-scene-art.hl-icon{width:160px;height:auto;max-width:100%}
+.history-lab .hl-two-cards .learning-scene-art.hl-icon{width:160px;height:auto}
+@media(max-width:700px){.history-lab .hl-scene>.learning-scene-art.hl-icon{width:220px;max-width:90%;height:auto}.history-lab .hl-low-cards .learning-scene-art.hl-icon{width:100%;height:auto}.history-lab .hl-scene{gap:16px}}

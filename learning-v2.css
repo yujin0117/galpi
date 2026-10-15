@@ -201,3 +201,70 @@
 #content .learning-v2 .lab-menu-jump{display:block}
 @media(max-width:1024px){#content .learning-v2 .lab-tabs,#content .learning-v2 .learning-step-nav{grid-template-columns:repeat(3,minmax(0,1fr))}#content .learning-v2 .fn-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){#content .learning-v2 .learning-header{grid-template-columns:1fr}#content .learning-v2 .learning-header>.learning-illustration{display:none}#content .learning-v2 .lab-tabs,#content .learning-v2 .learning-step-nav,#content .learning-v2.intervention .lab-tabs,#content .learning-v2 .rr-tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}#content .learning-v2 :is(.lab-tabs,.learning-step-nav)>button{padding:11px 10px;gap:7px;min-height:52px;white-space:normal}#content .learning-v2 :is(.lab-tabs,.learning-step-nav)>button:last-child:nth-child(odd){grid-column:1/-1}#content .learning-v2 .lab-current{display:none}#content .learning-v2 .lab-location .lab-menu-jump{display:block}#content .learning-v2 .rr-stage-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;gap:7px}#content .learning-v2 .rr-stage-nav .btn{white-space:normal}#content .learning-v2 .rr-stage-nav .btn:last-child{grid-column:1/-1}#content .learning-v2 .lab-step-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible}#content .learning-v2 .lab-step-links a{min-width:0;white-space:normal;padding:8px 5px}}
+
+/* Learning scenes: illustrated comparisons and tangible model goods. */
+.learning-world{display:block;width:100%;height:auto}
+.learning-good{display:inline-block;width:42px;height:42px;flex:none;vertical-align:middle}
+#content .trade.learning-v2 .learning-header{position:relative;border:0;background:#eef2e6;border-radius:22px;padding:24px 28px;margin-top:18px;overflow:hidden}
+#content .trade.learning-v2 .learning-header .learning-curriculum .curriculum-card{background:#ffffff9c;border-color:#d8e1cd}
+#content .trade.learning-v2 .learning-header>.learning-illustration{width:230px;height:145px;position:relative}
+#content .trade.learning-v2 .learning-header h1{font-size:34px}
+#content .trade.learning-v2 .learning-header .learning-goal{max-width:43ch}
+#content .trade.learning-v2 .learning-compare-layout{grid-template-columns:minmax(0,1.45fr) minmax(280px,.8fr);gap:24px}
+#content .trade.learning-v2 .learning-compare-data{min-width:0}
+#content .trade.learning-v2 .studio-production{background:#f5f3e9;border:1px solid #e3e4d4;border-radius:18px;padding:20px}
+#content .trade.learning-v2 .studio-board-caption{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 16px;font-size:15px;font-weight:700;color:#345944}
+#content .trade.learning-v2 .studio-board-caption small{font-size:12px;font-weight:400;color:#5f6e60}
+.studio-country-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#content .trade.learning-v2 .studio-country{background:#fff;border:1px solid #d7e1d1;border-radius:14px;overflow:hidden;min-width:0;position:relative;padding:15px 12px 12px}
+#content .trade.learning-v2 .studio-country[data-country="1"]{border-color:#d5dfe3}
+#content .trade.learning-v2 .studio-country>header{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 4px}
+#content .trade.learning-v2 .studio-country>header h3{font-size:19px;margin:0}
+.studio-country-letter{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:#e9f0df;color:#3d6447;font-size:12px;font-weight:750}
+[data-country="1"] .studio-country-letter{background:#eaf0f3;color:#456773}
+#content .trade.learning-v2 .studio-country.is-selected{border:2px solid #49704d;padding:14px 11px 11px;box-shadow:0 5px 14px #4564350d}
+#content .trade.learning-v2 .studio-my-choice{font-size:11px;color:#3b6648;margin-left:auto;white-space:nowrap}
+.studio-costs{display:grid;grid-template-columns:1fr;gap:8px;margin-top:6px}
+.studio-costs>div{display:flex;align-items:center;gap:10px;background:#f7f6f0;border:1px solid #ebe8da;border-radius:9px;padding:9px 10px}
+.studio-costs>div:last-child{background:#f1f5ed;border-color:#e2e8db}
+.studio-costs>div>span{flex:1;font-size:12px;color:#52634e;display:flex;align-items:center;justify-content:space-between;gap:8px}
+#content .trade.learning-v2 .studio-costs strong{display:flex;align-items:baseline;gap:3px;font-size:25px;font-variant-numeric:tabular-nums;color:#2c4933;line-height:1.25}
+#content .trade.learning-v2 .studio-costs small{font-size:12px;font-weight:500}
+#content .trade.learning-v2 .studio-board-hint{font-size:13px;margin:14px 0 0;text-align:center;color:#556448}
+#content .trade.learning-v2 .studio-source-table{margin:12px 0 0;border:0;padding:0}
+#content .trade.learning-v2 .studio-source-table summary{font-size:12px;min-height:44px;color:#556448;padding:11px 0}
+#content .trade.learning-v2 .studio-country-note{font-size:12px;font-weight:650;color:#376141;margin:10px 0 0}
+#content .trade.learning-v2 .tg-question{align-self:start;border:1px solid #dbe5d7;border-top:4px solid #9cb388;border-radius:14px;padding:22px;background:#fff;box-shadow:0 8px 24px #31592b06}
+#content .trade.learning-v2 .tg-question:before{content:'나의 판단';display:block;font-size:12px;font-weight:700;color:#657d51;margin-bottom:10px}
+#content .trade.learning-v2 .tg-question>h3{font-size:19px;line-height:1.6}
+#content .trade.learning-v2 .tg-question>.ex-options{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#content .trade.learning-v2 .tg-question>.ex-options>.btn{min-height:52px;font-size:16px;border-radius:10px;background:#f8faf4;border:1px solid #d5dfcd;color:#32563d}
+#content .trade.learning-v2 .tg-question>.ex-options>.btn[aria-pressed=true]{background:#00462a;color:#fff;border-color:#00462a;box-shadow:0 3px 0 #d5e0ce}
+#content .trade.learning-v2 .tg-question>[data-tl=learn-check]{width:100%;margin:4px 0 0}
+#content .trade.learning-v2 .studio-country-heading{display:flex;align-items:center;gap:14px;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid #e2e8db}
+#content .trade.learning-v2 .studio-country-heading .lab-country-emblem{width:120px;height:auto;min-height:70px;background:none;border:0;border-radius:0;display:block;flex:none;padding:0}
+#content .trade.learning-v2 .studio-country-heading .lab-country-emblem svg{width:100%;height:auto}
+#content .trade.learning-v2 .studio-country-heading .lab-country-tag{font-size:11px;color:#67755f;letter-spacing:.02em}
+#content .trade.learning-v2 .studio-country-heading h3{font-size:19px;margin:4px 0 0}
+#content .trade.learning-v2 .tg-country{background:#fffefb;border-color:#dce3d3;border-radius:16px;padding:20px}
+#content .trade.learning-v2 .tg-country:nth-child(2){background:#fcfdfe;border-color:#dbe3e6}
+#content .trade.learning-v2 .tg-goods{padding:12px;background:#f4f5eb;border:1px solid #e4e6d9;border-radius:10px;gap:16px}
+#content .trade.learning-v2 .tg-goods>span{font-size:14px;color:#38523b}
+#content .trade.learning-v2 .tg-unit{position:relative;width:60px;height:60px;background:#f4f3ed;border:1px dashed #d4dbc9;border-radius:10px;overflow:hidden}
+#content .trade.learning-v2 .tg-unit>.learning-good{position:absolute;width:52px;height:52px;top:3px;left:3px;filter:grayscale(1);opacity:.15}
+#content .trade.learning-v2 .tg-unit>.tg-unit-fill{position:absolute;inset:0 auto 0 0;overflow:hidden;background:#edf3e5;height:100%;border-right:1px solid #b5c6a2}
+#content .trade.learning-v2 .tg-unit-fill .learning-good{width:52px;height:52px;max-width:none;position:absolute;top:3px;left:3px}
+#content .trade.learning-v2 .tg-making{font-size:14px;gap:7px}
+#content .trade.learning-v2 .tg-making .learning-good{width:34px;height:34px}
+#content .trade.learning-v2 .tg-fraction{gap:7px;flex-wrap:wrap;margin:16px 0 12px}
+#content .trade.learning-v2 .tg-scene{background:#f7f7ef;border:1px solid #e2e7d8;border-radius:18px;padding:24px}
+#content .trade.learning-v2 .tg-scene .tg-country{box-shadow:0 4px 14px #244d2b04}
+#content .trade.learning-v2 .tg-exchange{background:#edf3e7;border:1px solid #d9e4cf;border-radius:14px;padding:22px}
+#content .trade.learning-v2 .tg-exchange p{gap:13px;padding:12px;background:#ffffffc9;border-radius:10px}
+#content .trade.learning-v2 .tg-conclusion{padding:20px;border-radius:14px;background:#eff4e7;border:1px solid #d6e2c9}
+@media(max-width:1100px){#content .trade.learning-v2 .learning-compare-layout{grid-template-columns:1fr}.studio-costs>div>span{font-size:14px}.studio-costs{grid-template-columns:1fr 1fr}.studio-costs>div>span{display:block}#content .trade.learning-v2 .studio-country>.learning-world{max-height:150px}#content .trade.learning-v2 .tg-question{max-width:none}}
+@media(max-width:700px){#content .trade.learning-v2 .learning-header{padding:18px;border-radius:16px;margin-top:12px}#content .trade.learning-v2 .learning-header h1{font-size:26px}#content .trade.learning-v2 .learning-header .learning-goal{font-size:15px}#content .trade.learning-v2 .studio-production{padding:14px 10px;border-radius:14px}#content .trade.learning-v2 .studio-board-caption{align-items:flex-start;gap:5px;flex-direction:column;font-size:14px;margin-bottom:12px}#content .trade.learning-v2 .studio-country{padding:12px 8px 8px;border-radius:11px}#content .trade.learning-v2 .studio-country.is-selected{padding:11px 7px 7px}#content .trade.learning-v2 .studio-country>header{gap:6px;padding:0}#content .trade.learning-v2 .studio-country>header h3{font-size:17px}.studio-country-grid{gap:8px}.studio-country-letter{width:24px;height:24px;border-radius:7px}.studio-costs{grid-template-columns:1fr;gap:6px}.studio-costs>div{padding:8px 6px;gap:5px}.studio-costs .learning-good{width:28px;height:28px}.studio-costs>div>span{display:flex;font-size:11px;gap:2px}#content .trade.learning-v2 .studio-costs strong{font-size:21px;gap:1px}#content .trade.learning-v2 .studio-costs small{font-size:10px}#content .trade.learning-v2 .studio-my-choice{font-size:10px;margin-left:0;width:100%}#content .trade.learning-v2 .studio-board-hint{font-size:12px}#content .trade.learning-v2 .tg-question{padding:18px 16px}#content .trade.learning-v2 .tg-question>h3{display:block!important;font-size:18px}#content .trade.learning-v2 .learning-mobile-question{display:none}#content .trade.learning-v2 .tg-scene{padding:18px 12px}#content .trade.learning-v2 .tg-country{padding:16px 12px}#content .trade.learning-v2 .studio-country-heading .lab-country-emblem{width:100px}#content .trade.learning-v2 .studio-country-heading{gap:10px}#content .trade.learning-v2 .studio-country-heading h3{font-size:18px}#content .trade.learning-v2 .tg-goods{gap:12px;padding:10px}.learning-good{width:36px;height:36px}#content .trade.learning-v2 .tg-exchange{padding:12px}}
+@media(max-width:360px){.studio-costs>div>span{display:block}.studio-costs .learning-good{width:30px;height:30px}.studio-costs>div{gap:8px}#content .trade.learning-v2 .studio-costs strong{font-size:22px;margin-top:3px}}
+#content .trade.learning-v2 :is([data-tl=learn-check],[data-tl=learn-next],[data-tl=book-next]){background:#00462a;border-color:#00462a;color:#fff}
+@media(min-width:1101px){#content .trade.learning-v2 .learning-compare-data>.tg-opportunities{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}#content .trade.learning-v2 .learning-compare-data .studio-country-heading{flex-direction:column;align-items:flex-start;gap:8px}#content .trade.learning-v2 .learning-compare-data .studio-country-heading .lab-country-emblem{width:150px;max-width:100%;align-self:center}}
+@media(max-width:700px){#content .trade.learning-v2 .learning-mobile-question{display:block;font-size:18px;line-height:1.55;margin:0 0 18px}#content .trade.learning-v2 .tg-question>h3{display:none!important}}

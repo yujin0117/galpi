@@ -18,9 +18,9 @@
     return `<svg viewBox="0 0 24 24" class="lab-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths[kind] || paths.question}</svg>`;
   }
   function country(i, title = countryNames[i], level = 3) {
-    const skyline = i === 0 ? '<path d="M5 27V17l7-5 7 5v10M19 27V20h8v7M9 27v-6h6v6"/>' : '<path d="M5 27V19h8v8M13 27V12l7-4 7 4v15M18 27v-8h5v8"/>';
-    return `<div class="lab-country-heading"><span class="lab-country-emblem"><svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">${skyline}<path d="M3 28h26"/><circle cx="7" cy="7" r="2"/></svg></span><div><span class="lab-country-tag">가상의 나라 ${i === 0 ? 'A' : 'B'}</span><h${level}>${title}</h${level}></div></div>`;
+    return `<div class="lab-country-heading studio-country-heading"><span class="lab-country-emblem">${window.GalpiLearningArt.world(i)}</span><div><span class="lab-country-tag">가상의 나라 ${i === 0 ? 'A' : 'B'}</span><h${level}>${title}</h${level}></div></div>`;
   }
+
   function head(number, title, description, kind = 'controls') {
     return `<header class="lab-card-head"><span class="lab-section-icon">${icon(kind)}</span><div><p class="lab-eyebrow">${number}</p><h3>${title}</h3>${description ? `<p>${description}</p>` : ''}</div></header>`;
   }
