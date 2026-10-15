@@ -26,7 +26,7 @@
   }
   function navigation(type, current, completed = []) {
     const list = type === 'trade' ? trade : intervention, prefix = type === 'trade' ? 'tl' : 'il';
-    return `<div class="lab-menu-heading"><h2>학습 메뉴</h2><p>번호를 눌러 이동할 수 있어요.</p></div><div class="ex-tabs ${type === 'trade' ? 'tl-tabs' : ''} lab-tabs" role="tablist" aria-label="${type === 'trade' ? '무역 학습 메뉴' : '정부 개입 실험'}">${list.map(([title, desc], i) => `<button type="button" id="${prefix}-tab-${i}" role="tab" aria-label="${String(i+1).padStart(2,'0')} ${title}${completed.includes(i)?' · 완료':''}" data-${prefix}="tab" data-i="${i}" aria-selected="${current === i}" aria-controls="${prefix}-panel" tabindex="${current === i ? 0 : -1}"><span class="lab-tab-number">${completed.includes(i)?'✓':String(i + 1).padStart(2, '0')}</span><span class="lab-tab-copy"><strong>${title}</strong><small>${desc}</small></span>${current === i ? '<span class="lab-current">현재</span>' : completed.includes(i)?'<span class="lab-current lab-complete">완료</span>':''}</button>`).join('')}</div><div class="lab-location" aria-live="polite"><span>${type === 'trade' ? '무역의 갈피' : '정부의 개입 실험실'}</span><span aria-hidden="true">/</span><strong>${String(current + 1).padStart(2, '0')} ${list[current][0]}</strong><span class="lab-location-count">${current + 1} / ${list.length}</span>${mobilePicker(list.map((x,i)=>[i,x[0]]),current,prefix+'-tab')}<button type="button" class="lab-menu-jump" data-lab-menu aria-label="학습 메뉴로 돌아가기">메뉴 ↑</button></div>`;
+    return `<div class="lab-menu-heading"><h2>학습 메뉴</h2><p>번호를 눌러 이동할 수 있어요.</p></div><div class="ex-tabs ${type === 'trade' ? 'tl-tabs' : ''} lab-tabs" role="tablist" aria-label="${type === 'trade' ? '무역 학습 메뉴' : '정부 개입 실험'}">${list.map(([title, desc], i) => `<button type="button" id="${prefix}-tab-${i}" role="tab" aria-label="${String(i+1).padStart(2,'0')} ${title}${completed.includes(i)?' · 완료':''}" data-${prefix}="tab" data-i="${i}" aria-selected="${current === i}" aria-controls="${prefix}-panel" tabindex="${current === i ? 0 : -1}"><span class="lab-tab-number">${completed.includes(i)?'✓':String(i + 1).padStart(2, '0')}</span><span class="lab-tab-copy"><strong>${title}</strong><small>${desc}</small></span>${current === i ? '<span class="lab-current">현재</span>' : completed.includes(i)?'<span class="lab-current lab-complete">완료</span>':''}</button>`).join('')}</div><div class="lab-location" aria-live="polite"><span>${type === 'trade' ? '무역의 갈피' : '정부의 개입 실험실'}</span><span aria-hidden="true">/</span><strong>${String(current + 1).padStart(2, '0')} ${list[current][0]}</strong><span class="lab-location-count">${current + 1} / ${list.length}</span><button type="button" class="lab-menu-jump" data-lab-menu aria-label="학습 메뉴로 돌아가기">메뉴 ↑</button></div>`;
   }
   function footer(type, current) {
     const list = type === 'trade' ? trade : intervention, prefix = type === 'trade' ? 'tl' : 'il';
@@ -46,12 +46,14 @@
     const steps = root.querySelectorAll('[data-lab-section]'), links = root.querySelectorAll('.lab-step-links a');
     if (!steps.length) return;
     const setCurrent = id => links.forEach(a => { if (a.hash === '#' + id) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    const offset=Math.ceil((root.querySelector('.lab-location')?.getBoundingClientRect().height||0)+(root.querySelector('.lab-step-links')?.getBoundingClientRect().height||0)+24);
+    steps.forEach(s=>s.style.scrollMarginTop=offset+'px');
     const visible = new Map();
     observer = new IntersectionObserver(entries => {
       entries.forEach(e => visible.set(e.target.id, e.isIntersecting));
       const first = [...steps].find(s => visible.get(s.id));
       if (first) setCurrent(first.id);
-    }, { rootMargin: '-135px 0px -35% 0px' });
+    }, { rootMargin: `-${offset+1}px 0px -35% 0px` });
     steps.forEach(s => observer.observe(s));
     root.querySelectorAll('.lab-step-links a,.lab-jump-result').forEach(a => a.addEventListener('click', e => {
       e.preventDefault(); setCurrent(a.hash.slice(1));
@@ -69,7 +71,7 @@
     return `<svg class="learning-illustration" viewBox="0 0 200 120" aria-hidden="true">${art}</svg>`;
   }
   function header(key, title, description) {
-    return `<header class="learning-header"><div><p class="learning-breadcrumb">GALPI <span aria-hidden="true">/</span> 통합사회2 <span class="learning-chapter">/ 시장경제와 지속가능발전</span></p><h1>${title}</h1><p class="learning-goal">${description}</p><details class="learning-curriculum"><summary>단원·교과서 정보</summary>${window.GalpiCurriculum.header(key)}</details></div>${illustration(key)}</header>`;
+    return `<header class="learning-header"><div><div class="learning-curriculum">${window.GalpiCurriculum.header(key)}</div><h1>${title}</h1><p class="learning-goal">${description}</p></div>${illustration(key)}</header>`;
   }
   function explanation(content, title = '풀이 과정 자세히 보기') {
     return `<details class="learning-explanation"><summary>${title}</summary><div>${content}</div></details>`;
@@ -94,13 +96,9 @@
     return `<section class="learning-result"><header><p class="learning-overline">학습 결과</p><h2>${title}</h2><p>확인한 개념을 돌아보고 다음 학습을 정해 보세요.</p></header><div class="learning-result-grid"><div class="learning-result-score"><div class="learning-score-ring" style="--learning-rate:${score/total*100}%"><div><strong>${score}<small> / ${total}</small></strong><span>문제 정답</span></div></div><p>${Math.round(score/total*100)}% · ${caption||'이번에 푼 문제 기준'}</p></div><div class="learning-result-concepts"><section>${icon('check')}<h3>잘 이해한 개념</h3><p>${good}</p></section><section>${icon('question')}<h3>다시 확인할 개념</h3><p>${weak}</p></section></div></div><div class="learning-result-actions">${actions}</div></section>`;
   }
   function stepNav(items,current,{idPrefix,panel,attribute,label,extraClass='',completed=[]}) {
-    return `<div class="learning-nav-wrap"><div class="learning-nav-heading"><span>${label} · ${current+1} / ${items.length}</span>${mobilePicker(items,current,idPrefix)}</div><div class="learning-step-nav ${extraClass}" role="tablist" aria-label="${label}">${items.map(([key,title],i)=>`<button type="button" role="tab" id="${idPrefix}-${key}" aria-controls="${panel}" aria-selected="${current===i}" tabindex="${current===i?0:-1}" ${attribute(key,i)}><span class="learning-step-number">${completed.includes(i)?'✓':String(i+1).padStart(2,'0')}</span><span>${title}</span>${completed.includes(i)?'<span class="sr-only">확인 완료</span>':''}</button>`).join('')}</div></div>`;
-  }
-  function mobilePicker(items,current,prefix) {
-    return `<label class="learning-mobile-picker"><span>전체 활동</span><select data-learning-jump="${prefix}" aria-label="전체 활동 목록">${items.map(([key,title],i)=>`<option value="${key}" ${i===current?'selected':''}>${String(i+1).padStart(2,'0')} ${title}</option>`).join('')}</select></label>`;
+    return `<div class="learning-nav-wrap"><div class="learning-nav-heading"><span>${label} · ${current+1} / ${items.length}</span></div><div class="learning-step-nav ${extraClass}" role="tablist" aria-label="${label}">${items.map(([key,title],i)=>`<button type="button" role="tab" id="${idPrefix}-${key}" aria-controls="${panel}" aria-selected="${current===i}" tabindex="${current===i?0:-1}" ${attribute(key,i)}><span class="learning-step-number">${completed.includes(i)?'✓':String(i+1).padStart(2,'0')}</span><span>${title}</span>${completed.includes(i)?'<span class="sr-only">확인 완료</span>':''}</button>`).join('')}</div></div>`;
   }
   function mount(root) {
-    root.querySelectorAll('[data-learning-jump]').forEach(select=>select.addEventListener('change',()=>document.getElementById(select.dataset.learningJump+'-'+select.value)?.click()));
     root.querySelectorAll('[role=tablist]').forEach(list=>{
       const active=list.querySelector('[aria-selected=true]');
       if(active&&list.scrollWidth>list.clientWidth)list.scrollLeft=Math.max(0,active.offsetLeft-list.offsetLeft-list.clientWidth/2+active.clientWidth/2);
