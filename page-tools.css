@@ -1,0 +1,8 @@
+.page-top{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom));z-index:25;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:52px;min-height:54px;padding:7px 5px;border:1px solid #bdcdb8;border-radius:13px;background:#fffef9;color:#245339;box-shadow:0 4px 18px #24452c1a;font:600 11px/1.4 -apple-system,'Apple SD Gothic Neo',sans-serif;cursor:pointer}
+.page-top[hidden]{display:none}
+.page-top svg{width:21px;height:21px;flex:none}
+.page-top:hover{background:#edf3e7;border-color:#7d9a70}
+.page-top:focus-visible{outline:3px solid #9c7738;outline-offset:3px}
+body:has(.tk-timer-dock:not([hidden])) .page-top{bottom:calc(90px + env(safe-area-inset-bottom))}
+@media(max-width:700px){.page-top{right:max(12px,env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom));width:48px;min-height:50px;border-radius:12px}}
+@media print{.page-top{display:none!important}}
