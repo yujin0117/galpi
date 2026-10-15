@@ -63,6 +63,8 @@
   }
   const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function illustration(type) {
+    const sceneKind = {cost:'tteokbokki',finance:'wallet',intervention:'bank',ripple:'shirt'}[type];
+    if (sceneKind) return window.GalpiLearningArt.scene(sceneKind).replace('class="learning-scene-art hl-icon"','class="learning-illustration"');
     const art = type === 'trade'
       ? '<path d="M19 70h163l-22 25H44Z" fill="#15573c"/><path d="M137 70V43h23v27M143 43V29h9v14" fill="#dce7de"/><path d="M50 70V51h28v19M80 70V48h28v22M73 48V29h29v19M110 70V51h25v19" fill="#cda86b" stroke="#fffaf1" stroke-width="2"/><path d="M20 103q15-6 30 0t30 0t30 0t30 0t30 0" fill="none" stroke="#acc4b6" stroke-width="2"/><path d="M30 23h27m-8-6 8 6-8 6M160 15h-27m8-6-8 6 8 6" fill="none" stroke="#829e8b" stroke-width="2"/>'
       : type === 'ripple'
