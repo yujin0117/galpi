@@ -229,6 +229,7 @@
 #content .learning-v2 .lab-step-links{top:62px;position:static;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;overflow:visible;background:#f2f5e9;padding:10px;border-radius:10px}
 #content .learning-v2 .lab-step-links a{font-size:12px;min-height:44px;min-width:0;white-space:normal;padding:9px 5px;line-height:1.5}
 #content .learning-v2 :is(.tg-progress,.hl-step-nav){display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;background:#f3f5ec;border:0;border-radius:9px;padding:10px;margin:0 0 22px;list-style:none}
+#content .learning-v2 .tg-progress:has(>li:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
 #content .learning-v2 :is(.tg-progress,.hl-step-nav):has(>li:nth-child(5)){grid-template-columns:repeat(5,minmax(0,1fr))}
 #content .learning-v2 :is(.tg-progress,.hl-step-nav)>li{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 4px;margin:0;min-width:0;font-size:12px;border:1px solid transparent;border-radius:7px;color:#687861;line-height:1.4}
 #content .learning-v2 :is(.tg-progress,.hl-step-nav)>li[aria-current]{border-color:#c0d0b7;background:white;color:#224d31;font-weight:700}
@@ -252,8 +253,11 @@
 #content .learning-v2 .studio-exchange-scene>div>.learning-good{display:block;width:64px;height:64px;margin:10px auto}
 #content .learning-v2 .studio-shipping{background:#eff5e7;border-radius:50% 50% 10px 10px;padding:16px 6px}
 #content .learning-v2 .studio-shipping p{font-size:13px;font-weight:700;margin:6px 0}
-#content .learning-v2 .tl-chain{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr;gap:8px;align-items:center}
-#content .learning-v2 .tl-chain>button{display:flex;flex-direction:column;background:#fafbf5;border:1px solid #d7e1cf;border-radius:10px;padding:12px}
+#content .learning-v2 .tl-chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+#content .learning-v2 .tl-chain>span{display:none}
+#content .learning-v2 .tl-chain>button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;width:100%;background:#fafbf5;border:1px solid #d7e1cf;border-radius:10px;padding:12px}
+#content .learning-v2 .tl-chain>button:not(:last-child)::after{content:'→';position:absolute;right:-16px;top:calc(50% - 10px);color:#6c805e;font-size:14px;line-height:20px}
+#content .learning-v2 .tl-chain>button>span{width:100%;white-space:normal;overflow-wrap:anywhere}
 #content .learning-v2 .tl-chain>button[aria-pressed=true]{background:#edf3df;border:2px solid #698d57;color:#264f31}
 #content .learning-v2 .tl-chain svg{width:100%;max-width:170px;height:auto}
 #content .learning-v2 .studio-value-chart{background:#f7f9f3;border:1px solid #e2e8d9;border-radius:12px;padding:18px;margin:20px 0}
@@ -449,7 +453,8 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 #content .learning-v2 .studio-exchange-scene>div>span,#content .learning-v2 .studio-shipping p{font-size:10px}
 #content .learning-v2 .studio-exchange-scene .lab-country-emblem{width:100%}
 #content .learning-v2 .studio-exchange-scene .learning-good{width:40px;height:40px}
-#content .learning-v2 .tl-chain{grid-template-columns:1fr 10px 1fr 10px 1fr;gap:2px}
+#content .learning-v2 .tl-chain{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#content .learning-v2 .tl-chain>button:not(:last-child)::after{right:-12px;font-size:12px}
 #content .learning-v2 .tl-chain>button{padding:8px 3px;font-size:11px}
 #content .learning-v2 .rr-surface{padding:20px 14px}
 #content .learning-v2 .rr-stage-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;overflow:visible;padding:6px}
