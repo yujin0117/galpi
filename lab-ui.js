@@ -18,7 +18,7 @@
     return `<svg viewBox="0 0 24 24" class="lab-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths[kind] || paths.question}</svg>`;
   }
   function country(i, title = countryNames[i], level = 3) {
-    return `<div class="lab-country-heading studio-country-heading"><span class="lab-country-emblem">${window.GalpiLearningArt.world(i)}</span><div><span class="lab-country-tag">가상의 나라 ${i === 0 ? 'A' : 'B'}</span><h${level}>${title}</h${level}></div></div>`;
+    return `<div class="lab-country-heading studio-country-heading"><span class="lab-country-emblem">${window.GalpiLearningArt.country(i)}</span><div><span class="lab-country-tag">가상의 나라 ${i === 0 ? 'A' : 'B'}</span><h${level}>${title}</h${level}></div></div>`;
   }
 
   function head(number, title, description, kind = 'controls') {
@@ -26,7 +26,7 @@
   }
   function navigation(type, current, completed = []) {
     const list = type === 'trade' ? trade : intervention, prefix = type === 'trade' ? 'tl' : 'il';
-    return `<div class="lab-menu-heading"><h2>학습 메뉴</h2><p>번호를 눌러 이동할 수 있어요.</p></div><div class="ex-tabs ${type === 'trade' ? 'tl-tabs' : ''} lab-tabs" role="tablist" aria-label="${type === 'trade' ? '무역 학습 메뉴' : '정부 개입 실험'}">${list.map(([title, desc], i) => `<button type="button" id="${prefix}-tab-${i}" role="tab" aria-label="${String(i+1).padStart(2,'0')} ${title}${completed.includes(i)?' · 완료':''}" data-${prefix}="tab" data-i="${i}" aria-selected="${current === i}" aria-controls="${prefix}-panel" tabindex="${current === i ? 0 : -1}"><span class="lab-tab-number">${completed.includes(i)?'✓':String(i + 1).padStart(2, '0')}</span><span class="lab-tab-copy"><strong>${title}</strong><small>${desc}</small></span>${current === i ? '<span class="lab-current">현재</span>' : completed.includes(i)?'<span class="lab-current lab-complete">완료</span>':''}</button>`).join('')}</div><div class="lab-location" aria-live="polite"><span>${type === 'trade' ? '무역의 갈피' : '정부의 개입 실험실'}</span><span aria-hidden="true">/</span><strong>${String(current + 1).padStart(2, '0')} ${list[current][0]}</strong><span class="lab-location-count">${current + 1} / ${list.length}</span><button type="button" class="lab-menu-jump" data-lab-menu aria-label="학습 메뉴로 돌아가기">메뉴 ↑</button></div>`;
+    return `<div class="ex-tabs ${type === 'trade' ? 'tl-tabs' : ''} lab-tabs" style="--studio-tabs:${list.length}" role="tablist" aria-label="${type === 'trade' ? '무역 학습 메뉴' : '정부 개입 실험'}">${list.map(([title, desc], i) => `<button type="button" id="${prefix}-tab-${i}" role="tab" aria-label="${String(i+1).padStart(2,'0')} ${title}${completed.includes(i)?' · 완료':''}" data-${prefix}="tab" data-i="${i}" aria-selected="${current === i}" aria-controls="${prefix}-panel" tabindex="${current === i ? 0 : -1}"><span class="lab-tab-number">${completed.includes(i)?'✓':String(i + 1).padStart(2, '0')}</span><span class="lab-tab-copy"><strong>${title}</strong><small>${desc}</small></span>${current === i ? '<span class="lab-current">현재</span>' : completed.includes(i)?'<span class="lab-current lab-complete">완료</span>':''}</button>`).join('')}</div><div class="lab-location" aria-live="polite"><strong>${String(current + 1).padStart(2, '0')} ${list[current][0]}</strong><span class="lab-location-count">${current + 1} / ${list.length}</span><button type="button" class="lab-menu-jump" data-lab-menu aria-label="학습 메뉴로 돌아가기">메뉴 ↑</button></div>`;
   }
   function footer(type, current) {
     const list = type === 'trade' ? trade : intervention, prefix = type === 'trade' ? 'tl' : 'il';
@@ -63,7 +63,8 @@
   }
   const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function illustration(type) {
-    const sceneKind = {cost:'tteokbokki',finance:'wallet',intervention:'bank',ripple:'shirt'}[type];
+    if(type==='trade')return window.GalpiLearningArt.country(1,true).replace('class="tc-scene tc-harbor"','class="learning-illustration"');
+    const sceneKind = {cost:'tteokbokki',finance:'wallet',intervention:'bank',ripple:'shirt',history:'factory'}[type];
     if (sceneKind) return window.GalpiLearningArt.scene(sceneKind).replace('class="learning-scene-art hl-icon"','class="learning-illustration"');
     const art = type === 'trade'
       ? '<path d="M19 70h163l-22 25H44Z" fill="#15573c"/><path d="M137 70V43h23v27M143 43V29h9v14" fill="#dce7de"/><path d="M50 70V51h28v19M80 70V48h28v22M73 48V29h29v19M110 70V51h25v19" fill="#cda86b" stroke="#fffaf1" stroke-width="2"/><path d="M20 103q15-6 30 0t30 0t30 0t30 0t30 0" fill="none" stroke="#acc4b6" stroke-width="2"/><path d="M30 23h27m-8-6 8 6-8 6M160 15h-27m8-6-8 6 8 6" fill="none" stroke="#829e8b" stroke-width="2"/>'
@@ -88,8 +89,8 @@
   function choice({text,index,selected,checked,correct,attributes=''}) {
     return `<button type="button" class="learning-choice answer-option ${selected?'active':''} ${checked&&correct?'correct is-correct':''} ${checked&&selected&&!correct?'wrong is-wrong':''}" ${attributes} aria-pressed="${selected}" ${checked?'disabled':''}><span class="key">${index+1}</span><span class="learning-choice-text">${text}</span>${checked&&(correct||selected)?`<span class="learning-choice-state">${correct?'✓ 정답':'× 나의 선택'}</span>`:''}</button>`;
   }
-  function feedback({correct,answer,selected,explain,wrongReason='',next=''}) {
-    return `<section class="learning-feedback ${correct?'is-success':'is-incorrect'}" aria-label="정답과 풀이"><div class="learning-feedback-title" role="status"><span class="learning-feedback-mark" aria-hidden="true">${correct?'✓':'!'}</span><div><p>정답 확인</p><h3>${correct?'정답입니다!':'다시 생각해 볼까요?'}</h3></div></div><div class="learning-answer-comparison">${!correct?`<div><small>내가 선택한 답</small><strong>${selected}</strong></div>`:''}<div><small>정답</small><strong>${answer}</strong></div></div><p class="learning-core-reason">${brief(explain)}</p>${wrongReason?explanation(wrongReason,'선택한 답의 힌트 보기'):''}${explanation(explain)}${!correct?'<p class="learning-retry-note">세트를 마치면 틀린 문제만 다시 풀 수 있어요.</p>':''}<div class="learning-feedback-actions">${next}</div></section>`;
+  function feedback({correct,answer,selected,explain,wrongReason='',next='',visual=''}) {
+    return `<section class="learning-feedback ${correct?'is-success':'is-incorrect'}" aria-label="정답과 풀이"><div class="learning-feedback-title" role="status"><span class="learning-feedback-mark" aria-hidden="true">${correct?'✓':'!'}</span><div><p>정답 확인</p><h3>${correct?'정답입니다!':'다시 생각해 볼까요?'}</h3></div></div><div class="learning-answer-comparison">${!correct?`<div><small>내가 선택한 답</small><strong>${selected}</strong></div>`:''}<div><small>정답</small><strong>${answer}</strong></div></div>${visual}<p class="learning-core-reason">${brief(explain)}</p>${wrongReason?explanation(wrongReason,'선택한 답의 힌트 보기'):''}${explanation(explain)}${!correct?'<p class="learning-retry-note">세트를 마치면 틀린 문제만 다시 풀 수 있어요.</p>':''}<div class="learning-feedback-actions">${next}</div></section>`;
   }
   function question({number,total,topic,prompt,evidence='',choices='',action='',feedback:answer='',retry=false}) {
     return `<section class="learning-question-card"><header class="learning-question-meta"><span>${retry?'오답 다시 풀기':'문제 연습'} <strong>${String(number).padStart(2,'0')} / ${String(total).padStart(2,'0')}</strong></span><span>${topic}</span></header><div class="learning-question-progress" role="progressbar" aria-label="현재 문제" aria-valuenow="${number}" aria-valuemin="0" aria-valuemax="${total}"><span style="width:${number/total*100}%"></span></div><div class="learning-question-layout"><section class="learning-question-main" aria-label="문제와 답 선택"><p class="learning-overline">생각하고 선택해 보세요</p>${prompt}${evidence?`<div class="learning-evidence">${evidence}</div>`:''}<div class="learning-choices" role="group" aria-label="답 선택">${choices}</div><div class="learning-question-actions">${action}</div></section><aside class="learning-feedback-column">${answer||`<div class="learning-waiting-feedback">${icon('question')}<h3>내 선택의 근거는 무엇일까요?</h3><p>답을 선택하고 확인하면<br>핵심 근거와 풀이를 볼 수 있어요.</p></div>`}</aside></div></section>`;
@@ -98,7 +99,14 @@
     return `<section class="learning-result"><header><p class="learning-overline">학습 결과</p><h2>${title}</h2><p>확인한 개념을 돌아보고 다음 학습을 정해 보세요.</p></header><div class="learning-result-grid"><div class="learning-result-score"><div class="learning-score-ring" style="--learning-rate:${score/total*100}%"><div><strong>${score}<small> / ${total}</small></strong><span>문제 정답</span></div></div><p>${Math.round(score/total*100)}% · ${caption||'이번에 푼 문제 기준'}</p></div><div class="learning-result-concepts"><section>${icon('check')}<h3>잘 이해한 개념</h3><p>${good}</p></section><section>${icon('question')}<h3>다시 확인할 개념</h3><p>${weak}</p></section></div></div><div class="learning-result-actions">${actions}</div></section>`;
   }
   function stepNav(items,current,{idPrefix,panel,attribute,label,extraClass='',completed=[]}) {
-    return `<div class="learning-nav-wrap"><div class="learning-nav-heading"><span>${label} · ${current+1} / ${items.length}</span></div><div class="learning-step-nav ${extraClass}" role="tablist" aria-label="${label}">${items.map(([key,title],i)=>`<button type="button" role="tab" id="${idPrefix}-${key}" aria-controls="${panel}" aria-selected="${current===i}" tabindex="${current===i?0:-1}" ${attribute(key,i)}><span class="learning-step-number">${completed.includes(i)?'✓':String(i+1).padStart(2,'0')}</span><span>${title}</span>${completed.includes(i)?'<span class="sr-only">확인 완료</span>':''}</button>`).join('')}</div></div>`;
+    return `<div class="learning-nav-wrap"><div class="learning-step-nav ${extraClass}" style="--studio-tabs:${items.length}" role="tablist" aria-label="${label}">${items.map(([key,title],i)=>`<button type="button" role="tab" id="${idPrefix}-${key}" aria-controls="${panel}" aria-selected="${current===i}" tabindex="${current===i?0:-1}" ${attribute(key,i)}><span class="learning-step-number">${completed.includes(i)?'✓':String(i+1).padStart(2,'0')}</span><span>${title}</span>${completed.includes(i)?'<span class="sr-only">확인 완료</span>':''}</button>`).join('')}</div></div>`;
+  }
+  function bars(title, rows, {unit='',max=null}={}) {
+    const scale=max||Math.max(1,...rows.map(r=>Math.abs(r.value))),diverging=rows.some(r=>r.value<0);
+    return `<figure class="studio-value-chart ${diverging?'is-diverging':''}"><figcaption>${escape(title)}${unit?` <small>단위: ${escape(unit)}${diverging?' · 음수 ← 0 → 양수':''}</small>`:''}</figcaption>${rows.map((r,i)=>`<div class="studio-value-row"><span>${escape(r.label)}</span><div class="studio-value-track"><i style="width:${Math.min(100,Math.abs(r.value)/scale*100)*(diverging?.5:1)}%;${diverging?`${r.value<0?'right':'left'}:50%;`: ''}--bar-color:${r.value<0?'#b67757':r.color||['#8ca17a','#176145'][i%2]}"></i></div><strong>${r.value<0?'−':''}${escape(r.text||Math.abs(r.value).toLocaleString('ko-KR'))}</strong></div>`).join('')}</figure>`;
+  }
+  function evidence(rows, format) {
+    return `<div class="studio-evidence-options">${rows.map((r,i)=>`<article><header>${window.GalpiLearningArt.scene(['bag','wallet','certificate'][i%3])}<strong>${escape(r.name)}</strong></header><dl><div><dt>편익</dt><dd>${format(r.benefit)}</dd></div><div><dt>가격</dt><dd>${format(r.cost)}</dd></div></dl></article>`).join('')}</div>`;
   }
   function mount(root) {
     root.querySelectorAll('[role=tablist]').forEach(list=>{
@@ -107,5 +115,5 @@
     });
     watchSteps(root);
   }
-  window.GalpiLabUI = { icon, country, head, navigation, footer, watchSteps, illustration, header, choice, question, feedback, explanation, summary, result, stepNav, mount, brief };
+  window.GalpiLabUI = { icon, country, head, navigation, footer, watchSteps, illustration, header, choice, question, feedback, explanation, summary, result, stepNav, mount, brief, bars, evidence };
 })();

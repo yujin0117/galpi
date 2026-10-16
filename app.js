@@ -133,11 +133,24 @@ function wrongReason(q,opt){
  return '이 항목은 앞으로의 선택에 따라 달라질 비용 또는 편익이므로 고려해야 합니다. 이미 지불해 회수할 수 없는 비용과 구분해 보세요.';
 }
 function createQuiz(){const types=shuffle(['explicit','implicit','opportunity','net','rational','sunk','explicit','opportunity','net','rational']);const q=types.map((t,i)=>buildQuestion(t,i));state.quiz={mode:'normal',questions:q,index:0,answers:Array(q.length).fill(null),selected:null,checked:false,initialScore:null};state.completed=null;}
+function quizCalculation(q){
+ const U=window.GalpiLabUI,f=q.facts;
+ const tile=(label,value)=>`<span class="studio-equation-tile"><small>${label}</small><strong>${won(value)}</strong></span>`;
+ let cells=[];
+ if(q.type==='implicit')cells=[tile('포기한 B의 편익',f.bBenefit),'−',tile('B의 가격',f.bPrice),'=',tile('암묵적 비용',f.bNet)];
+ if(q.type==='opportunity')cells=[tile('직접 지출',f.price),'+',tile('포기한 B의 가치',f.bNet),'=',tile('기회비용',f.price+f.bNet)];
+ if(q.type==='net')cells=[tile('A의 편익',f.benefit),'−',tile('기회비용',f.price+f.bNet),'=',tile('순편익',q.answerValue)];
+ if(q.type==='explicit')cells=[tile('실제 지출한 영화표 값',f.price),'=',tile('명시적 비용',q.answerValue)];
+ if(q.type==='rational')return U.bars('대안별 편익 − 가격',q.table.map(r=>({label:r.name,value:r.benefit-r.cost,text:won(r.benefit-r.cost)})),{unit:'원'});
+ if(!cells.length)return '';
+ return `<figure class="studio-equation"><figcaption>숫자로 따라가는 풀이</figcaption><div>${cells.map((c,i)=>i%2?`<b aria-hidden="true">${c}</b>`:c).join('')}</div></figure>`;
+}
 function renderQuiz(){const U=window.GalpiLabUI;
  if(!state.quiz)return `<section class="learning-start-card">${U.illustration?U.illustration('cost'):U.icon('question')}<div><p class="learning-overline">개념을 적용해 볼 시간</p><h2>10문제로 선택의 근거를 확인해요.</h2><p>명시적 비용·암묵적 비용·기회비용·순편익을 풀고, 필요한 개념을 다시 살펴보세요.</p><button type="button" class="btn primary" data-action="startQuiz">10문제 시작하기 →</button></div></section>`;
  const qz=state.quiz,q=qz.questions[qz.index],choices=q.options.map((opt,i)=>U.choice({text:esc(opt),index:i,selected:qz.selected===i,checked:qz.checked,correct:q.correct===i,attributes:`data-answer="${i}"`})).join('');
- const answer=qz.checked?U.feedback({correct:qz.selected===q.correct,answer:esc(q.options[q.correct]),selected:esc(q.options[qz.selected]),explain:q.explain,wrongReason:qz.selected!==q.correct?q.wrongReasons[qz.selected]:'',next:`<button type="button" class="btn primary" data-action="nextQ">${qz.index===qz.questions.length-1?'학습 결과 확인':'다음 문제 →'}</button>`}):'';
- const evidence=q.table?`<div class="table-scroll"><table class="book-table"><caption>문제의 조건 · 금액은 원</caption><thead><tr><th>대안</th><th class="numeric">편익</th><th class="numeric">가격</th></tr></thead><tbody>${q.table.map(r=>`<tr><th>${r.name}</th><td class="numeric">${won(r.benefit)}</td><td class="numeric">${won(r.cost)}</td></tr>`).join('')}</tbody></table></div>`:'';
+ const visualCalculation=qz.checked?quizCalculation(q):'';
+ const answer=qz.checked?U.feedback({visual:visualCalculation,correct:qz.selected===q.correct,answer:esc(q.options[q.correct]),selected:esc(q.options[qz.selected]),explain:q.explain,wrongReason:qz.selected!==q.correct?q.wrongReasons[qz.selected]:'',next:`<button type="button" class="btn primary" data-action="nextQ">${qz.index===qz.questions.length-1?'학습 결과 확인':'다음 문제 →'}</button>`}):'';
+ const evidence=q.table?U.evidence(q.table,won):q.type==='sunk'?'':`<div class="studio-problem-material">${window.GalpiLearningArt.scene(q.type==='explicit'?'ticket':'wallet')}<div><small>문제에서 주어진 조건</small>${(q.type==='explicit'?[['영화표 지출',q.facts.price]]:q.type==='implicit'?[['B의 편익',q.facts.bBenefit],['B의 가격',q.facts.bPrice]]:q.type==='opportunity'?[['A의 지출',q.facts.price],['B의 편익',q.facts.bBenefit],['B의 가격',q.facts.bPrice]]:[['A의 편익',q.facts.benefit],['명시적 비용',q.facts.price],['포기한 B의 가치',q.facts.bNet]]).map(([label,value])=>`<p><span>${label}</span><strong>${won(value)}</strong></p>`).join('')}</div></div>`;
  return U.question({number:qz.index+1,total:qz.questions.length,topic:q.topic,prompt:`<h2 class="question-title">${q.prompt}</h2>`,evidence,choices,action:qz.checked?'':`<button type="button" class="btn primary" data-action="grade" ${qz.selected===null?'disabled':''}>정답 확인</button>`,feedback:answer,retry:qz.mode==='retry'})+'<p class="learning-privacy">문제와 풀이 결과는 새로고침하면 초기화됩니다.</p>';
 }
 function grade(){const qz=state.quiz;if(!qz||qz.selected===null||qz.checked)return;qz.checked=true;qz.answers[qz.index]=qz.selected;renderBody();announce(qz.selected===qz.questions[qz.index].correct?'정답입니다. 해설이 표시되었습니다.':'오답입니다. 해설이 표시되었습니다.');}
