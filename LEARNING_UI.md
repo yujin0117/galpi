@@ -5,10 +5,12 @@
 ## 범위
 
 - `lab-ui.js`: 기존 공통 UI를 확장한 `GalpiLabUI` 템플릿 함수.
-- `learning-v2.css`: `.learning-v2` 내부에만 적용되는 학습 디자인 토큰과 반응형 배치.
+- `learning-tokens.css`: 학습 전용 뉴트럴 컬러와 의미별 색상.
+- `curriculum.js` / `curriculum.css`: 과목·단원·쪽수의 공통 Editorial Chapter Header.
+- `learning-v2.css`: `.learning-v2` 내부의 공통 컴포넌트와 반응형 배치.
 - `lab-ui.css`: 기존 실험실의 조건·결과·나라 비교 표현.
 
-홈·과목 목록·전역 메뉴·브랜드 배너에는 `.learning-v2`를 적용하지 않습니다. 새 스타일을 전역 `body`, `.shell`, `.topbar` 등에 적용하지 마세요.
+홈·과목 목록·전역 메뉴·브랜드 배너에는 `.learning-v2`를 적용하지 않습니다. 무조건 적용되는 전역 스타일은 추가하지 않습니다. 학습 페이지 배경만 `body:has(#content > .learning-v2)`로 한정하며, 홈과 과목별 메인에서는 원래 배경을 사용합니다.
 
 ## 공통 함수
 

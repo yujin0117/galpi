@@ -2,6 +2,7 @@
 (() => {
   'use strict';
   const lessons = Object.freeze({
+    history: { subject:'한국사2', chapters:[['Ⅱ','대한민국의 발전'],['Ⅲ','오늘날의 대한민국']], unit:'경제 변화와 국민의 삶', pages:'112~116쪽 · 136~137쪽' },
     capitalism: { unit: '3-1. 자본주의의 발달과 시장경제', pages: '68~73쪽' },
     cost: { unit: '3-2. 합리적 선택', pages: '74~75쪽' },
     ripple: { unit: '3-3. 시장 참여자의 역할과 책임', pages: '78~83쪽' },
@@ -16,7 +17,10 @@
     header(key) {
       const lesson = lessons[key];
       if (!lesson) throw new Error(`Unknown GALPI lesson: ${key}`);
-      return `<div class="curriculum-card" aria-label="단원 정보"><p class="curriculum-path"><span>통합사회2</span><span class="curriculum-chapter"><span aria-hidden="true">/ </span>Ⅲ. 시장경제와 지속가능발전</span></p><p class="curriculum-detail"><span>${lesson.unit}</span><span class="curriculum-pages">${lesson.pages}${lesson.note ? ` · ${lesson.note}` : ''}</span></p></div>`;
+      const match=lesson.unit.match(/^(\d+-\d+)\. (.+)$/);
+      const number=match?match[1]:'',unit=match?match[2]:lesson.unit;
+      const chapters=lesson.chapters||[['Ⅲ','시장경제와 지속가능발전']];
+      return `<div class="chapter-header" aria-label="교과서 단원 정보"><p class="chapter-context"><span class="chapter-subject">${lesson.subject||'통합사회2'}</span><span class="chapter-context-separator" aria-hidden="true">/</span><span class="chapter-book"><span class="chapter-book-label">CHAPTER</span> ${chapters.map(([n,t])=>`<span class="chapter-part"><em class="chapter-roman">${n}</em> · ${t}</span>`).join(' / ')}</span></p><div class="chapter-detail ${number?'':'chapter-detail-without-number'}">${number?`<span class="chapter-number">${number}</span>`:''}<span class="chapter-unit">${unit}</span><span class="chapter-pages">${lesson.pages}${lesson.note?`<span class="chapter-note">· ${lesson.note}</span>`:''}</span></div></div>`;
     }
   });
   const help = {

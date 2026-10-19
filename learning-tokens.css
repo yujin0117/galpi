@@ -1,0 +1,43 @@
+/* Learning-only palette. Home, subject landing pages and illustration assets keep their own colors. */
+body:has(#content > .learning-v2){background:#F8FAF9}
+body:has(#content > .learning-v2),.learning-v2{
+ --learning-page:#F8FAF9;
+ --learning-surface:#FFFFFF;
+ --learning-ink:#1F2933;
+ --learning-muted:#64748B;
+ --learning-muted-strong:#475569;
+ --learning-line:#E5E7EB;
+ --learning-brand:#00462A;
+ --learning-selected:#EAF3EE;
+ --learning-accent:#E9C887;
+ --learning-subtle:#F8FAF9;
+ --learning-danger:#9F3B2F;
+ --learning-danger-soft:#FFF4F1;
+ --learning-control:#7C8B9C;
+ --learning-sage:var(--learning-selected);
+ --learning-gold:var(--learning-accent);
+}
+.learning-v2{
+ /* Scoped compatibility for original activities. No global brand variable is changed. */
+ --ink:var(--learning-ink);--muted:var(--learning-muted);--line:var(--learning-line);
+ --green:var(--learning-brand);--deep:var(--learning-brand);--paper:var(--learning-surface);
+ --surface:var(--learning-surface);--cream:var(--learning-page);--sand:var(--learning-subtle);
+ --sage:var(--learning-selected);--sage-strong:var(--learning-line);--gold:var(--learning-accent);
+ --red:var(--learning-danger);--red-bg:var(--learning-danger-soft);
+ color:var(--learning-ink);
+}
+.learning-v2 :is([aria-pressed=true],[aria-selected=true],[aria-current],.learning-feedback,.hl-feedback,.hl-selected-year,.hl-current,.tg-highlight,.learning-country-selected){--learning-muted:var(--learning-muted-strong)}
+body:has(#content > .learning-v2) .footer{border-color:#E5E7EB;color:#64748B}
+
+/* Baseline learning colors moved out of the global home stylesheet. */
+:where(.learning-v2) .concept-summary{background:var(--learning-subtle);border-left:3px solid var(--green);color:var(--learning-ink)}
+:where(.learning-v2) .definition{color:var(--ink)}
+:where(.learning-v2) .teacher-strip{border:1px solid var(--learning-line);background:var(--learning-subtle);color:var(--learning-ink)}
+:where(.learning-v2) .visual-equation b{color:var(--green)}
+:where(.learning-v2) .choice-tag{background:var(--learning-subtle)}
+:where(.learning-v2) .formula-em{background:var(--learning-subtle);color:var(--learning-ink)}
+:where(.learning-v2) .number-row label{color:var(--learning-muted)}
+:where(.learning-v2) .number-row input{border:1px solid var(--learning-control);background:white;color:var(--ink)}
+:where(.learning-v2) .bar-track{background:var(--learning-subtle)}
+:where(.learning-v2) .sim-result{border:1px solid var(--learning-line);background:var(--learning-subtle)}
+:where(.learning-v2) .sim-result .outcome b{color:var(--green)}

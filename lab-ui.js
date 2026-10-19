@@ -75,7 +75,7 @@
     return `<svg class="learning-illustration" viewBox="0 0 200 120" aria-hidden="true">${art}</svg>`;
   }
   function header(key, title, description) {
-    return `<header class="learning-header"><div><div class="learning-curriculum">${window.GalpiCurriculum.header(key)}</div><h1>${title}</h1><p class="learning-goal">${description}</p></div>${illustration(key)}</header>`;
+    return `<header class="learning-header"><div>${window.GalpiCurriculum.header(key)}<h1>${title}</h1><p class="learning-goal">${description}</p></div>${illustration(key)}</header>`;
   }
   function explanation(content, title = '풀이 과정 자세히 보기') {
     return `<details class="learning-explanation"><summary>${title}</summary><div>${content}</div></details>`;

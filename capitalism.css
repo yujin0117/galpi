@@ -1,60 +1,62 @@
-/* Capitalism: original editorial timeline and decision-process diagrams. */
-#content .capitalism{--cp-sage:#edf2e4;--cp-gold:#bc985a;--cp-line:#dce3d3;--cp-muted:#5a6f59}
+/* Learning styles: neutral surfaces, semantic palette and preserved illustration/chart colors. */
+#content .capitalism{--cp-sage:var(--learning-selected);--cp-gold:var(--learning-accent);--cp-line:var(--learning-line);--cp-muted:var(--learning-muted)}
 #content .capitalism .cp-era-art{display:block;width:100%;height:auto}
-#content .capitalism .cp-eyebrow{font-size:12px;font-weight:700;letter-spacing:.01em;color:#60724e;margin:0 0 8px}
-#content .capitalism .cp-small,#content .capitalism .cp-source{font-size:12px;line-height:1.7;color:#61725d;margin:16px 0}
+#content .capitalism .cp-eyebrow{font-size:12px;font-weight:700;letter-spacing:.01em;color:var(--learning-muted);margin:0 0 8px}
+#content .capitalism .cp-small,#content .capitalism .cp-source{font-size:12px;line-height:1.7;color:var(--learning-muted);margin:16px 0}
 #content .capitalism .cp-source{margin-top:30px}
 #content .capitalism .cp-section-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 24px}
 #content .capitalism .cp-section-heading h2{font-size:25px;margin:0;line-height:1.4;letter-spacing:-.03em}
 #content .capitalism .cp-section-heading>span{font-size:12px;white-space:nowrap;color:var(--cp-muted)}
 #content .capitalism .cp-timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 18px;position:relative;list-style:none;padding:0;margin:0}
 #content .capitalism .cp-timeline>li{display:contents}
-#content .capitalism [data-cp=era]{position:relative;grid-row:1;display:flex;flex-direction:column;align-items:stretch;gap:4px;width:100%;min-width:0;padding:12px 10px 16px;min-height:210px;border:1px solid transparent;border-bottom:3px solid #c6d3bc;border-radius:15px 15px 0 0;background:none;box-shadow:none;color:#2c4c38;text-align:left}
-#content .capitalism [data-cp=era]:not([aria-pressed=true]):hover{background:#edf2e46b}
-#content .capitalism [data-cp=era][aria-pressed=true]{background:#e9efdf;border-color:#ceddbf;border-bottom:3px solid #235c3c}
-@media(min-width:701px){#content .capitalism .cp-timeline>li:not(:last-child)>[data-cp=era]::after{content:'';position:absolute;right:-20px;bottom:-3px;width:19px;height:3px;background:#c6d3bc}}
+#content .capitalism [data-cp=era]{position:relative;grid-row:1;display:flex;flex-direction:column;align-items:stretch;gap:4px;width:100%;min-width:0;padding:12px 10px 16px;min-height:210px;border:1px solid transparent;border-bottom:3px solid var(--learning-line);border-radius:15px 15px 0 0;background:none;box-shadow:none;color:var(--learning-ink);text-align:left}
+#content .capitalism [data-cp=era]:not([aria-pressed=true]):hover{background:var(--learning-subtle)}
+#content .capitalism [data-cp=era][aria-pressed=true]{background:var(--learning-selected);border-color:var(--learning-brand);border-bottom:3px solid var(--learning-brand)}
+@media(min-width:701px){
+#content .capitalism .cp-timeline>li:not(:last-child)>[data-cp=era]::after{content:'';position:absolute;right:-20px;bottom:-3px;width:19px;height:3px;background:var(--learning-subtle)}
+}
 #content .capitalism .cp-era-label{display:flex;align-items:center;gap:9px;min-width:0;width:100%;position:relative}
-#content .capitalism .cp-era-number{display:grid;place-items:center;width:29px;height:29px;flex:none;background:#fdfbf3;color:#5e7652;border:1px solid #d7e1c9;border-radius:50%;font-size:12px;font-weight:700}
-#content .capitalism [aria-pressed=true] .cp-era-number{background:#155738;color:white;border-color:#155738}
+#content .capitalism .cp-era-number{display:grid;place-items:center;width:29px;height:29px;flex:none;background:var(--learning-subtle);color:var(--learning-brand);border:1px solid var(--learning-line);border-radius:50%;font-size:12px;font-weight:700}
+#content .capitalism [aria-pressed=true] .cp-era-number{background:var(--learning-brand);color:var(--learning-surface);border-color:var(--learning-brand)}
 #content .capitalism .cp-era-label strong{display:block;font-size:17px;line-height:1.4}
-#content .capitalism .cp-era-label small{display:block;font-size:11px;color:#64765c;margin-top:4px}
-#content .capitalism .cp-era-read{margin-left:auto;font-size:13px;color:#4e7845}
-#content .capitalism .cp-era-detail{grid-row:2;grid-column:1/-1;display:grid;grid-template-columns:1.05fr 1fr;gap:36px;background:white;border:1px solid #e0e6d5;border-radius:16px;padding:28px;align-items:center;min-width:0}
+#content .capitalism .cp-era-label small{display:block;font-size:11px;color:var(--learning-muted);margin-top:4px}
+#content .capitalism .cp-era-read{margin-left:auto;font-size:13px;color:var(--learning-ink)}
+#content .capitalism .cp-era-detail{grid-row:2;grid-column:1/-1;display:grid;grid-template-columns:1.05fr 1fr;gap:36px;background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:16px;padding:28px;align-items:center;min-width:0}
 #content .capitalism .cp-detail-visual{min-width:0}
 #content .capitalism .cp-detail-visual>.cp-era-art{width:100%;max-height:320px}
 #content .capitalism .cp-cause-flow{display:flex;align-items:center;justify-content:center;gap:8px;margin:16px 0 0;flex-wrap:wrap}
-#content .capitalism .cp-cause-flow>span{padding:7px 10px;background:#f0f4e7;border-radius:6px;font-size:12px;line-height:1.5;text-align:center}
-#content .capitalism .cp-cause-flow>b{font-weight:500;color:#80946e}
+#content .capitalism .cp-cause-flow>span{padding:7px 10px;background:var(--learning-subtle);border-radius:6px;font-size:12px;line-height:1.5;text-align:center}
+#content .capitalism .cp-cause-flow>b{font-weight:500;color:var(--learning-ink)}
 #content .capitalism .cp-detail-copy{min-width:0}
 #content .capitalism .cp-detail-copy h2{font-size:26px;margin:0 0 18px}
 #content .capitalism .cp-detail-copy h3{font-size:18px;margin:20px 0 8px}
-#content .capitalism .cp-detail-copy>p:not(.cp-eyebrow,.cp-small){font-size:16px;line-height:1.7;margin:8px 0;color:#354c3c}
-#content .capitalism .cp-detail-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));list-style:none;padding:6px;margin:0;background:#f3f5ec;border-radius:9px;gap:5px}
+#content .capitalism .cp-detail-copy>p:not(.cp-eyebrow,.cp-small){font-size:16px;line-height:1.7;margin:8px 0;color:var(--learning-ink)}
+#content .capitalism .cp-detail-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));list-style:none;padding:6px;margin:0;background:var(--learning-subtle);border-radius:9px;gap:5px}
 #content .capitalism .cp-detail-steps>li{min-width:0}
-#content .capitalism .cp-detail-steps .btn{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;width:100%;height:100%;min-width:0;border:1px solid transparent;border-radius:7px;padding:9px 4px;background:none;font-size:11px;color:#607356;line-height:1.45}
-#content .capitalism .cp-detail-steps .btn[aria-pressed=true]{border-color:#bacdab;background:white;color:#2b5538}
-#content .capitalism .cp-detail-steps .btn>span{display:grid;place-items:center;width:22px;height:22px;flex:none;background:#e3ebd8;border-radius:50%;font-size:11px}
-#content .capitalism .cp-detail-steps .btn[aria-pressed=true]>span{background:#1d5a3a;color:white}
+#content .capitalism .cp-detail-steps .btn{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;width:100%;height:100%;min-width:0;border:1px solid transparent;border-radius:7px;padding:9px 4px;background:none;font-size:11px;color:var(--learning-brand);line-height:1.45}
+#content .capitalism .cp-detail-steps .btn[aria-pressed=true]{border-color:var(--learning-brand);background:var(--learning-surface);color:var(--learning-brand)}
+#content .capitalism .cp-detail-steps .btn>span{display:grid;place-items:center;width:22px;height:22px;flex:none;background:var(--learning-subtle);border-radius:50%;font-size:11px}
+#content .capitalism .cp-detail-steps .btn[aria-pressed=true]>span{background:var(--learning-brand);color:var(--learning-surface)}
 #content .capitalism .cp-detail-actions,#content .capitalism .cp-page-actions{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;margin-top:22px}
-#content .capitalism .cp-term{padding:12px;background:#f6f1e5;border-left:3px solid #bc985a;font-size:13px!important}
+#content .capitalism .cp-term{padding:12px;background:var(--learning-subtle);border-left:3px solid var(--learning-brand);font-size:13px!important}
 #content .capitalism .cp-history-note{padding:0 4px}
-#content .capitalism .cp-overview{border:0;padding:0;background:#fffdf7;border-radius:12px;scroll-margin-top:20px}
-#content .capitalism .cp-overview>summary{min-height:48px;cursor:pointer;font-size:15px;font-weight:700;padding:16px;color:#345739}
+#content .capitalism .cp-overview{border:0;padding:0;background:var(--learning-subtle);border-radius:12px;scroll-margin-top:20px}
+#content .capitalism .cp-overview>summary{min-height:48px;cursor:pointer;font-size:15px;font-weight:700;padding:16px;color:var(--learning-ink)}
 #content .capitalism .cp-overview .table-scroll{padding:0 16px}
 #content .capitalism .cp-overview table{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0 20px;line-height:1.6}
-#content .capitalism .cp-overview :is(th,td){padding:13px 10px;border-bottom:1px solid #e1e6d7;text-align:left}
-#content .capitalism .cp-overview caption{text-align:left;color:#61725b;font-size:12px;padding-bottom:10px}
-#content .capitalism .cp-overview thead{background:#f0f4e7}
+#content .capitalism .cp-overview :is(th,td){padding:13px 10px;border-bottom:1px solid var(--learning-line);text-align:left}
+#content .capitalism .cp-overview caption{text-align:left;color:var(--learning-muted);font-size:12px;padding-bottom:10px}
+#content .capitalism .cp-overview thead{background:var(--learning-subtle)}
 #content .capitalism .cp-history-link{display:flex;align-items:center;justify-content:space-between;gap:24px;border-block:1px solid var(--cp-line);padding:20px 4px;margin:28px 0}
 #content .capitalism .cp-history-link strong{font-size:14px}
-#content .capitalism .cp-history-link p{font-size:13px;line-height:1.7;margin:8px 0 0;color:#586b51}
+#content .capitalism .cp-history-link p{font-size:13px;line-height:1.7;margin:8px 0 0;color:var(--learning-ink)}
 #content .capitalism .cp-history-link .btn{flex:none}
 #content .capitalism .cp-systems-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-#content .capitalism .cp-systems-grid>figure{margin:0;min-width:0;background:white;border-radius:14px;padding:20px;border:1px solid #e2e6d9}
+#content .capitalism .cp-systems-grid>figure{margin:0;min-width:0;background:var(--learning-surface);border-radius:14px;padding:20px;border:1px solid var(--learning-line)}
 #content .capitalism .cp-systems-grid>figure>header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 #content .capitalism .cp-systems-grid h3{margin:0;font-size:22px}
-#content .capitalism .cp-system-letter{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#e9efdd;font-size:12px;font-weight:700;color:#5a754c}
-#content .capitalism .cp-systems-grid>figure:nth-child(2) .cp-system-letter{background:#f4e7cd;color:#8b7147}
+#content .capitalism .cp-system-letter{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:var(--learning-subtle);font-size:12px;font-weight:700;color:var(--learning-ink)}
+#content .capitalism .cp-systems-grid>figure:nth-child(2) .cp-system-letter{background:var(--learning-subtle);color:var(--learning-ink)}
 #content .capitalism .cp-system-art{display:block;width:100%;height:auto}
 #content .capitalism .cp-system-art text{font:25px/1.4 Pretendard,'Apple SD Gothic Neo',sans-serif;fill:#294a37;font-weight:650}
 #content .capitalism .cp-system-art .cp-art-small{font-size:21px;font-weight:500}
@@ -62,189 +64,194 @@
 #content .capitalism .cp-systems-grid figcaption>strong{font-size:17px}
 #content .capitalism .cp-systems-grid figcaption>p{font-size:15px;line-height:1.7;margin:10px 0}
 #content .capitalism .cp-systems-grid dl{margin:0}
-#content .capitalism .cp-systems-grid dl>div{padding:12px 0;border-top:1px solid #e6eadd;display:grid;grid-template-columns:85px minmax(0,1fr);gap:14px;font-size:14px;line-height:1.65}
-#content .capitalism .cp-systems-grid dt{color:#5b734f;font-weight:650}
+#content .capitalism .cp-systems-grid dl>div{padding:12px 0;border-top:1px solid var(--learning-line);display:grid;grid-template-columns:85px minmax(0,1fr);gap:14px;font-size:14px;line-height:1.65}
+#content .capitalism .cp-systems-grid dt{color:var(--learning-muted);font-weight:650}
 #content .capitalism .cp-systems-grid dd{margin:0}
-#content .capitalism .cp-mixed{padding:30px;margin:32px 0;border-radius:18px;background:#edf3e5}
+#content .capitalism .cp-mixed{padding:30px;margin:32px 0;border-radius:18px;background:var(--learning-subtle)}
 #content .capitalism .cp-mixed h2{font-size:25px;margin:0 0 22px}
 #content .capitalism .cp-mixed-diagram{display:grid;grid-template-columns:1.6fr 36px 1fr;gap:20px;align-items:center}
-#content .capitalism :is(.cp-market-foundation,.cp-government-role){display:flex;flex-direction:column;align-items:center;padding:16px;background:#fffdf6;border:1px solid #d5e0c9;border-radius:12px;min-width:0;align-self:stretch;justify-content:center;gap:7px}
-#content .capitalism .cp-market-foundation{border:2px solid #7da26d}
+#content .capitalism :is(.cp-market-foundation,.cp-government-role){display:flex;flex-direction:column;align-items:center;padding:16px;background:var(--learning-selected);border:1px solid var(--learning-brand);border-radius:12px;min-width:0;align-self:stretch;justify-content:center;gap:7px}
+#content .capitalism .cp-market-foundation{border:2px solid var(--learning-brand)}
 #content .capitalism :is(.cp-market-foundation,.cp-government-role)>svg{width:170px;max-width:100%;height:auto}
 #content .capitalism :is(.cp-market-foundation,.cp-government-role)>strong{font-size:17px;text-align:center}
-#content .capitalism :is(.cp-market-foundation,.cp-government-role)>span{font-size:12px;text-align:center;line-height:1.6;color:#617355}
-#content .capitalism .cp-mixed-plus{font-size:30px;font-weight:400;text-align:center;color:#6a8957}
+#content .capitalism :is(.cp-market-foundation,.cp-government-role)>span{font-size:12px;text-align:center;line-height:1.6;color:var(--learning-ink)}
+#content .capitalism .cp-mixed-plus{font-size:30px;font-weight:400;text-align:center;color:var(--learning-ink)}
 #content .capitalism .cp-mixed-result{grid-column:1/-1;text-align:center}
-#content .capitalism .cp-mixed-result>span{display:block;font-size:27px;color:#6d875a}
+#content .capitalism .cp-mixed-result>span{display:block;font-size:27px;color:var(--learning-ink)}
 #content .capitalism .cp-mixed-result h3{font-size:24px;margin:7px 0 12px}
 #content .capitalism .cp-mixed-result p{font-size:15px;line-height:1.8;margin:0}
 #content .capitalism .cp-perspectives{margin:32px 0}
 #content .capitalism .cp-perspectives>h3{font-size:20px;margin:0 0 18px}
-#content .capitalism .cp-perspectives>h3 small{font-size:12px;font-weight:400;color:#65785b}
+#content .capitalism .cp-perspectives>h3 small{font-size:12px;font-weight:400;color:var(--learning-muted)}
 #content .capitalism .cp-perspectives>div{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 #content .capitalism .cp-perspectives article{padding:18px 0;border-block:1px solid var(--cp-line)}
 #content .capitalism .cp-perspectives strong{font-size:16px}
 #content .capitalism .cp-perspectives article p{font-size:15px;line-height:1.7;margin:10px 0 0}
-#content .capitalism .cp-system-check{padding:28px;background:white;border:1px solid #dfe5d6;border-radius:14px;margin:28px 0}
+#content .capitalism .cp-system-check{padding:28px;background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:14px;margin:28px 0}
 #content .capitalism .cp-system-check h3{font-size:22px;margin:0 0 16px}
 #content .capitalism .cp-check-prompt{font-size:18px;line-height:1.7;margin:16px 0}
 #content .capitalism .cp-system-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
 #content .capitalism .cp-system-choices .btn{min-width:0;font-size:14px;font-weight:500}
-#content .capitalism .cp-system-choices .btn[aria-pressed=true]{background:#edf5e5;border:2px solid #5c8651;color:#294f34;font-weight:700}
+#content .capitalism .cp-system-choices .btn[aria-pressed=true]{background:var(--learning-selected);border:2px solid var(--learning-brand);color:var(--learning-brand);font-weight:700}
 #content .capitalism .cp-system-choices .btn:disabled{opacity:1}
-#content .capitalism .cp-check-feedback{background:#eff5e7;border-left:3px solid #668e51;padding:18px;margin-top:20px;border-radius:0 9px 9px 0}
-#content .capitalism .cp-check-feedback.is-wrong{background:#fcf0e7;border-color:#ab7558}
-#content .capitalism .cp-check-feedback strong{font-size:17px;color:#315e38}
-#content .capitalism .cp-check-feedback.is-wrong strong{color:#8e523b}
+#content .capitalism .cp-check-feedback{background:var(--learning-subtle);border-left:3px solid var(--learning-brand);padding:18px;margin-top:20px;border-radius:0 9px 9px 0}
+#content .capitalism .cp-check-feedback.is-wrong{background:var(--learning-danger-soft);border-color:var(--learning-danger)}
+#content .capitalism .cp-check-feedback strong{font-size:17px;color:var(--learning-brand)}
+#content .capitalism .cp-check-feedback.is-wrong strong{color:var(--learning-danger)}
 #content .capitalism .cp-check-feedback p{font-size:15px;line-height:1.7;margin:10px 0}
 #content .capitalism .cp-quiz-intro{max-width:700px;margin:auto}
 #content .capitalism .cp-quiz-topics{margin:20px 0 24px}
 #content .capitalism .cp-order-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;list-style:none;padding:0;margin:0}
-#content .capitalism .cp-order-slots>li{display:flex;align-items:center;gap:9px;min-width:0;min-height:58px;padding:11px;background:#f1f5e9;border:1px dashed #bbcdaa;border-radius:8px;font-size:14px;line-height:1.5}
-#content .capitalism .cp-order-slots>li>span{flex:none;color:#647e54;font-size:12px;font-weight:700}
+#content .capitalism .cp-order-slots>li{display:flex;align-items:center;gap:9px;min-width:0;min-height:58px;padding:11px;background:var(--learning-subtle);border:1px dashed var(--learning-line);border-radius:8px;font-size:14px;line-height:1.5}
+#content .capitalism .cp-order-slots>li>span{flex:none;color:var(--learning-ink);font-size:12px;font-weight:700}
 #content .capitalism .cp-order-choices{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:15px}
 #content .capitalism .cp-order-choices .btn{min-width:0;font-size:14px;font-weight:500;min-height:50px}
-#content .capitalism .cp-order-choices .btn[aria-pressed=true]{background:#edf3e4;color:#375e36;border-color:#a7be95;opacity:1}
-#content .capitalism .cp-quiz-evidence{padding:10px 16px;background:#f2f5e9;border-left:3px solid #94ad7e;border-radius:0 8px 8px 0}
+#content .capitalism .cp-order-choices .btn[aria-pressed=true]{background:var(--learning-selected);color:var(--learning-brand);border-color:var(--learning-brand);opacity:1}
+#content .capitalism .cp-quiz-evidence{padding:10px 16px;background:var(--learning-subtle);border-left:3px solid var(--learning-brand);border-radius:0 8px 8px 0}
 #content .capitalism .cp-quiz-evidence p{font-size:15px;line-height:1.7}
-#content .capitalism .cp-missed{background:white;padding:24px;border:1px solid #dfe5d6;border-radius:12px;margin:24px auto;max-width:1100px}
-#content .capitalism .cp-missed details{border:0;border-bottom:1px solid #dfe6d6;padding:10px 0;border-radius:0}
+#content .capitalism .cp-missed{background:var(--learning-surface);padding:24px;border:1px solid var(--learning-line);border-radius:12px;margin:24px auto;max-width:1100px}
+#content .capitalism .cp-missed details{border:0;border-bottom:1px solid var(--learning-line);padding:10px 0;border-radius:0}
 #content .capitalism .cp-missed summary{font-size:15px;cursor:pointer;min-height:44px;padding:10px 0}
 #content .capitalism .cp-missed p{font-size:14px;line-height:1.7}
 #content .capitalism .cp-quiz-topics{display:flex;gap:8px;flex-wrap:wrap}
-#content .capitalism .cp-quiz-topics>span{font-size:12px;color:#4e6b49;background:#eaf0df;border-radius:5px;padding:6px 10px}
-#content .capitalism .cp-definition{padding:26px 28px;background:#fff;border:1px solid #dce5d4;border-left:5px solid #35644b;border-radius:4px 14px 14px 4px;margin:2px 0 32px}
+#content .capitalism .cp-quiz-topics>span{font-size:12px;color:var(--learning-ink);background:var(--learning-subtle);border-radius:5px;padding:6px 10px}
+#content .capitalism .cp-definition{padding:26px 28px;background:var(--learning-surface);border:1px solid var(--learning-line);border-left:5px solid var(--learning-brand);border-radius:4px 14px 14px 4px;margin:2px 0 32px}
 #content .capitalism .cp-definition h2{font-size:23px;margin:0 0 14px}
 #content .capitalism .cp-definition-text{font-size:18px;line-height:1.75;max-width:68ch;margin:0 0 20px}
-#content .capitalism .cp-definition-text strong{color:#1b5638;font-weight:700}
-#content .capitalism .cp-definition h3{font-size:12px;font-weight:500;color:#62715f;margin:0 0 10px}
+#content .capitalism .cp-definition-text strong{color:var(--learning-brand);font-weight:700}
+#content .capitalism .cp-definition h3{font-size:12px;font-weight:500;color:var(--learning-brand);margin:0 0 10px}
 #content .capitalism .cp-keywords{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;list-style:none;padding:0;margin:0}
-#content .capitalism .cp-keywords>li{display:flex;align-items:center;gap:9px;min-width:0;background:#f0f4e9;padding:12px;font-size:14px;line-height:1.5;border-radius:7px;color:#344d39}
-#content .capitalism .cp-keywords>li>span{font-size:11px;color:#6f855e;flex:none;font-variant-numeric:tabular-nums}
-#content .capitalism .cp-economic-problems{background:#fff;border:1px solid #dce5d4;border-radius:14px;padding:26px;margin-bottom:30px}
+#content .capitalism .cp-keywords>li{display:flex;align-items:center;gap:9px;min-width:0;background:var(--learning-subtle);padding:12px;font-size:14px;line-height:1.5;border-radius:7px;color:var(--learning-ink)}
+#content .capitalism .cp-keywords>li>span{font-size:11px;color:var(--learning-ink);flex:none;font-variant-numeric:tabular-nums}
+#content .capitalism .cp-economic-problems{background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:14px;padding:26px;margin-bottom:30px}
 #content .capitalism .cp-economic-problems h3{font-size:22px;margin:0 0 10px}
-#content .capitalism .cp-economic-problems header>p:last-child{font-size:15px;line-height:1.7;margin:0 0 20px;color:#455448}
+#content .capitalism .cp-economic-problems header>p:last-child{font-size:15px;line-height:1.7;margin:0 0 20px;color:var(--learning-ink)}
 #content .capitalism .cp-economic-problems ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;list-style:none;padding:0;margin:0}
-#content .capitalism .cp-economic-problems li{display:flex;align-items:center;gap:14px;min-width:0;padding:16px 12px;background:#f2f5ec;border-radius:9px}
+#content .capitalism .cp-economic-problems li{display:flex;align-items:center;gap:14px;min-width:0;padding:16px 12px;background:var(--learning-subtle);border-radius:9px}
 #content .capitalism .cp-problem-art{display:block;width:100px;max-width:35%;flex:none}
 #content .capitalism .cp-problem-art svg{display:block;width:100%;height:auto}
-#content .capitalism .cp-economic-problems small{font-size:11px;color:#667b58}
+#content .capitalism .cp-economic-problems small{font-size:11px;color:var(--learning-muted)}
 #content .capitalism .cp-economic-problems h4{font-size:20px;line-height:1.5;margin:4px 0 0}
-#content .capitalism .cp-economic-problems h4>span{display:block;font-size:14px;font-weight:500;color:#465b46}
-#content .capitalism .cp-problem-bridge{border-top:1px solid #dfe6d8;padding-top:18px;margin:20px 0 0;font-size:14px;line-height:1.75;color:#465548}
+#content .capitalism .cp-economic-problems h4>span{display:block;font-size:14px;font-weight:500;color:var(--learning-brand)}
+#content .capitalism .cp-problem-bridge{border-top:1px solid var(--learning-line);padding-top:18px;margin:20px 0 0;font-size:14px;line-height:1.75;color:var(--learning-ink)}
 #content .capitalism .cp-failure-comparison{padding:6px 20px 24px}
 #content .capitalism .cp-failure-comparison>header{margin:8px 0 18px}
 #content .capitalism .cp-failure-comparison h3{font-size:22px;margin:0 0 8px}
-#content .capitalism .cp-failure-comparison>header>p:last-child{font-size:14px;margin:0;color:#5b6e54;line-height:1.7}
+#content .capitalism .cp-failure-comparison>header>p:last-child{font-size:14px;margin:0;color:var(--learning-ink);line-height:1.7}
 #content .capitalism .cp-failure-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-#content .capitalism .cp-failure-pair>article{padding:20px;border:1px solid #cad9be;background:#f1f6eb;border-radius:12px;display:flex;flex-direction:column;min-width:0}
-#content .capitalism .cp-failure-pair>article:last-child{background:#faf4e7;border-color:#e2d3b6}
+#content .capitalism .cp-failure-pair>article{padding:20px;border:1px solid var(--learning-line);background:var(--learning-subtle);border-radius:12px;display:flex;flex-direction:column;min-width:0}
+#content .capitalism .cp-failure-pair>article:last-child{background:var(--learning-subtle);border-color:var(--learning-line)}
 #content .capitalism .cp-failure-pair article>header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
 #content .capitalism .cp-failure-symbol{display:block;width:100px;max-width:35%;flex:none}
 #content .capitalism .cp-failure-symbol svg{display:block;width:100%;height:auto}
-#content .capitalism .cp-failure-pair header p{margin:0 0 4px;font-size:12px;color:#637258}
+#content .capitalism .cp-failure-pair header p{margin:0 0 4px;font-size:12px;color:var(--learning-ink)}
 #content .capitalism .cp-failure-pair h4{font-size:24px;margin:0}
-#content .capitalism .cp-failure-meaning{font-size:16px;line-height:1.75;background:#fff;padding:16px;border-radius:8px;margin:0 0 12px;flex:1}
+#content .capitalism .cp-failure-meaning{font-size:16px;line-height:1.75;background:none;padding:16px;border-radius:8px;margin:0 0 12px;flex:1}
 #content .capitalism .cp-failure-response{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding-top:2px}
-#content .capitalism .cp-failure-response>span:first-child{font-size:23px;color:#6f895a}
-#content .capitalism .cp-failure-response small{font-size:11px;color:#637258}
-#content .capitalism .cp-failure-response strong{font-size:17px;color:#345939}
-#content .capitalism .cp-failure-pair>article:last-child .cp-failure-response strong{color:#795b30}
-#content .capitalism .cp-era-connection{font-size:13px;background:#fffdf8;border:1px solid #d8e2cd;border-radius:6px;padding:9px 12px;margin-top:5px;width:100%;color:#3f583e;line-height:1.6}
-#content .capitalism .cp-failure-pair>article:last-child .cp-era-connection{border-color:#e5d9c2;color:#715d3f}
+#content .capitalism .cp-failure-response>span:first-child{font-size:23px;color:var(--learning-ink)}
+#content .capitalism .cp-failure-response small{font-size:11px;color:var(--learning-muted)}
+#content .capitalism .cp-failure-response strong{font-size:17px;color:var(--learning-brand)}
+#content .capitalism .cp-failure-pair>article:last-child .cp-failure-response strong{color:var(--learning-brand)}
+#content .capitalism .cp-era-connection{font-size:13px;background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:6px;padding:9px 12px;margin-top:5px;width:100%;color:var(--learning-ink);line-height:1.6}
+#content .capitalism .cp-failure-pair>article:last-child .cp-era-connection{border-color:var(--learning-line);color:var(--learning-ink)}
 @media(max-width:1024px){
- #content .capitalism .cp-era-detail{gap:24px;padding:22px;grid-template-columns:1fr 1fr}
- #content .capitalism [data-cp=era]{min-height:175px;padding:8px 6px 12px}
- #content .capitalism .cp-era-label strong{font-size:14px}
- #content .capitalism .cp-era-label small{font-size:10px}
- #content .capitalism .cp-era-number{width:24px;height:24px;font-size:10px}
- #content .capitalism .cp-detail-copy h2{font-size:24px}
- #content .capitalism .cp-detail-copy>p:not(.cp-eyebrow,.cp-small){font-size:15px}
- #content .capitalism .cp-systems-grid{gap:18px}
- #content .capitalism .cp-systems-grid>figure{padding:18px}
- #content .capitalism .cp-mixed{padding:24px}
+#content .capitalism .cp-era-detail{gap:24px;padding:22px;grid-template-columns:1fr 1fr}
+#content .capitalism [data-cp=era]{min-height:175px;padding:8px 6px 12px}
+#content .capitalism .cp-era-label strong{font-size:14px}
+#content .capitalism .cp-era-label small{font-size:10px}
+#content .capitalism .cp-era-number{width:24px;height:24px;font-size:10px}
+#content .capitalism .cp-detail-copy h2{font-size:24px}
+#content .capitalism .cp-detail-copy>p:not(.cp-eyebrow,.cp-small){font-size:15px}
+#content .capitalism .cp-systems-grid{gap:18px}
+#content .capitalism .cp-systems-grid>figure{padding:18px}
+#content .capitalism .cp-mixed{padding:24px}
 }
 @media(max-width:700px){
- #content .capitalism .cp-definition{padding:20px 15px;margin:2px 0 26px;border-left-width:4px}
- #content .capitalism .cp-definition h2{font-size:20px;margin-bottom:12px}
- #content .capitalism .cp-definition-text{font-size:16px;line-height:1.75;margin-bottom:18px}
- #content .capitalism .cp-definition h3{font-size:11px}
- #content .capitalism .cp-keywords{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
- #content .capitalism .cp-keywords>li{padding:11px 8px;gap:6px;font-size:12px;min-height:44px;word-break:keep-all}
- #content .capitalism .cp-keywords>li>span{font-size:10px}
- #content .capitalism .cp-economic-problems{padding:20px 15px;margin-bottom:24px}
- #content .capitalism .cp-economic-problems h3{font-size:20px}
- #content .capitalism .cp-economic-problems header>p:last-child{font-size:14px;margin-bottom:16px}
- #content .capitalism .cp-economic-problems ol{grid-template-columns:1fr;gap:10px}
- #content .capitalism .cp-economic-problems li{padding:13px 12px;gap:14px}
- #content .capitalism .cp-problem-art{width:85px}
- #content .capitalism .cp-economic-problems h4{font-size:19px}
- #content .capitalism .cp-problem-bridge{font-size:14px;padding-top:16px;margin-top:16px}
- #content .capitalism .cp-failure-comparison{padding:6px 13px 18px}
- #content .capitalism .cp-failure-comparison h3{font-size:20px}
- #content .capitalism .cp-failure-pair{grid-template-columns:1fr;gap:16px}
- #content .capitalism .cp-failure-pair>article{padding:18px 14px}
- #content .capitalism .cp-failure-pair article>header{gap:12px;margin-bottom:14px}
- #content .capitalism .cp-failure-symbol{width:85px}
- #content .capitalism .cp-failure-meaning{font-size:15px;padding:14px}
- #content .capitalism .cp-section-heading{display:block;margin-bottom:18px}
- #content .capitalism .cp-section-heading h2{font-size:21px}
- #content .capitalism .cp-section-heading>span{display:block;font-size:11px;margin-top:9px}
- #content .capitalism .cp-timeline{display:block;border-left:2px solid #d4e0c8;margin-left:12px;padding-left:16px}
- #content .capitalism .cp-timeline>li{display:block;margin-bottom:16px}
- #content .capitalism [data-cp=era]{display:flex;flex-direction:row;gap:10px;align-items:center;padding:10px 9px;min-height:110px;border:1px solid #e3e7d9;border-radius:11px;background:#fffdfa}
- #content .capitalism [data-cp=era][aria-pressed=true]{border:2px solid #7c9b6c;padding:9px 12px;background:#edf3e3;min-height:64px}
- #content .capitalism [data-cp=era][aria-pressed=true]>.cp-era-art{display:none}
- #content .capitalism [data-cp=era]>.cp-era-art{width:43%;flex:none}
- #content .capitalism .cp-era-label{gap:7px;flex:1;flex-wrap:wrap}
- #content .capitalism .cp-era-label strong{font-size:15px}
- #content .capitalism .cp-era-label small{font-size:10px;line-height:1.5}
- #content .capitalism .cp-era-number{position:absolute;left:-36px;top:calc(50% - 12px);background:#f7f4ec;width:24px;height:24px;border:1px solid #bccdab;font-size:10px}
- #content .capitalism .cp-era-label:has(.cp-era-number){position:static}
- #content .capitalism [data-cp=era] .cp-era-number{left:-30px;top:calc(50% - 12px)}
- #content .capitalism .cp-era-read{font-size:11px}
- #content .capitalism .cp-era-detail{display:flex;flex-direction:column;align-items:stretch;margin:10px 0 20px;padding:18px 13px;gap:20px;border-radius:12px}
- #content .capitalism .cp-detail-visual>.cp-era-art{max-height:210px}
- #content .capitalism .cp-cause-flow{gap:4px;margin:10px 0 0;flex-wrap:nowrap}
- #content .capitalism .cp-cause-flow>span{padding:6px 5px;font-size:10px;min-width:0;flex:1}
- #content .capitalism .cp-cause-flow>b{font-size:11px;flex:none}
- #content .capitalism .cp-detail-copy h2{font-size:22px;margin-bottom:16px}
- #content .capitalism .cp-detail-steps{gap:3px;padding:4px}
- #content .capitalism .cp-detail-steps .btn{font-size:10px;padding:8px 3px;min-height:68px}
- #content .capitalism .cp-detail-copy h3{font-size:17px}
- #content .capitalism .cp-detail-copy>p:not(.cp-eyebrow,.cp-small){font-size:15px;line-height:1.75}
- #content .capitalism .cp-detail-actions,#content .capitalism .cp-page-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
- #content .capitalism :is(.cp-detail-actions,.cp-page-actions)>.btn{min-width:0;width:100%;font-size:12px;padding:10px 7px}
- #content .capitalism :is(.cp-detail-actions,.cp-page-actions)>.btn:only-child{grid-column:1/-1}
- #content .capitalism .cp-overview :is(th,td){padding:10px 7px;font-size:12px}
- #content .capitalism .cp-history-link{align-items:flex-start;flex-direction:column;gap:14px;padding:18px 4px}
- #content .capitalism .cp-history-link .btn{width:100%}
- #content .capitalism .cp-systems-grid{grid-template-columns:1fr;gap:24px}
- #content .capitalism .cp-systems-grid>figure{padding:16px 13px}
- #content .capitalism .cp-systems-grid h3{font-size:20px}
- #content .capitalism .cp-systems-grid figcaption{padding-top:16px}
- #content .capitalism .cp-systems-grid figcaption>strong{font-size:15px}
- #content .capitalism .cp-systems-grid dl>div{grid-template-columns:70px minmax(0,1fr);gap:10px;font-size:14px}
- #content .capitalism .cp-mixed{padding:20px 13px;border-radius:13px;margin:24px 0}
- #content .capitalism .cp-mixed h2{font-size:22px;line-height:1.5}
- #content .capitalism .cp-mixed-diagram{grid-template-columns:1.4fr 17px 1fr;gap:8px}
- #content .capitalism :is(.cp-market-foundation,.cp-government-role){padding:12px 7px;border-radius:9px}
- #content .capitalism :is(.cp-market-foundation,.cp-government-role)>strong{font-size:13px}
- #content .capitalism :is(.cp-market-foundation,.cp-government-role)>span{font-size:10px}
- #content .capitalism .cp-mixed-plus{font-size:23px}
- #content .capitalism .cp-mixed-result h3{font-size:22px}
- #content .capitalism .cp-mixed-result p{font-size:14px}
- #content .capitalism .cp-perspectives>div{grid-template-columns:1fr;gap:16px}
- #content .capitalism .cp-perspectives>h3{font-size:18px}
- #content .capitalism .cp-system-check{padding:20px 14px}
- #content .capitalism .cp-system-check h3{font-size:20px}
- #content .capitalism .cp-check-prompt{font-size:17px}
- #content .capitalism .cp-system-choices{gap:6px}
- #content .capitalism .cp-system-choices .btn{font-size:12px;padding:9px 5px}
- #content .capitalism .cp-check-feedback{padding:15px}
- #content .capitalism .cp-order-slots>li{font-size:12px;padding:10px 7px;gap:6px;min-height:60px}
- #content .capitalism .cp-order-choices .btn{font-size:13px;padding:10px 7px}
- #content .capitalism .cp-missed{padding:20px 14px}
+#content .capitalism .cp-definition{padding:20px 15px;margin:2px 0 26px;border-left-width:4px}
+#content .capitalism .cp-definition h2{font-size:20px;margin-bottom:12px}
+#content .capitalism .cp-definition-text{font-size:16px;line-height:1.75;margin-bottom:18px}
+#content .capitalism .cp-definition h3{font-size:11px}
+#content .capitalism .cp-keywords{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#content .capitalism .cp-keywords>li{padding:11px 8px;gap:6px;font-size:12px;min-height:44px;word-break:keep-all}
+#content .capitalism .cp-keywords>li>span{font-size:10px}
+#content .capitalism .cp-economic-problems{padding:20px 15px;margin-bottom:24px}
+#content .capitalism .cp-economic-problems h3{font-size:20px}
+#content .capitalism .cp-economic-problems header>p:last-child{font-size:14px;margin-bottom:16px}
+#content .capitalism .cp-economic-problems ol{grid-template-columns:1fr;gap:10px}
+#content .capitalism .cp-economic-problems li{padding:13px 12px;gap:14px}
+#content .capitalism .cp-problem-art{width:85px}
+#content .capitalism .cp-economic-problems h4{font-size:19px}
+#content .capitalism .cp-problem-bridge{font-size:14px;padding-top:16px;margin-top:16px}
+#content .capitalism .cp-failure-comparison{padding:6px 13px 18px}
+#content .capitalism .cp-failure-comparison h3{font-size:20px}
+#content .capitalism .cp-failure-pair{grid-template-columns:1fr;gap:16px}
+#content .capitalism .cp-failure-pair>article{padding:18px 14px}
+#content .capitalism .cp-failure-pair article>header{gap:12px;margin-bottom:14px}
+#content .capitalism .cp-failure-symbol{width:85px}
+#content .capitalism .cp-failure-meaning{font-size:15px;padding:14px}
+#content .capitalism .cp-section-heading{display:block;margin-bottom:18px}
+#content .capitalism .cp-section-heading h2{font-size:21px}
+#content .capitalism .cp-section-heading>span{display:block;font-size:11px;margin-top:9px}
+#content .capitalism .cp-timeline{display:block;border-left:2px solid var(--learning-line);margin-left:12px;padding-left:16px}
+#content .capitalism .cp-timeline>li{display:block;margin-bottom:16px}
+#content .capitalism [data-cp=era]{display:flex;flex-direction:row;gap:10px;align-items:center;padding:10px 9px;min-height:110px;border:1px solid var(--learning-line);border-radius:11px;background:var(--learning-surface)}
+#content .capitalism [data-cp=era][aria-pressed=true]{border:2px solid var(--learning-brand);padding:9px 12px;background:var(--learning-selected);min-height:64px}
+#content .capitalism [data-cp=era][aria-pressed=true]>.cp-era-art{display:none}
+#content .capitalism [data-cp=era]>.cp-era-art{width:43%;flex:none}
+#content .capitalism .cp-era-label{gap:7px;flex:1;flex-wrap:wrap}
+#content .capitalism .cp-era-label strong{font-size:15px}
+#content .capitalism .cp-era-label small{font-size:10px;line-height:1.5}
+#content .capitalism .cp-era-number{position:absolute;left:-36px;top:calc(50% - 12px);background:var(--learning-subtle);width:24px;height:24px;border:1px solid var(--learning-line);font-size:10px}
+#content .capitalism .cp-era-label:has(.cp-era-number){position:static}
+#content .capitalism [data-cp=era] .cp-era-number{left:-30px;top:calc(50% - 12px)}
+#content .capitalism .cp-era-read{font-size:11px}
+#content .capitalism .cp-era-detail{display:flex;flex-direction:column;align-items:stretch;margin:10px 0 20px;padding:18px 13px;gap:20px;border-radius:12px}
+#content .capitalism .cp-detail-visual>.cp-era-art{max-height:210px}
+#content .capitalism .cp-cause-flow{gap:4px;margin:10px 0 0;flex-wrap:nowrap}
+#content .capitalism .cp-cause-flow>span{padding:6px 5px;font-size:10px;min-width:0;flex:1}
+#content .capitalism .cp-cause-flow>b{font-size:11px;flex:none}
+#content .capitalism .cp-detail-copy h2{font-size:22px;margin-bottom:16px}
+#content .capitalism .cp-detail-steps{gap:3px;padding:4px}
+#content .capitalism .cp-detail-steps .btn{font-size:10px;padding:8px 3px;min-height:68px}
+#content .capitalism .cp-detail-copy h3{font-size:17px}
+#content .capitalism .cp-detail-copy>p:not(.cp-eyebrow,.cp-small){font-size:15px;line-height:1.75}
+#content .capitalism .cp-detail-actions,#content .capitalism .cp-page-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#content .capitalism :is(.cp-detail-actions,.cp-page-actions)>.btn{min-width:0;width:100%;font-size:12px;padding:10px 7px}
+#content .capitalism :is(.cp-detail-actions,.cp-page-actions)>.btn:only-child{grid-column:1/-1}
+#content .capitalism .cp-overview :is(th,td){padding:10px 7px;font-size:12px}
+#content .capitalism .cp-history-link{align-items:flex-start;flex-direction:column;gap:14px;padding:18px 4px}
+#content .capitalism .cp-history-link .btn{width:100%}
+#content .capitalism .cp-systems-grid{grid-template-columns:1fr;gap:24px}
+#content .capitalism .cp-systems-grid>figure{padding:16px 13px}
+#content .capitalism .cp-systems-grid h3{font-size:20px}
+#content .capitalism .cp-systems-grid figcaption{padding-top:16px}
+#content .capitalism .cp-systems-grid figcaption>strong{font-size:15px}
+#content .capitalism .cp-systems-grid dl>div{grid-template-columns:70px minmax(0,1fr);gap:10px;font-size:14px}
+#content .capitalism .cp-mixed{padding:20px 13px;border-radius:13px;margin:24px 0}
+#content .capitalism .cp-mixed h2{font-size:22px;line-height:1.5}
+#content .capitalism .cp-mixed-diagram{grid-template-columns:1.4fr 17px 1fr;gap:8px}
+#content .capitalism :is(.cp-market-foundation,.cp-government-role){padding:12px 7px;border-radius:9px}
+#content .capitalism :is(.cp-market-foundation,.cp-government-role)>strong{font-size:13px}
+#content .capitalism :is(.cp-market-foundation,.cp-government-role)>span{font-size:10px}
+#content .capitalism .cp-mixed-plus{font-size:23px}
+#content .capitalism .cp-mixed-result h3{font-size:22px}
+#content .capitalism .cp-mixed-result p{font-size:14px}
+#content .capitalism .cp-perspectives>div{grid-template-columns:1fr;gap:16px}
+#content .capitalism .cp-perspectives>h3{font-size:18px}
+#content .capitalism .cp-system-check{padding:20px 14px}
+#content .capitalism .cp-system-check h3{font-size:20px}
+#content .capitalism .cp-check-prompt{font-size:17px}
+#content .capitalism .cp-system-choices{gap:6px}
+#content .capitalism .cp-system-choices .btn{font-size:12px;padding:9px 5px}
+#content .capitalism .cp-check-feedback{padding:15px}
+#content .capitalism .cp-order-slots>li{font-size:12px;padding:10px 7px;gap:6px;min-height:60px}
+#content .capitalism .cp-order-choices .btn{font-size:13px;padding:10px 7px}
+#content .capitalism .cp-missed{padding:20px 14px}
 }
-@media(prefers-reduced-motion:no-preference){#content .capitalism .cp-era-detail{animation:cp-reveal .15s ease-out}}
-@keyframes cp-reveal{from{opacity:.6;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:no-preference){
+#content .capitalism .cp-era-detail{animation:cp-reveal .15s ease-out}
+}
+@keyframes cp-reveal{
+from{opacity:.6;transform:translateY(4px)}
+to{opacity:1;transform:none}
+}
