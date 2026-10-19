@@ -63,6 +63,7 @@
   }
   const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function illustration(type) {
+    if(type==='capitalism')return window.GalpiCapitalismArt.era(0).replace('class="cp-era-art"','class="learning-illustration"');
     if(type==='trade')return window.GalpiLearningArt.country(1,true).replace('class="tc-scene tc-harbor"','class="learning-illustration"');
     const sceneKind = {cost:'tteokbokki',finance:'wallet',intervention:'bank',ripple:'shirt',history:'factory'}[type];
     if (sceneKind) return window.GalpiLearningArt.scene(sceneKind).replace('class="learning-scene-art hl-icon"','class="learning-illustration"');
@@ -108,12 +109,26 @@
   function evidence(rows, format) {
     return `<div class="studio-evidence-options">${rows.map((r,i)=>`<article><header>${window.GalpiLearningArt.scene(['bag','wallet','certificate'][i%3])}<strong>${escape(r.name)}</strong></header><dl><div><dt>편익</dt><dd>${format(r.benefit)}</dd></div><div><dt>가격</dt><dd>${format(r.cost)}</dd></div></dl></article>`).join('')}</div>`;
   }
+  let previousScreen, previousQuestion;
+  function startScreen() {
+    window.scrollTo({top:0,left:0,behavior:'instant'});
+  }
   function mount(root) {
+    // Only a new main learning menu resets the reading position. Inline answers stay put.
+    const activeTab=root.querySelector('[role=tablist] [aria-selected=true]');
+    const screen=activeTab?.id;
+    const question=root.querySelector('.learning-question-card');
+    const questionKey=question?.querySelector('.learning-question-meta')?.textContent.trim();
+    if(screen&&previousScreen&&screen!==previousScreen)startScreen();
+    else if(question&&questionKey!==previousQuestion)question.scrollIntoView({block:'start',behavior:'instant'});
+    previousScreen=screen;
+    previousQuestion=questionKey;
+
     root.querySelectorAll('[role=tablist]').forEach(list=>{
       const active=list.querySelector('[aria-selected=true]');
       if(active&&list.scrollWidth>list.clientWidth)list.scrollLeft=Math.max(0,active.offsetLeft-list.offsetLeft-list.clientWidth/2+active.clientWidth/2);
     });
     watchSteps(root);
   }
-  window.GalpiLabUI = { icon, country, head, navigation, footer, watchSteps, illustration, header, choice, question, feedback, explanation, summary, result, stepNav, mount, brief, bars, evidence };
+  window.GalpiLabUI = { icon, country, head, navigation, footer, watchSteps, illustration, header, choice, question, feedback, explanation, summary, result, stepNav, mount, startScreen, brief, bars, evidence };
 })();

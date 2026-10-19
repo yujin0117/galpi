@@ -1,14 +1,9 @@
 /* Capitalism: original editorial timeline and decision-process diagrams. */
 #content .capitalism{--cp-sage:#edf2e4;--cp-gold:#bc985a;--cp-line:#dce3d3;--cp-muted:#5a6f59}
-#content .capitalism .cp-header-art{width:260px;max-width:100%;justify-self:end}
 #content .capitalism .cp-era-art{display:block;width:100%;height:auto}
 #content .capitalism .cp-eyebrow{font-size:12px;font-weight:700;letter-spacing:.01em;color:#60724e;margin:0 0 8px}
 #content .capitalism .cp-small,#content .capitalism .cp-source{font-size:12px;line-height:1.7;color:#61725d;margin:16px 0}
 #content .capitalism .cp-source{margin-top:30px}
-#content .capitalism .cp-intro{padding:12px 4px 24px;border-bottom:1px solid var(--cp-line);margin-bottom:28px}
-#content .capitalism .cp-intro>p{font-size:16px;line-height:1.7;margin:0 0 12px;max-width:75ch}
-#content .capitalism .cp-keywords,#content .capitalism .cp-quiz-topics{display:flex;gap:8px;flex-wrap:wrap}
-#content .capitalism .cp-keywords>span,#content .capitalism .cp-quiz-topics>span{font-size:12px;color:#4e6b49;background:#eaf0df;border-radius:5px;padding:6px 10px}
 #content .capitalism .cp-section-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 0 24px}
 #content .capitalism .cp-section-heading h2{font-size:25px;margin:0;line-height:1.4;letter-spacing:-.03em}
 #content .capitalism .cp-section-heading>span{font-size:12px;white-space:nowrap;color:var(--cp-muted)}
@@ -50,19 +45,10 @@
 #content .capitalism .cp-overview :is(th,td){padding:13px 10px;border-bottom:1px solid #e1e6d7;text-align:left}
 #content .capitalism .cp-overview caption{text-align:left;color:#61725b;font-size:12px;padding-bottom:10px}
 #content .capitalism .cp-overview thead{background:#f0f4e7}
-#content .capitalism .cp-failure-comparison{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0 20px 20px}
-#content .capitalism .cp-failure-comparison>section{padding:16px 0;border-top:3px solid #9fb68c}
-#content .capitalism .cp-failure-comparison>section:last-child{border-top-color:#bf9e65}
-#content .capitalism .cp-failure-comparison h3{font-size:17px;margin:0}
-#content .capitalism .cp-failure-comparison p{font-size:14px;line-height:1.7;margin:10px 0}
-#content .capitalism .cp-failure-comparison strong{font-size:13px;color:#586e50}
 #content .capitalism .cp-history-link{display:flex;align-items:center;justify-content:space-between;gap:24px;border-block:1px solid var(--cp-line);padding:20px 4px;margin:28px 0}
 #content .capitalism .cp-history-link strong{font-size:14px}
 #content .capitalism .cp-history-link p{font-size:13px;line-height:1.7;margin:8px 0 0;color:#586b51}
 #content .capitalism .cp-history-link .btn{flex:none}
-#content .capitalism .cp-leading{font-size:16px;line-height:1.6}
-#content .capitalism .cp-basic-problems{display:flex;flex-wrap:wrap;gap:8px 20px;padding:12px 0 20px;font-size:13px;color:#596f51}
-#content .capitalism .cp-basic-problems>span:before{content:'•';margin-right:7px;color:#9aaf85}
 #content .capitalism .cp-systems-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
 #content .capitalism .cp-systems-grid>figure{margin:0;min-width:0;background:white;border-radius:14px;padding:20px;border:1px solid #e2e6d9}
 #content .capitalism .cp-systems-grid>figure>header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
@@ -125,6 +111,47 @@
 #content .capitalism .cp-missed details{border:0;border-bottom:1px solid #dfe6d6;padding:10px 0;border-radius:0}
 #content .capitalism .cp-missed summary{font-size:15px;cursor:pointer;min-height:44px;padding:10px 0}
 #content .capitalism .cp-missed p{font-size:14px;line-height:1.7}
+#content .capitalism .cp-quiz-topics{display:flex;gap:8px;flex-wrap:wrap}
+#content .capitalism .cp-quiz-topics>span{font-size:12px;color:#4e6b49;background:#eaf0df;border-radius:5px;padding:6px 10px}
+#content .capitalism .cp-definition{padding:26px 28px;background:#fff;border:1px solid #dce5d4;border-left:5px solid #35644b;border-radius:4px 14px 14px 4px;margin:2px 0 32px}
+#content .capitalism .cp-definition h2{font-size:23px;margin:0 0 14px}
+#content .capitalism .cp-definition-text{font-size:18px;line-height:1.75;max-width:68ch;margin:0 0 20px}
+#content .capitalism .cp-definition-text strong{color:#1b5638;font-weight:700}
+#content .capitalism .cp-definition h3{font-size:12px;font-weight:500;color:#62715f;margin:0 0 10px}
+#content .capitalism .cp-keywords{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;list-style:none;padding:0;margin:0}
+#content .capitalism .cp-keywords>li{display:flex;align-items:center;gap:9px;min-width:0;background:#f0f4e9;padding:12px;font-size:14px;line-height:1.5;border-radius:7px;color:#344d39}
+#content .capitalism .cp-keywords>li>span{font-size:11px;color:#6f855e;flex:none;font-variant-numeric:tabular-nums}
+#content .capitalism .cp-economic-problems{background:#fff;border:1px solid #dce5d4;border-radius:14px;padding:26px;margin-bottom:30px}
+#content .capitalism .cp-economic-problems h3{font-size:22px;margin:0 0 10px}
+#content .capitalism .cp-economic-problems header>p:last-child{font-size:15px;line-height:1.7;margin:0 0 20px;color:#455448}
+#content .capitalism .cp-economic-problems ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;list-style:none;padding:0;margin:0}
+#content .capitalism .cp-economic-problems li{display:flex;align-items:center;gap:14px;min-width:0;padding:16px 12px;background:#f2f5ec;border-radius:9px}
+#content .capitalism .cp-problem-art{display:block;width:100px;max-width:35%;flex:none}
+#content .capitalism .cp-problem-art svg{display:block;width:100%;height:auto}
+#content .capitalism .cp-economic-problems small{font-size:11px;color:#667b58}
+#content .capitalism .cp-economic-problems h4{font-size:20px;line-height:1.5;margin:4px 0 0}
+#content .capitalism .cp-economic-problems h4>span{display:block;font-size:14px;font-weight:500;color:#465b46}
+#content .capitalism .cp-problem-bridge{border-top:1px solid #dfe6d8;padding-top:18px;margin:20px 0 0;font-size:14px;line-height:1.75;color:#465548}
+#content .capitalism .cp-failure-comparison{padding:6px 20px 24px}
+#content .capitalism .cp-failure-comparison>header{margin:8px 0 18px}
+#content .capitalism .cp-failure-comparison h3{font-size:22px;margin:0 0 8px}
+#content .capitalism .cp-failure-comparison>header>p:last-child{font-size:14px;margin:0;color:#5b6e54;line-height:1.7}
+#content .capitalism .cp-failure-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+#content .capitalism .cp-failure-pair>article{padding:20px;border:1px solid #cad9be;background:#f1f6eb;border-radius:12px;display:flex;flex-direction:column;min-width:0}
+#content .capitalism .cp-failure-pair>article:last-child{background:#faf4e7;border-color:#e2d3b6}
+#content .capitalism .cp-failure-pair article>header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+#content .capitalism .cp-failure-symbol{display:block;width:100px;max-width:35%;flex:none}
+#content .capitalism .cp-failure-symbol svg{display:block;width:100%;height:auto}
+#content .capitalism .cp-failure-pair header p{margin:0 0 4px;font-size:12px;color:#637258}
+#content .capitalism .cp-failure-pair h4{font-size:24px;margin:0}
+#content .capitalism .cp-failure-meaning{font-size:16px;line-height:1.75;background:#fff;padding:16px;border-radius:8px;margin:0 0 12px;flex:1}
+#content .capitalism .cp-failure-response{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding-top:2px}
+#content .capitalism .cp-failure-response>span:first-child{font-size:23px;color:#6f895a}
+#content .capitalism .cp-failure-response small{font-size:11px;color:#637258}
+#content .capitalism .cp-failure-response strong{font-size:17px;color:#345939}
+#content .capitalism .cp-failure-pair>article:last-child .cp-failure-response strong{color:#795b30}
+#content .capitalism .cp-era-connection{font-size:13px;background:#fffdf8;border:1px solid #d8e2cd;border-radius:6px;padding:9px 12px;margin-top:5px;width:100%;color:#3f583e;line-height:1.6}
+#content .capitalism .cp-failure-pair>article:last-child .cp-era-connection{border-color:#e5d9c2;color:#715d3f}
 @media(max-width:1024px){
  #content .capitalism .cp-era-detail{gap:24px;padding:22px;grid-template-columns:1fr 1fr}
  #content .capitalism [data-cp=era]{min-height:175px;padding:8px 6px 12px}
@@ -138,11 +165,28 @@
  #content .capitalism .cp-mixed{padding:24px}
 }
 @media(max-width:700px){
- #content .capitalism .cp-header-art{display:none}
- #content .capitalism .cp-intro{padding:0 0 18px;margin-bottom:22px}
- #content .capitalism .cp-intro>p{font-size:14px;line-height:1.7}
- #content .capitalism .cp-keywords{gap:5px}
- #content .capitalism .cp-keywords>span{padding:5px 7px;font-size:10px}
+ #content .capitalism .cp-definition{padding:20px 15px;margin:2px 0 26px;border-left-width:4px}
+ #content .capitalism .cp-definition h2{font-size:20px;margin-bottom:12px}
+ #content .capitalism .cp-definition-text{font-size:16px;line-height:1.75;margin-bottom:18px}
+ #content .capitalism .cp-definition h3{font-size:11px}
+ #content .capitalism .cp-keywords{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #content .capitalism .cp-keywords>li{padding:11px 8px;gap:6px;font-size:12px;min-height:44px;word-break:keep-all}
+ #content .capitalism .cp-keywords>li>span{font-size:10px}
+ #content .capitalism .cp-economic-problems{padding:20px 15px;margin-bottom:24px}
+ #content .capitalism .cp-economic-problems h3{font-size:20px}
+ #content .capitalism .cp-economic-problems header>p:last-child{font-size:14px;margin-bottom:16px}
+ #content .capitalism .cp-economic-problems ol{grid-template-columns:1fr;gap:10px}
+ #content .capitalism .cp-economic-problems li{padding:13px 12px;gap:14px}
+ #content .capitalism .cp-problem-art{width:85px}
+ #content .capitalism .cp-economic-problems h4{font-size:19px}
+ #content .capitalism .cp-problem-bridge{font-size:14px;padding-top:16px;margin-top:16px}
+ #content .capitalism .cp-failure-comparison{padding:6px 13px 18px}
+ #content .capitalism .cp-failure-comparison h3{font-size:20px}
+ #content .capitalism .cp-failure-pair{grid-template-columns:1fr;gap:16px}
+ #content .capitalism .cp-failure-pair>article{padding:18px 14px}
+ #content .capitalism .cp-failure-pair article>header{gap:12px;margin-bottom:14px}
+ #content .capitalism .cp-failure-symbol{width:85px}
+ #content .capitalism .cp-failure-meaning{font-size:15px;padding:14px}
  #content .capitalism .cp-section-heading{display:block;margin-bottom:18px}
  #content .capitalism .cp-section-heading h2{font-size:21px}
  #content .capitalism .cp-section-heading>span{display:block;font-size:11px;margin-top:9px}
@@ -172,13 +216,10 @@
  #content .capitalism .cp-detail-actions,#content .capitalism .cp-page-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
  #content .capitalism :is(.cp-detail-actions,.cp-page-actions)>.btn{min-width:0;width:100%;font-size:12px;padding:10px 7px}
  #content .capitalism :is(.cp-detail-actions,.cp-page-actions)>.btn:only-child{grid-column:1/-1}
- #content .capitalism .cp-failure-comparison{grid-template-columns:1fr;gap:12px;padding:0 16px 18px}
  #content .capitalism .cp-overview :is(th,td){padding:10px 7px;font-size:12px}
  #content .capitalism .cp-history-link{align-items:flex-start;flex-direction:column;gap:14px;padding:18px 4px}
  #content .capitalism .cp-history-link .btn{width:100%}
  #content .capitalism .cp-systems-grid{grid-template-columns:1fr;gap:24px}
- #content .capitalism .cp-leading{font-size:14px}
- #content .capitalism .cp-basic-problems{gap:8px;padding:0 0 20px;font-size:11px;flex-direction:column}
  #content .capitalism .cp-systems-grid>figure{padding:16px 13px}
  #content .capitalism .cp-systems-grid h3{font-size:20px}
  #content .capitalism .cp-systems-grid figcaption{padding-top:16px}

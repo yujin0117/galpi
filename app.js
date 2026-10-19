@@ -58,6 +58,7 @@ function renderBody(){
   const active=document.activeElement;
   const action=active?.dataset?.action, answer=active?.dataset?.answer;
   el.innerHTML=renderTab();
+  window.GalpiLabUI.mount(root);
   const next=answer!==undefined?el.querySelector(`[data-answer="${answer}"]`):action?el.querySelector(`[data-action="${action}"]`):null;
   if(next&&!next.disabled)next.focus({preventScroll:true});
   else if(action==='grade')el.querySelector('[data-action=nextQ]')?.focus({preventScroll:true});
