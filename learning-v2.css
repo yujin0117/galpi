@@ -56,7 +56,7 @@
 #content .learning-v2 .is-incorrect .learning-feedback-title h3{color:var(--learning-danger)}
 .learning-v2 .is-incorrect .learning-feedback-mark{color:var(--learning-danger);border-color:var(--learning-danger)}
 .learning-v2 .learning-answer-comparison{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;padding:16px 0}
-.learning-v2 .learning-answer-comparison>div{border-bottom:1px solid var(--learning-line);padding-bottom:12px}
+.learning-v2 .learning-answer-comparison>div{border-bottom:1px solid var(--learning-divider);padding-bottom:12px}
 .learning-v2 .learning-answer-comparison small{display:block;font-size:12px;color:var(--learning-muted);margin-bottom:5px}
 .learning-v2 .learning-answer-comparison strong{display:block;color:var(--learning-brand);font-size:14px;line-height:1.6;font-weight:600}
 .learning-v2 .learning-core-reason{font-size:14px;line-height:1.7;margin:4px 0 16px}
@@ -88,7 +88,7 @@
 .learning-v2 .learning-result-concepts .lab-icon{position:absolute;width:24px;height:24px;left:20px;top:21px;color:var(--learning-ink)}
 .learning-v2 .learning-result-concepts h3{font-size:16px;margin:0 0 8px}
 .learning-v2 .learning-result-concepts p{font-size:14px;line-height:1.6;margin:0}
-.learning-v2 .learning-result-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;border-top:1px solid var(--learning-line);padding-top:22px}
+.learning-v2 .learning-result-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;border-top:1px solid var(--learning-divider);padding-top:22px}
 #content .learning-v2 .learning-selection-summary{border:1px solid var(--learning-line);border-radius:10px;background:var(--learning-subtle);padding:0 15px;margin:0}
 #content .learning-v2 .learning-selection-summary summary{font-size:14px;min-height:44px;padding:12px 0;cursor:pointer;color:var(--learning-ink)}
 .learning-v2 .learning-selection-summary>div{padding-bottom:12px}
@@ -103,7 +103,7 @@
 #content .learning-v2 .learning-country-selected{outline:2px solid var(--learning-brand);outline-offset:-2px;background:var(--learning-selected)}
 #content .learning-v2 .tg-highlight{background:var(--learning-selected);color:var(--learning-brand);font-weight:700}
 #content .learning-v2 .tg-progress{font-size:13px;background:var(--learning-subtle);border:1px solid var(--learning-line);padding:12px}
-#content .learning-v2 .tg-question .learning-feedback{border-top:1px solid var(--learning-line);padding-top:16px;margin-top:18px}
+#content .learning-v2 .tg-question .learning-feedback{border-top:1px solid var(--learning-divider);padding-top:16px;margin-top:18px}
 #content .learning-v2 .tg-question .learning-feedback-title h3{font-size:16px}
 .learning-v2 .learning-inline-feedback{padding:12px 14px;border:1px solid var(--learning-line);background:var(--learning-subtle);border-radius:8px;font-size:14px;line-height:1.6}
 #content .learning-v2 .lab-eyebrow{font-size:12px;color:var(--learning-muted)}
@@ -216,7 +216,7 @@
 #content .learning-v2 .hl-tabs>button[aria-selected=true]>small{background:#ffffff25;color:var(--learning-surface)}
 #content .learning-v2 :is(.lab-tab-copy strong){font-size:14px;line-height:1.4;white-space:normal}
 #content .learning-v2 :is(.lab-tab-copy small,.lab-current,.lab-menu-heading,.hl-nav-heading,.learning-nav-heading){display:none}
-#content .learning-v2 :is(.lab-location,.hl-location){position:static;display:flex;gap:10px;align-items:center;padding:0 0 12px;margin:0 0 18px;border-bottom:1px solid var(--learning-line);background:none;font-size:13px}
+#content .learning-v2 :is(.lab-location,.hl-location){position:static;display:flex;gap:10px;align-items:center;padding:0 0 12px;margin:0 0 18px;border-bottom:1px solid var(--learning-divider);background:none;font-size:13px}
 #content .learning-v2 .lab-location-count{margin-left:auto;background:var(--learning-subtle);border-radius:5px;padding:4px 8px;white-space:nowrap}
 #content .learning-v2 .lab-menu-jump{display:none}
 #content .learning-v2 :is(#tl-panel,#il-panel,#fn-panel,#hl-panel){min-width:0}
@@ -423,7 +423,7 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 #content .learning-v2 .learning-choice{padding:11px;gap:9px;font-size:14px;min-height:52px}
 #content .learning-v2 .learning-choice:is(.active,.correct,.wrong){padding:10px}
 #content .learning-v2 .learning-choice-state{font-size:10px;max-width:40px;white-space:normal}
-#content .learning-v2 .learning-feedback-column{border:0;border-top:1px solid var(--learning-line);background:var(--learning-surface);padding:20px 15px}
+#content .learning-v2 .learning-feedback-column{border:0;border-top:1px solid var(--learning-divider);background:var(--learning-surface);padding:20px 15px}
 #content .learning-v2 .learning-feedback-column:has(.learning-waiting-feedback){display:none}
 #content .learning-v2 :is(.learning-question-actions,.learning-feedback-actions)>.btn{width:100%}
 #content .learning-v2 .learning-result{padding:22px 16px}
