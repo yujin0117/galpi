@@ -15,9 +15,9 @@
 #content .learning-v2 .chapter-pages::before{content:'';height:10px;width:1px;background:var(--learning-divider);align-self:center}
 #content .learning-v2 .chapter-note{font-size:11px;color:var(--learning-muted)}
 @media(max-width:700px){
- #content .learning-v2 .chapter-header{padding:0 0 11px 12px;margin-bottom:12px}
+ #content .learning-v2 .chapter-header{padding:0 0 9px 12px;margin-bottom:9px}
  #content .learning-v2 .chapter-header::before{height:16px;width:2px}
- #content .learning-v2 .chapter-context{font-size:11px;gap:6px;margin-bottom:8px;line-height:1.5}
+ #content .learning-v2 .chapter-context{font-size:11px;gap:6px;margin-bottom:6px;line-height:1.5}
  #content .learning-v2 .chapter-book-label{font-size:9px;letter-spacing:.05em}
  #content .learning-v2 .chapter-detail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;align-items:baseline}
  #content .learning-v2 .chapter-number{font-size:20px;grid-row:1/3}

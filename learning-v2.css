@@ -6,6 +6,10 @@
 #content .learning-v2 :is(button,a,input,select,textarea):focus-visible{outline:3px solid var(--learning-brand);outline-offset:3px}
 #content .learning-v2 .btn{border-radius:8px;min-height:44px;padding:10px 16px;font-size:14px;line-height:1.45}
 #content .learning-v2 .btn.primary{background:var(--learning-brand);border-color:var(--learning-brand);color:var(--learning-surface)}
+/* Optional related reading has a quieter role than the next learning action. */
+#content .learning-v2 .learning-related-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:7px 0;border:0;background:none;color:var(--learning-brand);font:inherit;font-size:14px;font-weight:600;text-align:left;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--learning-line)}
+#content .learning-v2 .learning-related-link:hover{text-decoration-color:currentColor}
+#content .learning-v2 .learning-related-link:focus-visible{outline:3px solid var(--learning-accent);outline-offset:3px;border-radius:3px}
 .learning-v2 .learning-breadcrumb{font-size:12px;color:var(--learning-muted)!important;margin:0 0 9px;letter-spacing:.01em}
 #content .learning-v2 .learning-route{margin:14px 0 18px;padding:0;border:0;background:none}
 #content .learning-v2 .learning-route summary{padding:8px 0;min-height:36px;font-size:12px;color:var(--learning-muted)}
@@ -397,12 +401,13 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 #content .learning-v2 .teacher-setting{min-height:36px;padding:5px 8px;font-size:11px}
 #content .learning-v2 .teacher-help{min-height:28px;width:28px}
 #content .learning-v2 .teacher-setting label span{font-size:11px}
-#content .learning-v2 .learning-header{display:block;padding:6px 0 14px}
+#content .learning-v2 .learning-header{display:block;padding:4px 0 10px}
 #content .learning-v2 .learning-header>.learning-illustration{display:none}
-#content .learning-v2 .learning-header h1,#content .history-lab.learning-v2 .learning-header h1{font-size:24px;margin:7px 0 4px}
+#content .learning-v2 .learning-header h1,#content .history-lab.learning-v2 .learning-header h1{font-size:24px;margin:5px 0 3px}
 #content .learning-v2 .learning-header>div>p{font-size:13px;margin-top:5px}
-#content .learning-v2 :is(.learning-step-nav,.lab-tabs,.hl-tabs){gap:4px;margin:0 0 14px;grid-template-columns:repeat(var(--studio-tabs,5),minmax(0,1fr))}
+#content .learning-v2 :is(.learning-step-nav,.lab-tabs,.hl-tabs){gap:4px;margin:0 0 12px;grid-template-columns:repeat(var(--studio-tabs,5),minmax(0,1fr))}
 #content .learning-v2 :is(.learning-step-nav,.lab-tabs,.hl-tabs)>button{flex-direction:column;justify-content:flex-start;text-align:center;min-height:78px;gap:6px;padding:8px 3px;border-radius:7px;font-size:10px;line-height:1.4}
+#content .learning-v2 :is(.learning-step-nav,.lab-tabs,.hl-tabs):has(>button:nth-child(3)):not(:has(>button:nth-child(5)))>button{min-height:64px;justify-content:center;gap:4px;padding-block:7px}
 #content .learning-v2 .lab-tab-copy{display:block!important}
 #content .learning-v2 .lab-tab-copy strong{display:block;font-size:10px;line-height:1.4}
 #content .learning-v2 :is(.learning-step-number,.lab-tab-number,.hl-tabs>button>small){width:23px;height:23px;font-size:10px}
