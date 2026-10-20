@@ -97,28 +97,28 @@ function buildQuestion(type,id){
   const base={id,type,facts:{price,bPrice,bNet,aNet,benefit,bBenefit},topic:'기회비용',correct:0,options:[],explain:'',prompt:''};
   const setNum=(correct,dists)=>{base.answerValue=correct;base.options=numericOptions(correct,dists);base.correct=base.options.indexOf(won(correct));};
   if(type==='explicit'){
-    base.topic='명시적 비용';base.prompt=`어느 학생이 영화표에 ${won(price)}을 지불하고 영화를 보기로 했습니다. 이 선택의 명시적 비용은 얼마일까요?`;
+    base.topic='명시적 비용';base.situation='지우는 주말에 영화를 보기로 하고 영화표를 샀어요. 영화표에 실제로 지불한 돈을 확인해 보세요.';base.prompt='지우가 영화를 선택할 때의 명시적 비용은 얼마일까요?';
     setNum(price,[price+aNet,aNet,benefit]);base.explain=`명시적 비용은 실제로 지출하는 금액입니다. 영화표 값 ${won(price)}이 명시적 비용입니다.`;
   }else if(type==='implicit'){
-    base.topic='암묵적 비용';base.prompt=`A를 선택하면 B를 포기해야 합니다. B의 편익은 ${won(bBenefit)}, 가격은 ${won(bPrice)}입니다. B를 포기하며 잃는 암묵적 비용은 얼마일까요?`;
-    setNum(bNet,[bPrice,bBenefit,price]);base.explain=`포기한 B의 가치 = 편익 ${won(bBenefit)} − 가격 ${won(bPrice)} = ${won(bNet)}입니다. 이것이 암묵적 비용입니다.`;
+    base.topic='암묵적 비용';base.situation='민서는 점심으로 떡볶이와 김밥 중 하나만 먹을 수 있어요. 떡볶이를 선택하면 김밥을 먹었을 때 얻을 이익을 포기하게 돼요.';base.prompt='민서가 떡볶이를 선택할 때의 암묵적 비용은 얼마일까요?';
+    setNum(bNet,[bPrice,bBenefit,price]);base.explain=`김밥을 먹었다면 얻었을 이익을 포기하므로, 김밥의 편익에서 김밥 가격을 뺀 ${won(bNet)}이 떡볶이 선택의 암묵적 비용이에요.`;
   }else if(type==='opportunity'){
-    base.topic='기회비용';base.prompt=`A를 선택하면 직접 ${won(price)}을 지출합니다. 포기한 B의 편익은 ${won(bBenefit)}, 가격은 ${won(bPrice)}입니다. A 선택의 기회비용은?`;
-    const result=price+bNet;setNum(result,[price,bNet,price+bBenefit]);base.explain=`B를 포기한 가치 ${won(bBenefit)} − ${won(bPrice)} = ${won(bNet)}. 따라서 A의 기회비용은 명시적 비용 ${won(price)} + 암묵적 비용 ${won(bNet)} = ${won(result)}입니다.`;
+    base.topic='기회비용';base.situation='지우는 토요일 오후에 영화 관람과 보드게임 카페 이용 중 하나만 할 수 있어요. 영화를 보기로 해서 보드게임 카페는 가지 않기로 했어요.';base.prompt='지우가 영화 관람을 선택할 때의 기회비용은 얼마일까요?';
+    const result=price+bNet;setNum(result,[price,bNet,price+bBenefit]);base.explain=`영화표에 지출한 돈뿐 아니라, 보드게임 카페를 포기하며 잃는 이익도 함께 고려해야 해요. 암묵적 비용 ${won(bNet)}을 명시적 비용 ${won(price)}에 더하면 기회비용은 ${won(result)}이에요.`;
   }else if(type==='net'){
-    base.topic='순편익';base.prompt=`A를 선택할 때 편익 ${won(benefit)}, 명시적 비용 ${won(price)}입니다. 포기한 최선의 대안 B의 가치가 ${won(bNet)}이라면 A의 순편익은?`;
-    const result=benefit-(price+bNet);setNum(result,[aNet,benefit-price+bNet,price+bNet]);base.explain=`A의 기회비용 = ${won(price)} + ${won(bNet)} = ${won(price+bNet)}. A의 순편익 = 편익 ${won(benefit)} − 기회비용 ${won(price+bNet)} = ${won(result)}입니다.`;
+    base.topic='순편익';base.situation='하린이는 방과 후에 영화와 볼링 중 하나만 즐길 수 있어요. 영화를 선택했으며, 볼링을 포기하며 잃는 이익은 이미 편익에서 가격을 빼서 계산해 두었어요.';base.prompt='하린이가 영화 관람을 선택할 때의 순편익은 얼마일까요?';
+    const result=benefit-(price+bNet);setNum(result,[aNet,benefit-price+bNet,price+bNet]);base.explain=`영화에서 얻는 편익에서, 영화표 값과 볼링을 포기한 암묵적 비용을 모두 빼야 선택의 순편익을 알 수 있어요. 기회비용 ${won(price+bNet)}을 빼면 순편익은 ${won(result)}이에요.`;
   }else if(type==='rational'){
     base.topic='합리적 선택';
     const vals=shuffle([randMoney(5,8),randMoney(10,14),randMoney(16,20)]);
     const table=vals.map((v,i)=>{const p=randMoney(5,15);return{name:['A','B','C'][i],cost:p,benefit:p+v}});
     const winner=table.reduce((best,v,i)=>v.benefit-v.cost>table[best].benefit-table[best].cost?i:best,0);
     base.table=table;base.options=['A','B','C','선택하지 않는다'];base.correct=winner;base.answerValue=table[winner].name;
-    base.prompt='다음 중 편익과 가격을 고려할 때 가장 합리적인 선택은 무엇일까요?';
-    base.explain=`각 대안의 편익−가격은 ${table.map(x=>`${x.name}: ${won(x.benefit-x.cost)}`).join(', ')}입니다. 포기할 가치까지 고려했을 때 순가치가 가장 큰 ${table[winner].name}를 선택하는 것이 합리적입니다.`;
+    base.situation='서연이는 점심으로 떡볶이·김밥·샌드위치 중 하나만 고르려고 해요. 아무것도 선택하지 않으면 편익과 비용은 모두 0원이에요.';base.prompt='주어진 편익과 가격을 고려하면 서연이의 가장 합리적인 선택은 무엇일까요?';
+    base.explain=`가장 싼 메뉴만 찾기보다, 지불할 가격과 얻는 편익을 함께 비교해요. 각 메뉴의 편익−가격을 비교하면 ${quizMenuName(table[winner].name)}의 이익이 가장 크고, 포기한 대안까지 고려한 순편익도 가장 높아요.`;
   }else if(type==='sunk'){
     base.topic='매몰 비용';const paid=randMoney(5,20);
-    base.prompt=`학생이 이미 ${won(paid)}을 지불했고 환불·양도·재판매할 수 없는 체험 수업을 신청했습니다. 앞으로 수업에 참여할지 결정할 때 고려하지 않아야 할 것은?`;
+    base.facts.paid=paid;base.situation=`유나는 체험 수업료 ${won(paid)}을 미리 냈어요. 이 수업료는 환불·양도·재판매가 모두 불가능해요. 이제 수업에 갈지 고민하고 있어요.`;base.prompt='유나가 지금부터 수업 참여 여부를 결정할 때 고려하지 않아야 할 것은 무엇일까요?';
     const options=['이미 지불해 회수할 수 없는 수업료','앞으로 필요한 교통비','앞으로 얻게 될 만족감','앞으로 이동에 들일 시간'];base.options=shuffle(options);base.correct=base.options.indexOf(options[0]);base.answerValue=options[0];
     base.explain=`이미 지급했고 어떤 선택을 해도 돌려받지 못하는 ${won(paid)}은 매몰 비용입니다. 향후 선택은 앞으로의 편익과 추가 비용을 기준으로 판단해야 합니다.`;
   }
@@ -135,25 +135,60 @@ function wrongReason(q,opt){
  return '이 항목은 앞으로의 선택에 따라 달라질 비용 또는 편익이므로 고려해야 합니다. 이미 지불해 회수할 수 없는 비용과 구분해 보세요.';
 }
 function createQuiz(){const types=shuffle(['explicit','implicit','opportunity','net','rational','sunk','explicit','opportunity','net','rational']);const q=types.map((t,i)=>buildQuestion(t,i));state.quiz={mode:'normal',questions:q,index:0,answers:Array(q.length).fill(null),selected:null,checked:false,initialScore:null};state.completed=null;}
+const quizMenuName = name => ({A:'A · 떡볶이',B:'B · 김밥',C:'C · 샌드위치'})[name]||name;
+const quizOptionName = (q,i) => q.type==='rational'?quizMenuName(q.options[i]):q.options[i];
+function quizConditionRows(q){
+ const f=q.facts;
+ if(q.type==='explicit')return [['영화표에 지불한 돈',f.price]];
+ if(q.type==='implicit')return [['포기한 김밥의 편익',f.bBenefit],['김밥 가격',f.bPrice]];
+ if(q.type==='opportunity')return [['영화표 값 (명시적 비용)',f.price],['보드게임 카페의 편익',f.bBenefit],['보드게임 카페 가격',f.bPrice]];
+ return [['영화의 편익',f.benefit],['영화표 값 (명시적 비용)',f.price],['볼링을 포기한 암묵적 비용',f.bNet]];
+}
+function quizFormula(q){
+ const lines={
+ explicit:['명시적 비용 = 선택을 위해 실제로 지출한 금액'],
+ implicit:['이 문제의 암묵적 비용 = 포기한 김밥의 편익 − 김밥 가격'],
+ opportunity:['암묵적 비용 = 포기한 카페의 편익 − 카페 가격','기회비용 = 명시적 비용 + 암묵적 비용'],
+ net:['기회비용 = 명시적 비용 + 암묵적 비용','순편익 = 편익 − 기회비용'],
+ rational:['먼저 각 메뉴의 편익 − 가격을 비교해요.','기회비용 = 명시적 비용 + 암묵적 비용','순편익 = 편익 − 기회비용'],
+ sunk:['이미 지불해 회수할 수 없는 매몰 비용은 앞으로의 선택에서 제외']
+ }[q.type];
+ return `<section class="cost-formulas" aria-label="${q.type==='sunk'?'판단 기준':'기본 공식'}"><h4>${q.type==='sunk'?'이번 문제의 판단 기준':'이번 문제에서 쓰는 기본 공식'}</h4>${lines.map(t=>`<p>${t}</p>`).join('')}</section>`;
+}
+function quizGuide(q){
+ const f=q.facts;
+ const step=(title,formula,reason,calculation)=>`<li><h4>${title}</h4><p class="cost-guide-formula">${formula}</p><p>${reason}</p><p class="cost-guide-calculation">${calculation}</p></li>`;
+ let steps='';
+ if(q.type==='explicit')steps=step('실제로 나간 돈을 찾아요','명시적 비용 = 실제로 지출한 금액','명시적 비용을 묻고 있으므로, 영화를 보며 얻는 만족감이 아니라 영화표에 지불한 돈을 찾아야 해요.',`영화표 값 ${won(f.price)} → 명시적 비용 <strong>${won(q.answerValue)}</strong>`);
+ if(q.type==='implicit')steps=step('포기한 메뉴를 확인해요','암묵적 비용은 포기한 최선의 대안에서 얻을 수 있었던 가치','민서가 선택한 것은 떡볶이이고, 포기한 다른 메뉴는 김밥이에요. 그래서 김밥의 조건으로 계산해요.','선택: 떡볶이 / 포기한 대안: 김밥')+step('김밥을 먹었을 때의 이익을 구해요','이 문제의 암묵적 비용 = 김밥의 편익 − 김밥 가격','김밥을 포기하면 만족감은 얻지 못하지만, 김밥 가격도 지불하지 않아요. 따라서 편익 전체가 아니라 가격을 뺀 이익을 포기하는 거예요.',`${won(f.bBenefit)} − ${won(f.bPrice)} = <strong>${won(f.bNet)}</strong>`);
+ if(q.type==='opportunity')steps=step('포기한 카페의 암묵적 비용부터 구해요','암묵적 비용 = 포기한 대안의 편익 − 그 대안의 가격','보드게임 카페를 가지 않으면 그곳에서 얻을 만족감을 포기하지만 이용료도 아껴요. 두 금액의 차이가 포기한 이익이에요.',`${won(f.bBenefit)} − ${won(f.bPrice)} = ${won(f.bNet)}`)+step('직접 지출한 돈과 포기한 이익을 더해요','기회비용 = 명시적 비용 + 암묵적 비용','기회비용은 영화표 값만을 뜻하지 않아요. 영화를 선택하면서 지출한 돈과 카페를 포기한 이익을 모두 고려해야 해서 두 비용을 더해요.',`${won(f.price)} + ${won(f.bNet)} = <strong>${won(q.answerValue)}</strong>`);
+ if(q.type==='net')steps=step('선택의 전체 비용을 구해요','기회비용 = 명시적 비용 + 암묵적 비용','영화표 값뿐 아니라 볼링을 포기한 이익도 영화 선택의 비용이에요. 문제에서 암묵적 비용은 이미 계산해 주었으므로, 그 값에서 가격을 다시 빼지 않아요.',`${won(f.price)} + ${won(f.bNet)} = ${won(f.price+f.bNet)}`)+step('편익에서 기회비용을 빼요','순편익 = 편익 − 기회비용','순편익은 선택으로 얻는 편익에서 전체 기회비용을 뺀 값이에요. 편익에서 영화표 값만 빼면 볼링을 포기한 비용이 빠져요.',`${won(f.benefit)} − ${won(f.price+f.bNet)} = <strong>${won(q.answerValue)}</strong>${q.answerValue<0?'<br>음수라는 것은 포기한 대안까지 고려하면 이 선택이 상대적으로 불리하다는 뜻이에요.':''}`);
+ if(q.type==='rational'){
+  const rows=compute(q.table.map(r=>({...r,base:r.benefit-r.cost}))).rows,winner=rows[q.correct],other=rows.filter((_,i)=>i!==q.correct).reduce((best,r)=>r.base>best.base?r:best),name=quizMenuName(winner.name);
+  steps=step('가격을 내고 얻는 이익을 비교해요','먼저 계산할 값: 각 메뉴의 편익 − 가격','가격이 싸거나 편익이 크다는 이유 하나만으로 고르지 않아요. 이 문제에서는 먼저 각 메뉴의 편익에서 가격을 빼서 비교할 수 있어요.',q.table.map(r=>`${quizMenuName(r.name)}: ${won(r.benefit)} − ${won(r.cost)} = ${won(r.benefit-r.cost)}`).join('<br>'))+step('가장 유리한 메뉴의 기회비용을 구해요','기회비용 = 명시적 비용 + 암묵적 비용',`${name} 선택에서는 포기하는 다른 메뉴 중 ${quizMenuName(other.name)}의 이익 ${won(other.base)}이 가장 커요. 이 값이 ${name} 선택의 암묵적 비용이에요.`,`${won(winner.cost)} + ${won(winner.implicit)} = ${won(winner.opp)}`)+step('순편익으로 최종 선택을 확인해요','순편익 = 편익 − 기회비용','여기서 처음 구한 편익−가격과, 기회비용까지 뺀 순편익은 다른 값이에요. 순편익을 비교해도 같은 메뉴가 가장 유리해요.',`${name}: ${won(winner.benefit)} − ${won(winner.opp)} = <strong>${won(winner.net)}</strong><br>다른 메뉴의 순편익: ${rows.filter((_,i)=>i!==q.correct).map(r=>`${quizMenuName(r.name)} ${won(r.net)}`).join(' / ')}<br>따라서 <strong>${name}</strong> 선택이 합리적이에요.`);
+ }
+ if(q.type==='sunk')steps=step('회수할 수 있는 돈인지 확인해요','매몰 비용 = 이미 지불했고 회수할 수 없는 비용','수업에 가도, 가지 않아도 이미 낸 수업료는 돌아오지 않아요. 이 돈은 지금의 결정으로 달라지지 않으므로 앞으로의 선택에서 제외해요.',`이미 낸 ${won(f.paid)} → 매몰 비용`)+step('앞으로 달라지는 것끼리 비교해요','판단 기준: 앞으로 얻을 편익과 앞으로 추가로 드는 비용','교통비와 이동 시간은 수업에 가면 새로 부담하고, 만족감은 참여하면 새로 얻어요. 이런 항목은 앞으로의 선택에 따라 달라지므로 고려해야 해요.','제외할 항목: <strong>이미 지불해 회수할 수 없는 수업료</strong>');
+ return `<ol class="cost-guide-steps">${steps}</ol>`;
+}
 function quizCalculation(q){
  const U=window.GalpiLabUI,f=q.facts;
  const tile=(label,value)=>`<span class="studio-equation-tile"><small>${label}</small><strong>${won(value)}</strong></span>`;
  let cells=[];
- if(q.type==='implicit')cells=[tile('포기한 B의 편익',f.bBenefit),'−',tile('B의 가격',f.bPrice),'=',tile('암묵적 비용',f.bNet)];
- if(q.type==='opportunity')cells=[tile('직접 지출',f.price),'+',tile('포기한 B의 가치',f.bNet),'=',tile('기회비용',f.price+f.bNet)];
- if(q.type==='net')cells=[tile('A의 편익',f.benefit),'−',tile('기회비용',f.price+f.bNet),'=',tile('순편익',q.answerValue)];
+ if(q.type==='implicit')cells=[tile('김밥의 편익',f.bBenefit),'−',tile('김밥 가격',f.bPrice),'=',tile('암묵적 비용',f.bNet)];
+ if(q.type==='opportunity')cells=[tile('명시적 비용',f.price),'+',tile('암묵적 비용',f.bNet),'=',tile('기회비용',f.price+f.bNet)];
+ if(q.type==='net')cells=[tile('영화의 편익',f.benefit),'−',tile('기회비용',f.price+f.bNet),'=',tile('순편익',q.answerValue)];
  if(q.type==='explicit')cells=[tile('실제 지출한 영화표 값',f.price),'=',tile('명시적 비용',q.answerValue)];
- if(q.type==='rational')return U.bars('대안별 편익 − 가격',q.table.map(r=>({label:r.name,value:r.benefit-r.cost,text:won(r.benefit-r.cost)})),{unit:'원'});
- if(!cells.length)return '';
- return `<figure class="studio-equation"><figcaption>숫자로 따라가는 풀이</figcaption><div>${cells.map((c,i)=>i%2?`<b aria-hidden="true">${c}</b>`:c).join('')}</div></figure>`;
+ if(q.type==='rational')return quizFormula(q)+U.bars('메뉴별 편익 − 가격',q.table.map(r=>({label:quizMenuName(r.name),value:r.benefit-r.cost,text:won(r.benefit-r.cost)})),{unit:'원'});
+ if(!cells.length)return quizFormula(q);
+ return quizFormula(q)+`<figure class="studio-equation"><figcaption>숫자로 따라가는 풀이</figcaption><div>${cells.map((c,i)=>i%2?`<b aria-hidden="true">${c}</b>`:c).join('')}</div></figure>`;
 }
 function renderQuiz(){const U=window.GalpiLabUI;
  if(!state.quiz)return `<section class="learning-start-card">${U.illustration?U.illustration('cost'):U.icon('question')}<div><p class="learning-overline">개념을 적용해 볼 시간</p><h2>10문제로 선택의 근거를 확인해요.</h2><p>명시적 비용·암묵적 비용·기회비용·순편익을 풀고, 필요한 개념을 다시 살펴보세요.</p><button type="button" class="btn primary" data-action="startQuiz">10문제 시작하기 →</button></div></section>`;
- const qz=state.quiz,q=qz.questions[qz.index],choices=q.options.map((opt,i)=>U.choice({text:esc(opt),index:i,selected:qz.selected===i,checked:qz.checked,correct:q.correct===i,attributes:`data-answer="${i}"`})).join('');
+ const qz=state.quiz,q=qz.questions[qz.index],choices=q.options.map((opt,i)=>U.choice({text:esc(quizOptionName(q,i)),index:i,selected:qz.selected===i,checked:qz.checked,correct:q.correct===i,attributes:`data-answer="${i}"`})).join('');
  const visualCalculation=qz.checked?quizCalculation(q):'';
- const answer=qz.checked?U.feedback({visual:visualCalculation,correct:qz.selected===q.correct,answer:esc(q.options[q.correct]),selected:esc(q.options[qz.selected]),explain:q.explain,wrongReason:qz.selected!==q.correct?q.wrongReasons[qz.selected]:'',next:`<button type="button" class="btn primary" data-action="nextQ">${qz.index===qz.questions.length-1?'학습 결과 확인':'다음 문제 →'}</button>`}):'';
- const evidence=q.table?U.evidence(q.table,won):q.type==='sunk'?'':`<div class="studio-problem-material">${window.GalpiLearningArt.scene(q.type==='explicit'?'ticket':'wallet')}<div><small>문제에서 주어진 조건</small>${(q.type==='explicit'?[['영화표 지출',q.facts.price]]:q.type==='implicit'?[['B의 편익',q.facts.bBenefit],['B의 가격',q.facts.bPrice]]:q.type==='opportunity'?[['A의 지출',q.facts.price],['B의 편익',q.facts.bBenefit],['B의 가격',q.facts.bPrice]]:[['A의 편익',q.facts.benefit],['명시적 비용',q.facts.price],['포기한 B의 가치',q.facts.bNet]]).map(([label,value])=>`<p><span>${label}</span><strong>${won(value)}</strong></p>`).join('')}</div></div>`;
- return U.question({number:qz.index+1,total:qz.questions.length,topic:q.topic,prompt:`<h2 class="question-title">${q.prompt}</h2>`,evidence,choices,action:qz.checked?'':`<button type="button" class="btn primary" data-action="grade" ${qz.selected===null?'disabled':''}>정답 확인</button>`,feedback:answer,retry:qz.mode==='retry'})+'<p class="learning-privacy">문제와 풀이 결과는 새로고침하면 초기화됩니다.</p>';
+ const answer=qz.checked?U.feedback({visual:visualCalculation,correct:qz.selected===q.correct,answer:esc(quizOptionName(q,q.correct)),selected:esc(quizOptionName(q,qz.selected)),explain:q.explain,guide:quizGuide(q),wrongReason:qz.selected!==q.correct?q.wrongReasons[qz.selected]:'',next:`<button type="button" class="btn primary" data-action="nextQ">${qz.index===qz.questions.length-1?'학습 결과 확인':'다음 문제 →'}</button>`}):'';
+ const evidence=q.table?U.evidence(q.table.map((r,i)=>({...r,name:quizMenuName(r.name),art:['tteokbokki','gimbap','lunch'][i]})),won):q.type==='sunk'?'':`<div class="studio-problem-material">${window.GalpiLearningArt.scene(q.type==='explicit'?'ticket':'wallet')}<div><small>문제에서 주어진 조건</small>${quizConditionRows(q).map(([label,value])=>`<p><span>${label}</span><strong>${won(value)}</strong></p>`).join('')}</div></div>`;
+ return U.question({number:qz.index+1,total:qz.questions.length,topic:q.topic,prompt:`<p class="cost-situation">${q.situation}</p><h2 class="question-title">${q.prompt}</h2>`,evidence:evidence+(['implicit','opportunity','net','rational'].includes(q.type)?'<p class="cost-benefit-note">편익은 만족감을 돈으로 환산한 학습용 금액이에요. 실제로 받는 돈은 아니에요.</p>':''),choices,action:qz.checked?'':`<button type="button" class="btn primary" data-action="grade" ${qz.selected===null?'disabled':''}>정답 확인</button>`,feedback:answer,retry:qz.mode==='retry'})+'<p class="learning-privacy">문제와 풀이 결과는 새로고침하면 초기화됩니다.</p>';
 }
 function grade(){const qz=state.quiz;if(!qz||qz.selected===null||qz.checked)return;qz.checked=true;qz.answers[qz.index]=qz.selected;renderBody();announce(qz.selected===qz.questions[qz.index].correct?'정답입니다. 해설이 표시되었습니다.':'오답입니다. 해설이 표시되었습니다.');}
 function nextQuestion(){const qz=state.quiz;if(!qz||!qz.checked)return;if(qz.index===qz.questions.length-1){const score=qz.questions.filter((q,i)=>qz.answers[i]===q.correct).length;state.completed={questions:qz.questions,answers:[...qz.answers],score,total:qz.questions.length,mode:qz.mode,original:qz.initialScore};state.quiz=null;state.tab='results';renderModule();root.focus({preventScroll:true});announce('학습 결과를 확인하세요.');return;}qz.index++;qz.selected=null;qz.checked=false;renderBody();document.querySelector('#moduleBody')?.focus({preventScroll:true});}
