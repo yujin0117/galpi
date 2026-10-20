@@ -63,6 +63,7 @@
   }
   const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function illustration(type) {
+    if(type==='cost'&&window.GalpiCostLearning)return window.GalpiCostLearning.art().replace('class="cost-lesson-art"','class="learning-illustration"');
     if(type==='capitalism')return window.GalpiCapitalismArt.era(0).replace('class="cp-era-art"','class="learning-illustration"');
     if(type==='trade')return window.GalpiLearningArt.country(1,true).replace('class="tc-scene tc-harbor"','class="learning-illustration"');
     const sceneKind = {cost:'tteokbokki',finance:'wallet',intervention:'bank',ripple:'shirt',history:'factory'}[type];

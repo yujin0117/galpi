@@ -6,21 +6,6 @@
 #content .learning-v2 :is(button,a,input,select,textarea):focus-visible{outline:3px solid var(--learning-brand);outline-offset:3px}
 #content .learning-v2 .btn{border-radius:8px;min-height:44px;padding:10px 16px;font-size:14px;line-height:1.45}
 #content .learning-v2 .btn.primary{background:var(--learning-brand);border-color:var(--learning-brand);color:var(--learning-surface)}
-/* Opportunity-cost practice: contextual questions and optional worked solutions. */
-#content .learning-cost .cost-situation{font-size:16px;line-height:1.7;color:var(--learning-ink);margin:0 0 16px;max-width:65ch}
-#content .learning-cost .cost-benefit-note{font-size:12px;line-height:1.6;color:var(--learning-muted);margin:10px 0 0}
-#content .learning-cost .cost-formulas{margin:18px 0;padding:0 0 0 14px;border-left:2px solid var(--learning-brand);color:var(--learning-ink)}
-#content .learning-cost .cost-formulas h4{font-size:13px;color:var(--learning-muted);margin:0 0 8px}
-#content .learning-cost .cost-formulas p{font-size:14px;line-height:1.7;font-weight:600;margin:5px 0}
-#content .learning-cost .cost-guide-steps{list-style:none;counter-reset:cost-guide;padding:0;margin:0}
-#content .learning-cost .cost-guide-steps>li{counter-increment:cost-guide;padding:16px 0;border-bottom:1px solid var(--learning-divider)}
-#content .learning-cost .cost-guide-steps>li:first-child{padding-top:0}
-#content .learning-cost .cost-guide-steps>li:last-child{padding-bottom:0;border:0}
-#content .learning-cost .cost-guide-steps h4{display:flex;gap:8px;align-items:baseline;font-size:15px;line-height:1.6;color:var(--learning-brand);margin:0 0 10px}
-#content .learning-cost .cost-guide-steps h4::before{content:counter(cost-guide,decimal-leading-zero);font-size:12px;font-variant-numeric:tabular-nums;flex:none}
-#content .learning-cost .cost-guide-steps p{font-size:14px;line-height:1.75;color:var(--learning-ink);margin:8px 0}
-#content .learning-cost .cost-guide-steps .cost-guide-formula{font-weight:650}
-#content .learning-cost .cost-guide-steps .cost-guide-calculation{font-variant-numeric:tabular-nums;padding-left:12px;border-left:2px solid var(--learning-line);margin-top:12px}
 /* Optional related reading has a quieter role than the next learning action. */
 #content .learning-v2 .learning-related-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:7px 0;border:0;background:none;color:var(--learning-brand);font:inherit;font-size:14px;font-weight:600;text-align:left;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--learning-line)}
 #content .learning-v2 .learning-related-link:hover{text-decoration-color:currentColor}
