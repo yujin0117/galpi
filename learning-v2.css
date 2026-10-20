@@ -289,8 +289,8 @@
 #content .history-lab.learning-v2 .hl-answer-grid{width:100%;max-width:none}
 #content .history-lab.learning-v2 .hl-answer-grid>.btn{display:flex;align-items:center;gap:12px;background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:8px;min-height:52px}
 #content .history-lab.learning-v2 .hl-answer-grid>.btn[aria-pressed=true]{border:2px solid var(--learning-brand);background:var(--learning-selected);color:var(--learning-brand)}
-#content .history-lab.learning-v2 .hl-scene{background:none;border:0;border-radius:16px;padding:24px}
-#content .history-lab.learning-v2 .hl-scene>.hl-icon{width:32%;height:auto;max-width:310px}
+#content .history-lab.learning-v2 .hl-scene:has(>.hl-icon){display:grid;grid-template-columns:minmax(80px,150px) minmax(0,1fr);align-items:center;gap:24px;min-height:0;background:none;border:0;border-radius:0;padding:18px 0}
+#content .history-lab.learning-v2 .hl-scene>.hl-icon{width:100%;height:auto;max-width:150px}
 #content .history-lab.learning-v2 .hl-chart{background:var(--learning-surface);border:0;border-radius:12px;box-shadow:0 4px 18px #1f293304}
 #content .history-lab.learning-v2 .hl-archive article{border-radius:3px 12px 12px 3px;border-left:3px solid #8AA7BE;background:var(--learning-material)}
 #content .history-lab.learning-v2 .hl-archive article:has(input:checked){border-left-color:var(--learning-brand);background:var(--learning-selected)}
@@ -307,6 +307,15 @@
 #content .learning-v2 .fn-totals strong{font-size:24px}
 #content .learning-v2 :is(input[type=number],select){min-height:44px;height:auto;line-height:1.4;max-width:100%}
 #content .learning-v2 :is(.fn-notice,.rr-note,.ex-notice){font-size:13px;line-height:1.6}
+/* Formula values are HTML, so they reflow independently of the reusable SVG symbols. */
+#content .learning-v2 .learning-calculation{margin:18px 0;padding:16px 0;border-block:1px solid var(--learning-divider)}
+#content .learning-v2 .learning-calculation figcaption{font-size:12px;color:var(--learning-muted);margin-bottom:12px}
+#content .learning-v2 .learning-calculation>div{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center}
+#content .learning-v2 .learning-calculation-term{min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+#content .learning-v2 .learning-calculation-term>.learning-scene-art{width:64px;max-width:100%;height:auto}
+#content .learning-v2 .learning-calculation-term>span{font-size:12px;color:var(--learning-ink)}
+#content .learning-v2 .learning-calculation-term>strong{font-size:18px;color:var(--learning-brand);font-variant-numeric:tabular-nums;white-space:nowrap}
+#content .learning-v2 .learning-calculation-operator{font-size:21px;color:var(--learning-muted-strong)}
 #content .learning-v2 .studio-equation{margin:18px 0;padding:16px;background:var(--learning-subtle);border-radius:10px}
 #content .learning-v2 .studio-equation figcaption{font-size:13px;font-weight:700;color:var(--learning-muted);margin-bottom:12px}
 #content .learning-v2 .studio-equation>div{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
@@ -419,6 +428,11 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 #content .learning-v2 :is(.tg-progress,.hl-step-nav)>li>span{width:22px;height:22px;font-size:10px}
 #content .learning-v2 .lab-step-links{grid-template-columns:repeat(5,minmax(0,1fr));padding:6px;gap:3px}
 #content .learning-v2 .lab-step-links a{display:flex;flex-direction:column;align-items:center;font-size:10px;padding:7px 2px;gap:5px}
+#content .learning-v2 .learning-calculation>div{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+#content .learning-v2 .learning-calculation-operator:nth-child(4),#content .learning-v2 .learning-calculation-term[data-result]{grid-column:1/-1}
+#content .learning-v2 .learning-calculation-operator:nth-child(4){text-align:center;line-height:1}
+#content .learning-v2 .learning-calculation-term[data-result]{flex-direction:row;justify-content:center;gap:10px;padding:8px 0}
+#content .learning-v2 .learning-calculation-term[data-result]>.learning-scene-art{width:42px}
 #content .learning-v2 .learning-question-layout{display:block}
 #content .learning-v2 .learning-question-meta{padding:13px;font-size:11px;gap:8px;flex-wrap:wrap}
 #content .learning-v2 .learning-question-main{padding:20px 15px}
@@ -474,8 +488,8 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 #content .history-lab.learning-v2 .studio-history-opening>div{display:flex;align-items:center;justify-content:center;border-radius:12px;padding:8px}
 #content .history-lab.learning-v2 .studio-history-opening .hl-icon{max-width:140px;margin:0;height:auto}
 #content .history-lab.learning-v2 .studio-history-opening .studio-eyebrow{font-size:11px;max-width:90px}
-#content .history-lab.learning-v2 .hl-scene{display:block;padding:20px 14px}
-#content .history-lab.learning-v2 .hl-scene>.hl-icon{width:100%;max-width:210px;margin:0 auto 15px;display:block}
+#content .history-lab.learning-v2 .hl-scene:has(>.hl-icon){grid-template-columns:76px minmax(0,1fr);align-items:start;gap:12px;padding:16px 0}
+#content .history-lab.learning-v2 .hl-scene>.hl-icon{width:100%;max-width:76px;margin:8px 0 0;display:block}
 #content .history-lab.learning-v2 .hl-question{padding:18px 13px}
 #content .history-lab.learning-v2 .hl-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #content .history-lab.learning-v2 .hl-actions>.btn{width:100%;min-width:0}

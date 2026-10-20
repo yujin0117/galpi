@@ -1,7 +1,7 @@
 /* Original SVG learning scenes. The size of a shape is not an economic quantity. */
 (() => {
   'use strict';
-  const ink='#355e4c',sage='#8da894',sand='#d7b581',cream='#fbf5e6',blue='#8eaaa9';
+  const ink='var(--diagram-ink,#355B50)',sage='var(--diagram-green,#6CA18B)',sand='var(--diagram-gold,#E6BF75)',cream='var(--learning-surface,#FFFFFF)',blue='var(--diagram-blue,#87AEC8)';
   const person=(x,y,color=sage)=>`<g transform="translate(${x} ${y})"><circle cx="0" cy="0" r="10" fill="#d9b58a"/><path d="M-15 47V23q15-20 30 0v24" fill="${color}"/><path d="M-6 47v17m12-17v17" stroke="${ink}" stroke-width="6"/></g>`;
   const factory=(x,y)=>`<g transform="translate(${x} ${y})"><path d="M0 80V30l35 18V25l35 23V0h16v80Z" fill="${sage}"/><path d="M12 57h13m17 0h13m17 0h8" stroke="${cream}" stroke-width="10"/></g>`;
   function era(n){
@@ -39,11 +39,7 @@
       {title:'정부 역할을 줄이는 정책들',nodes:[['wallet','세금 감면·복지 축소'],['factory','민영화·규제 완화']],connectors:['+']}
     ]
   ];
-  function connectionScene(kind) {
-    if(kind!=='voyage')return window.GalpiLearningArt.scene(kind);
-    // A sailing vessel keeps the early-modern trade scene distinct from today's cargo ships.
-    return `<svg class="learning-scene-art" viewBox="0 0 256 168" aria-hidden="true"><path d="M21 139V93c0-45 44-74 107-69 65-11 107 23 107 69v46Z" fill="#edf1e5"/><circle cx="204" cy="38" r="15" fill="#efdbaf"/><path d="M42 112h175l-25 31H68Z" fill="${ink}"/><path d="M120 112V27m47 85V48" stroke="#8c7750" stroke-width="4"/><path d="M125 34q43 12 31 56h-31Z" fill="#f4e5bc"/><path d="M115 39q-36 15-32 51h32Zm57 15q31 10 25 36h-25Z" fill="${cream}"/><path d="M60 153q16-7 32 0t32 0t32 0t32 0t32 0" stroke="#8eaaa9" stroke-width="3" fill="none"/></svg>`;
-  }
+  function connectionScene(kind){return window.GalpiLearningArt.scene(kind);}
   function connection(eraIndex, step) {
     const frame=frames[eraIndex][step],list=frame.connectors?.includes('+')?'ul':'ol';
     return `<figure class="cp-connection" data-era="${eraIndex}" data-step="${step}"><figcaption><span>그림으로 연결하기 · ${step+1} / 3</span><strong>${frame.title}</strong></figcaption><${list} style="--cp-nodes:${frame.nodes.length}" aria-label="${frame.title}">${frame.nodes.map(([kind,label],i)=>`<li>${connectionScene(kind)}<strong>${label}</strong>${i<frame.nodes.length-1?`<span class="cp-connection-arrow" aria-hidden="true">${frame.connectors?.[i]||'→'}</span>`:''}</li>`).join('')}</${list}></figure>`;

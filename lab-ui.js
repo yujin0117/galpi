@@ -107,6 +107,9 @@
     const scale=max||Math.max(1,...rows.map(r=>Math.abs(r.value))),diverging=rows.some(r=>r.value<0);
     return `<figure class="studio-value-chart ${diverging?'is-diverging':''}"><figcaption>${escape(title)}${unit?` <small>단위: ${escape(unit)}${diverging?' · 음수 ← 0 → 양수':''}</small>`:''}</figcaption>${rows.map((r,i)=>`<div class="studio-value-row"><span>${escape(r.label)}</span><div class="studio-value-track"><i style="width:${Math.min(100,Math.abs(r.value)/scale*100)*(diverging?.5:1)}%;${diverging?`${r.value<0?'right':'left'}:50%;`: ''}--bar-color:${r.value<0?'#b67757':r.color||['#8ca17a','#176145'][i%2]}"></i></div><strong>${r.value<0?'−':''}${escape(r.text||Math.abs(r.value).toLocaleString('ko-KR'))}</strong></div>`).join('')}</figure>`;
   }
+  function calculation(terms,operators=['+','='],caption='계산으로 연결하기') {
+    return `<figure class="learning-calculation"><figcaption>${escape(caption)}</figcaption><div>${terms.map((term,i)=>`${i?`<span class="learning-calculation-operator" aria-hidden="true">${escape(operators[i-1])}</span>`:''}<div class="learning-calculation-term" ${i===terms.length-1?'data-result':''}>${term.art?window.GalpiLearningArt.scene(term.art):''}<span>${escape(term.label)}</span><strong>${escape(term.value)}</strong></div>`).join('')}</div></figure>`;
+  }
   function evidence(rows, format) {
     return `<div class="studio-evidence-options">${rows.map((r,i)=>`<article><header>${window.GalpiLearningArt.scene(r.art||['bag','wallet','certificate'][i%3])}<strong>${escape(r.name)}</strong></header><dl><div><dt>편익</dt><dd>${format(r.benefit)}</dd></div><div><dt>가격</dt><dd>${format(r.cost)}</dd></div></dl></article>`).join('')}</div>`;
   }
@@ -131,5 +134,5 @@
     });
     watchSteps(root);
   }
-  window.GalpiLabUI = { icon, country, head, navigation, footer, watchSteps, illustration, header, choice, question, feedback, explanation, summary, result, stepNav, mount, startScreen, brief, bars, evidence };
+  window.GalpiLabUI = { icon, country, head, navigation, footer, watchSteps, illustration, header, choice, question, feedback, explanation, summary, result, stepNav, mount, startScreen, brief, bars, evidence, calculation };
 })();

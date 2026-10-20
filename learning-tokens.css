@@ -15,6 +15,14 @@ body:has(#content > .learning-v2),.learning-v2{
  --learning-material-ink:#315977;
  --learning-insight:#FFF8EA;
  --learning-subtle:#F8FAF9;
+ /* Shared editable SVG palette. Shapes use these tokens; labels remain HTML. */
+ --diagram-ink:#355B50;
+ --diagram-green:#6CA18B;
+ --diagram-blue:#87AEC8;
+ --diagram-coral:#DA967E;
+ --diagram-gold:#E6BF75;
+ --diagram-violet:#ADA2CE;
+ --diagram-soft:#EAF3EE;
  --learning-danger:#9F3B2F;
  --learning-danger-soft:#FFF4F1;
  --learning-control:#7C8B9C;
