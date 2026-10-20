@@ -280,6 +280,12 @@
 #content .history-lab.learning-v2 .hl-tabs{--studio-tabs:4}
 #content .history-lab.learning-v2 .hl-mode-links{margin:0 0 12px;justify-content:flex-end}
 #content .history-lab.learning-v2 .hl-mode-links .btn{min-height:36px;padding:7px 12px;font-size:12px}
+/* Action colors communicate navigation, results and restarting without changing behavior. */
+#content .history-lab.learning-v2 .btn[data-hl="switch-mode"]{background:var(--learning-material);border-color:#B8CCDC;color:var(--learning-material-ink)}
+#content .history-lab.learning-v2 .btn[data-hl="results"]{background:var(--learning-selected);border-color:#A7C5B5;color:var(--learning-brand)}
+#content .history-lab.learning-v2 .btn:is([data-hl="next"],[data-hl="complete-basic"]){background:var(--learning-brand);border-color:var(--learning-brand);color:var(--learning-surface)}
+#content .history-lab.learning-v2 .btn[data-hl="restart-topic"]{background:var(--learning-danger-soft);border-color:#D8B8B0;color:#7F4338}
+#content .history-lab.learning-v2 .btn:is([data-hl="switch-mode"],[data-hl="results"],[data-hl="next"],[data-hl="complete-basic"],[data-hl="restart-topic"]):hover:not(:disabled){filter:brightness(.96)}
 #content .history-lab.learning-v2 .learning-header h1{font-size:30px}
 #content .history-lab.learning-v2 .hl-location{border:0;margin-bottom:10px}
 #content .history-lab.learning-v2 #hl-panel{padding:26px;border:1px solid var(--learning-line);background:var(--learning-surface);border-radius:16px}
@@ -424,7 +430,7 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 #content .learning-v2 :is(h2,.step-title){font-size:19px;line-height:1.5}
 #content .learning-v2 h3{font-size:17px;line-height:1.5}
 #content .learning-v2 :is(.tg-progress,.hl-step-nav){gap:3px;padding:7px;margin-bottom:16px}
-#content .learning-v2 :is(.tg-progress,.hl-step-nav)>li,#content .learning-v2 :is(.tg-progress,.hl-step-nav)>li[aria-current]{flex-direction:column;justify-content:flex-start;padding:6px 2px;gap:5px;font-size:10px}
+#content .learning-v2 :is(.tg-progress,.hl-step-nav)>li,#content .learning-v2 :is(.tg-progress,.hl-step-nav)>li[aria-current]{flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:6px 2px;gap:5px;font-size:10px}
 #content .learning-v2 :is(.tg-progress,.hl-step-nav)>li>span{width:22px;height:22px;font-size:10px}
 #content .learning-v2 .lab-step-links{grid-template-columns:repeat(5,minmax(0,1fr));padding:6px;gap:3px}
 #content .learning-v2 .lab-step-links a{display:flex;flex-direction:column;align-items:center;font-size:10px;padding:7px 2px;gap:5px}
