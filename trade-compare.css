@@ -11,11 +11,12 @@
 .tc-activity .tc-inner-count{margin-left:auto;align-self:flex-start;font-size:12px;color:var(--learning-muted);white-space:nowrap;background:var(--learning-subtle);border-radius:6px;padding:5px 9px}
 .tc-activity .tc-learning-main{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr);gap:28px;align-items:start}
 .tc-activity .tc-country-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tc-activity .tc-country{position:relative;min-width:0;border:1px solid var(--learning-line);border-radius:13px;overflow:hidden;background:var(--learning-subtle)}
+.tc-activity .tc-country{position:relative;min-width:0;border:1px solid var(--learning-line);border-radius:13px;overflow:hidden;background:var(--learning-selected)}
 .tc-activity .tc-country>header{position:absolute;top:12px;left:14px;right:14px;display:flex;align-items:center;gap:8px;z-index:1}
-.tc-activity .tc-country>header h3{font-size:19px;font-weight:750;color:var(--learning-muted)}
-.tc-activity .tc-country-dot{display:grid;place-items:center;width:24px;height:24px;background:var(--learning-subtle);border-radius:50%;font-size:11px;font-weight:700;color:var(--learning-muted)}
-.tc-activity .tc-country:nth-child(2) .tc-country-dot{background:var(--learning-subtle);color:var(--learning-muted)}
+.tc-activity .tc-country>header h3{font-size:19px;font-weight:750;color:var(--learning-ink)}
+.tc-activity .tc-country-dot{display:grid;place-items:center;width:24px;height:24px;background:var(--learning-brand);border-radius:50%;font-size:11px;font-weight:700;color:var(--learning-surface)}
+.tc-activity .tc-country:nth-child(2){background:var(--learning-material)}
+.tc-activity .tc-country:nth-child(2) .tc-country-dot{background:var(--learning-material-ink);color:var(--learning-surface)}
 .tc-activity .tc-country>.tc-scene{margin-top:30px;min-height:135px;object-fit:cover}
 .tc-activity .tc-country-data{position:relative;background:var(--learning-surface);border-radius:12px 12px 0 0;padding:14px 12px 12px;margin-top:-8px}
 .tc-activity .tc-country-data>p{font-size:12px;font-weight:650;color:var(--learning-muted);text-align:center;margin-bottom:12px}

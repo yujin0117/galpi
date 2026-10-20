@@ -6,10 +6,10 @@
 #content .learning-v2 .chapter-context-separator{color:var(--learning-divider)}
 #content .learning-v2 .chapter-book{min-width:0;word-break:keep-all;overflow-wrap:anywhere}
 #content .learning-v2 .chapter-book-label{font-size:10px;letter-spacing:.08em;margin-right:4px}
-#content .learning-v2 .chapter-roman{font-style:normal;font-weight:650;color:var(--learning-brand)}
+#content .learning-v2 .chapter-roman{font-style:normal;font-weight:400;color:inherit}
 #content .learning-v2 .chapter-part{display:inline}
 #content .learning-v2 .chapter-detail{display:flex;align-items:baseline;gap:10px 15px;flex-wrap:wrap;min-width:0}
-#content .learning-v2 .chapter-number{font-size:24px;font-weight:750;color:var(--learning-brand);letter-spacing:-.04em;line-height:1.1;flex:none;font-variant-numeric:tabular-nums}
+#content .learning-v2 .chapter-number{font-size:15px;font-weight:650;color:var(--learning-brand);letter-spacing:0;line-height:1.6;flex:none;font-variant-numeric:tabular-nums}
 #content .learning-v2 .chapter-unit{font-size:15px;font-weight:550;color:var(--learning-ink);line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
 #content .learning-v2 .chapter-pages{display:inline-flex;align-items:baseline;gap:10px;color:var(--learning-muted);font-size:12px;line-height:1.55;white-space:nowrap}
 #content .learning-v2 .chapter-pages::before{content:'';height:10px;width:1px;background:var(--learning-divider);align-self:center}
@@ -20,9 +20,9 @@
  #content .learning-v2 .chapter-context{font-size:11px;gap:6px;margin-bottom:6px;line-height:1.5}
  #content .learning-v2 .chapter-book-label{font-size:9px;letter-spacing:.05em}
  #content .learning-v2 .chapter-detail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;align-items:baseline}
- #content .learning-v2 .chapter-number{font-size:20px;grid-row:1/3}
- #content .learning-v2 .chapter-unit{font-size:13px;line-height:1.5}
- #content .learning-v2 .chapter-pages{grid-column:2;font-size:11px;white-space:normal;flex-wrap:wrap;gap:4px 8px}
+ #content .learning-v2 .chapter-number{font-size:14px;line-height:1.5}
+ #content .learning-v2 .chapter-unit{font-size:14px;line-height:1.5}
+ #content .learning-v2 .chapter-pages{grid-column:1/-1;font-size:11px;white-space:normal;flex-wrap:wrap;gap:4px 8px}
  #content .learning-v2 .chapter-pages::before{display:none}
  #content .learning-v2 .chapter-detail-without-number{grid-template-columns:1fr}
  #content .learning-v2 .chapter-detail-without-number .chapter-pages{grid-column:1}

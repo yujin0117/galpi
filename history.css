@@ -233,7 +233,7 @@ to{opacity:1;transform:none}
 .history-lab .hl-flow{font-size:12px}
 .history-lab .hl-flow>span:not(.hl-arrow){padding:7px 9px}
 .history-lab .hl-stat-cards>div{background:var(--learning-subtle)}
-.history-lab .hl-top-controls{width:100%}
+.history-lab .hl-top-controls{width:auto;justify-content:flex-end;margin-left:auto}
 .history-lab .hl-feedback{padding:14px}
 .history-lab .hl-question .hl-feedback{margin-bottom:0}
 }
