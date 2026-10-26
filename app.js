@@ -85,7 +85,7 @@ function numericOptions(correct,distractors=[]){const s=new Set([correct]);distr
 function buildQuestion(type,id){return window.GalpiCostLearning.question(type,id,{randMoney,numericOptions,shuffle});}
 function createQuiz(){const q=window.GalpiCostLearning.order.map((type,i)=>buildQuestion(type,i));state.quiz={mode:'normal',questions:q,index:0,answers:Array(q.length).fill(null),selected:null,checked:false,initialScore:null};state.completed=null;}
 function renderQuiz(){const U=window.GalpiLabUI,C=window.GalpiCostLearning;
- if(!state.quiz)return `<section class="learning-start-card">${U.illustration('cost')}<div><p class="learning-overline">기초부터 응용까지</p><h2>10문제로 선택의 이유를 차례로 확인해요.</h2><p>기초 구분 → 암묵적 비용 → 기회비용 → 편익·순편익 → 합리적 선택 → 매몰 비용 → 종합 응용</p><p>문항은 이 순서로 진행돼요. 포기한 대안에도 가격이 있는 응용 계산은 필요한 설명을 먼저 확인해요.</p><button type="button" class="btn primary" data-action="startQuiz">10문제 시작하기 →</button></div></section>`;
+ if(!state.quiz)return `<section class="learning-start-card cost-practice-start">${U.illustration('cost')}<div><p class="learning-overline">문제 연습 · 10문항</p><h2>배운 내용을 문제로 풀어볼까요?</h2><button type="button" class="btn primary" data-action="startQuiz">10문제 시작하기 →</button></div></section>`;
  const z=state.quiz,q=z.questions[z.index];
  if(q.requiresBridge&&!state.costLesson.bridgeSeen)return `<p class="cost-kicker">문제 연습 ${z.index+1} / ${z.questions.length} · 응용 준비</p>`+C.bridge('quiz');
  return C.renderPractice(q,z);
