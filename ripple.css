@@ -1,204 +1,176 @@
-/* Learning styles: neutral surfaces, semantic palette and preserved illustration/chart colors. */
-.ripple{--rr-line:#cbd7ca;--rr-soft:#eef1e8;padding-top:18px;line-height:1.45}
-.ripple h1,.ripple h2,.ripple h3{letter-spacing:-.025em;line-height:1.3;text-wrap:balance}
-.ripple h1{font-size:clamp(30px,3vw,42px);margin:5px 0 8px}
-.ripple h2{font-size:25px;margin:0 0 8px}
-.ripple h3{font-size:19px;margin:0 0 12px}
-.ripple p{margin:10px 0 16px}
-.ripple button{min-height:46px;min-width:44px}
-.ripple input,.ripple textarea,.ripple select{font:inherit;accent-color:var(--green)}
-.ripple a{color:var(--green);text-decoration-thickness:1px;text-underline-offset:3px}
-.rr-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.rr-header{margin:18px 0 22px}
-.rr-header p{font-size:14px;color:var(--muted);margin:0}
-.rr-header>span{color:var(--muted)}
-.rr-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;background:var(--learning-subtle);border-radius:14px;padding:5px;margin-bottom:18px}
-.rr-tabs button{background:transparent;border:0;border-radius:10px;color:var(--ink);font-weight:650;padding:12px 8px}
-.rr-tabs [aria-selected=true]{background:var(--paper);color:var(--green);box-shadow:0 3px 9px #1f293310}
-.rr-stage-nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
-.rr-stage-nav .btn{font-size:14px;flex:1 1 auto;background:transparent;padding:9px 12px}
-.rr-surface{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px}
-.rr-selected{border-color:var(--green)!important;background:var(--learning-selected)!important;color:var(--green)!important;box-shadow:inset 0 0 0 1px var(--green)}
-.rr-selected::after{content:'✓';margin-left:8px;font-weight:700}
-.rr-product.rr-selected::after{position:absolute;top:12px;right:14px}
-.rr-actor.rr-selected::after,.rr-flow .rr-selected::after{position:absolute;top:6px;right:8px;margin:0;font-size:14px}
-.rr-section-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:22px}
-.rr-section-head p{color:var(--muted);margin:8px 0 0}
-.rr-step{flex:none;font-size:16px;font-weight:700;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:var(--green);color:var(--learning-surface)}
-.rr-products{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:800px;margin:0 auto}
-.rr-product{position:relative;border:1px solid var(--rr-line);padding:0;background:var(--paper);border-radius:14px;overflow:hidden;color:var(--ink);text-align:left}
-.rr-product-art{background:var(--learning-subtle);min-height:200px;display:grid;place-items:center}
-.rr-product-b{background:var(--learning-subtle)}
-.rr-product-art .rr-icon{width:150px;height:150px;color:var(--learning-ink);fill:#f9f7ed;stroke-width:.8}
-.rr-product>div:last-child{padding:18px 22px}
-.rr-product strong{display:block;font-size:29px;font-variant-numeric:tabular-nums;margin:5px 0;white-space:nowrap}
-.rr-product small{font-size:14px;color:var(--muted)}
-.rr-note,.rr-caption{color:var(--muted);font-size:14px}
-.rr-note{max-width:75ch}
-.rr-caption{margin:12px 0}
-.rr-lead{font-size:18px;max-width:75ch}
-.rr-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;border-top:1px solid var(--line);padding-top:20px;margin-top:24px}
-.rr-workspace{display:grid;grid-template-columns:minmax(250px,.95fr) minmax(280px,1.1fr) minmax(230px,.9fr);gap:24px;align-items:start}
-.rr-workspace>*{min-width:0}
-.rr-workspace h3{margin-top:2px}
-.rr-choices{display:grid;gap:10px}
-.rr-choice{border:1px solid var(--rr-line);border-radius:12px;padding:15px 16px;background:var(--paper);text-align:left;color:var(--ink);line-height:1.45}
-.rr-choice strong{display:block;font-size:17px}
-.rr-choice span{display:block;font-size:15px;color:var(--muted);margin-top:6px}
-.rr-choice small{display:inline-block;color:var(--green);font-size:13px;font-weight:600;margin-top:8px}
-.rr-workspace .rr-choices+ h3{margin-top:24px}
-.rr-icon{width:32px;height:32px;flex:none;vertical-align:middle}
-.rr-network{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:70px 40px;padding:16px 8px;min-height:325px;isolation:isolate}
-.rr-network>svg{position:absolute;inset:0;z-index:-1;width:100%;height:100%;overflow:visible}
-.rr-network line{stroke:#d1d9cf;stroke-width:.5;stroke-dasharray:2 1.5}
-.rr-network .rr-link-active{stroke:var(--green);stroke-width:1;stroke-dasharray:none;animation:rr-reveal .3s ease-out}
-.rr-actor{display:flex;position:relative;flex-direction:column;gap:5px;align-items:center;justify-content:center;padding:15px 8px;background:var(--paper);border:1px solid var(--rr-line);border-radius:13px;color:var(--ink);min-height:115px}
-.rr-actor strong{font-size:18px}
-.rr-actor span{font-size:13px;color:var(--muted)}
-.rr-impact{padding:18px 0 18px 20px;border-left:1px solid var(--rr-line)}
-.rr-impact details{margin-top:20px}
-.ripple summary{min-height:44px;cursor:pointer;padding:12px 0;font-size:15px;font-weight:650;color:var(--green)}
-.rr-trail{font-size:15px;background:var(--rr-soft);padding:16px;border-radius:10px}
-.rr-reveal{margin-top:18px;background:var(--rr-soft);border-radius:12px;padding:22px}
-.rr-reveal p:last-child{margin-bottom:0}
-.rr-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:20px}
-.rr-flow button{position:relative;padding:18px 8px;background:var(--paper);border:1px solid var(--rr-line);border-radius:12px;color:var(--ink);display:grid;justify-items:center;gap:8px}
-.rr-flow button:not(:last-child)::before{content:'→';position:absolute;right:-13px;top:42%;color:var(--green);z-index:1;background:var(--paper);font-size:17px}
-.rr-flow small{color:var(--muted);font-size:13px}
-.rr-flow span{font-weight:700;font-size:17px}
-.rr-chain{padding-top:15px;border-top:1px solid var(--learning-line);color:var(--green);font-size:16px;font-weight:650}
-.rr-decisions{padding-left:22px;line-height:1.8;margin-bottom:18px}
-.rr-question{padding-top:22px;border-top:1px solid var(--rr-line);margin-top:24px}
-.rr-case-menu{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 20px}
-.rr-case-menu .btn{display:flex;align-items:center;gap:10px;flex:1 1 auto;font-size:15px}
-.rr-case-menu .rr-icon{width:24px;height:24px}
-.rr-case-heading{display:flex;justify-content:space-between;gap:10px;align-items:start;border-bottom:1px solid var(--line);margin-bottom:22px;padding-bottom:14px}
-.rr-case-heading h2{font-size:20px}
-.rr-case-heading .pill{white-space:nowrap}
-.rr-bids{padding:24px 20px;border:1px solid var(--rr-line);border-radius:12px;background:var(--cream);max-width:900px;margin:20px auto}
-.rr-bid-links{text-align:center;padding:10px;background:var(--sand);border-radius:8px;font-weight:650;margin-bottom:20px}
-.rr-bids-revealed .rr-bid-links{background:var(--green);color:var(--learning-surface)}
-.rr-bid-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.rr-bid-row>div{display:grid;justify-items:center;gap:10px}
-.rr-bid-row span{font-size:14px}
-.rr-bids>p{text-align:center;font-size:15px;margin-bottom:0}
-.rr-waterflow{display:grid;grid-template-columns:1fr 1fr;gap:24px;background:var(--rr-soft);border-radius:12px;padding:24px;margin:20px 0}
-.rr-waterflow>div{display:grid;gap:10px;justify-items:center;text-align:center}
-.rr-waterflow .rr-icon{height:80px;width:80px}
-.rr-waterflow span{font-size:15px}
-.rr-waterflow p{grid-column:1/-1;text-align:center;border-top:1px solid var(--rr-line);padding-top:18px;margin:0}
-.rr-timeline{display:flex;gap:12px;margin:24px 0}
-.rr-timeline>div{flex:1;display:grid;gap:12px;padding:20px;background:var(--rr-soft);border-radius:12px}
-.rr-timeline time{font-size:22px;font-weight:700;color:var(--green);font-variant-numeric:tabular-nums}
-.rr-perspective-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-.rr-perspective-tabs .btn{flex:1 1 auto}
-.rr-comparison{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
-.rr-comparison>div{padding:22px;background:var(--rr-soft);border-radius:12px}
-.rr-comparison span{font-size:14px;color:var(--muted)}
-.rr-comparison h3{margin:12px 0 0;font-size:20px}
-.rr-concept{padding-top:20px;border-top:1px solid var(--rr-line);margin:24px 0}
-.rr-sources{border-top:1px solid var(--rr-line);margin-top:24px}
-.rr-sources p{font-size:14px;max-width:80ch}
-.rr-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
-.rr-checks label{display:flex;align-items:center;gap:10px;min-height:48px;border:1px solid var(--rr-line);padding:10px 14px;border-radius:10px}
-.rr-checks input{width:20px;height:20px;flex:none}
-.rr-writing{display:grid;gap:10px;font-size:16px;margin:20px 0}
-.rr-writing textarea{padding:14px;border:1px solid var(--learning-brand);border-radius:10px;resize:vertical;min-height:110px;width:100%;background:var(--paper);color:var(--ink);line-height:1.5}
-.rr-writing textarea::placeholder{color:var(--learning-ink);opacity:1}
-.rr-central{padding:22px;background:var(--sand);border-radius:12px;margin-top:20px}
-.rr-central p{margin-bottom:0}
-.rr-source-select{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:20px 0}
-.rr-source-select select{border:1px solid var(--learning-brand);min-height:46px;padding:10px;border-radius:8px;background:var(--paper);color:var(--ink);max-width:100%}
-.rr-empty{padding:24px 0;border-top:1px solid var(--line);margin-top:24px}
-.ripple blockquote{margin:20px 0;padding:18px;background:var(--sand);border-radius:10px;white-space:pre-wrap;overflow-wrap:anywhere}
-.ripple button:not(:disabled):hover{border-color:var(--green);filter:brightness(.98)}
-.ripple button:focus-visible,.ripple textarea:focus-visible,.ripple select:focus-visible,.ripple summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
-.rr-teacher-note{padding:14px;background:var(--learning-subtle);border-radius:10px;font-size:16px}
-.rr-teacher .rr-reveal p,.rr-teacher .rr-impact p,.rr-teacher .rr-lead,.rr-teacher .rr-central p{font-size:clamp(18px,1.25vw,24px)}
-.rr-teacher .rr-choice span{font-size:17px}
-.rr-teacher .btn{font-size:17px;min-height:52px}
-@keyframes rr-reveal{
-from{opacity:.35}
-to{opacity:1}
-}
-@media(max-width:1200px){
-.rr-workspace{grid-template-columns:1fr 1fr;gap:20px}
-.rr-impact{grid-column:1/-1;border-left:0;border-top:1px solid var(--rr-line);padding:20px 0 0}
-.rr-network{max-width:480px;margin:auto}
-.rr-final>div:first-child{align-self:center}
+/* 선택의 파장 — 교과서 개념을 짧게 확인하는 기초 학습 화면.
+   Content-specific classes are rb-*; global/home controls are intentionally untouched. */
+#content .ripple-basic{padding-top:12px;line-height:1.6;color:var(--learning-ink);overflow-wrap:break-word}
+#content .ripple-basic :is(h1,h2,h3,p,figure){margin-top:0}
+#content .ripple-basic :is(h2,h3){letter-spacing:-.025em;line-height:1.4;word-break:keep-all;overflow-wrap:break-word}
+#content .ripple-basic h2{font-size:clamp(22px,2.1vw,28px);margin-bottom:12px;color:var(--learning-brand)}
+#content .ripple-basic h3{font-size:17px;margin-bottom:7px;color:var(--learning-ink)}
+#content .ripple-basic p{margin-bottom:12px}
+#content .ripple-basic button{font:inherit;min-height:44px;min-width:44px;cursor:pointer}
+#content .ripple-basic button:disabled{cursor:default}
+#content .ripple-basic :is(button,a,summary):focus-visible{outline:3px solid var(--focus,#A2762E);outline-offset:3px}
+#content .ripple-basic svg{display:block;max-width:100%;height:auto;flex:none}
+#content .ripple-basic .rb-intro{max-width:72ch;color:var(--learning-muted-strong);font-size:15px;margin:0 0 20px}
+#content .ripple-basic .rb-role-layout{display:grid;grid-template-columns:minmax(200px,250px) minmax(0,1fr);gap:30px;align-items:start}
+#content .ripple-basic .rb-role-layout>*{min-width:0}
+#content .ripple-basic .rb-actors{display:grid;gap:10px}
+#content .ripple-basic .rb-actor{position:relative;display:grid;grid-template-columns:60px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-items:center;text-align:left;border:1px solid var(--learning-line);border-radius:11px;background:var(--learning-surface);color:var(--learning-ink);padding:14px}
+#content .ripple-basic .rb-actor-art{grid-column:1;grid-row:1/3;width:60px;align-self:center}
+#content .ripple-basic .rb-actor-art svg{width:100%}
+#content .ripple-basic .rb-actor strong{font-size:17px;align-self:end;line-height:1.4}
+#content .ripple-basic .rb-actor>span:not(.rb-actor-art){font-size:12px;line-height:1.5;color:var(--learning-muted-strong);align-self:start;word-break:keep-all}
+#content .ripple-basic .rb-actor[aria-pressed=true]{border-color:var(--learning-brand);background:var(--learning-selected);box-shadow:inset 3px 0 0 var(--learning-brand)}
+#content .ripple-basic .rb-actor[aria-pressed=true] strong{color:var(--learning-brand)}
+#content .ripple-basic .rb-role-panel{min-width:0;background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:16px;padding:28px 30px}
+#content .ripple-basic .rb-role-heading{display:flex;align-items:center;gap:20px;margin-bottom:24px;padding-bottom:22px;border-bottom:1px solid var(--learning-divider)}
+#content .ripple-basic .rb-role-heading>svg,#content .ripple-basic .rb-role-heading>.rb-actor-art{width:88px;flex:none}
+#content .ripple-basic .rb-role-heading>div{min-width:0}
+#content .ripple-basic .rb-role-heading :is(.kicker,small){display:block;color:var(--learning-muted);font-size:12px;font-weight:600;margin-bottom:5px}
+#content .ripple-basic .rb-role-heading h2{margin:0 0 6px}
+#content .ripple-basic .rb-role-heading p{font-size:16px;margin:0;max-width:58ch}
+#content .ripple-basic .rb-role-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 28px;margin:24px 0}
+#content .ripple-basic .rb-role-items article{min-width:0;padding-left:14px;border-left:3px solid var(--learning-accent)}
+#content .ripple-basic .rb-role-items article:nth-child(even){border-left-color:var(--diagram-blue)}
+#content .ripple-basic .rb-role-items p{font-size:15px;margin:0;color:var(--learning-ink)}
+#content .ripple-basic .rb-example{display:flex;align-items:center;gap:20px;padding:20px 0;border-block:1px solid var(--learning-divider);margin:24px 0}
+#content .ripple-basic .rb-example>svg{width:94px}
+#content .ripple-basic .rb-example figcaption{min-width:0}
+#content .ripple-basic .rb-example h3{font-size:16px;color:var(--learning-brand)}
+#content .ripple-basic .rb-example p{font-size:15px;margin:0}
+#content .ripple-basic .rb-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:24px 0}
+#content .ripple-basic .rb-compare article{min-width:0;padding:0 0 0 16px;border-left:3px solid var(--diagram-blue)}
+#content .ripple-basic .rb-compare article+article{border-left-color:var(--learning-accent)}
+#content .ripple-basic .rb-compare p{font-size:15px;margin:0}
+#content .ripple-basic .rb-esg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:20px 0}
+#content .ripple-basic .rb-esg>span{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 8px;background:var(--learning-subtle);border-radius:6px;text-align:center;font-size:14px}
+#content .ripple-basic .rb-esg strong{color:var(--learning-brand);font-size:18px}
+#content .ripple-basic .rb-rights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:20px 0 12px}
+#content .ripple-basic .rb-rights button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 10px;border:1px solid var(--learning-line);border-radius:9px;background:var(--learning-surface);color:var(--learning-ink);text-align:center}
+#content .ripple-basic .rb-rights span{font-size:12px;color:var(--learning-muted-strong)}
+#content .ripple-basic .rb-rights strong{font-size:16px}
+#content .ripple-basic .rb-rights button[aria-pressed=true]{background:var(--learning-selected);border-color:var(--learning-brand);box-shadow:inset 0 -2px 0 var(--learning-brand)}
+#content .ripple-basic .rb-right-note{min-height:72px;padding:12px 0;font-size:15px;color:var(--learning-ink)}
+#content .ripple-basic .rb-role-footer{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--learning-divider)}
+#content .ripple-basic :is(.rb-role-footer,.rb-actions,.rb-result-actions) .btn{padding:10px 18px;font-size:15px;border-radius:8px}
+#content .ripple-basic .rb-effect-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:540px;margin:0 0 24px}
+#content .ripple-basic .rb-effect-tabs button{background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:9px;padding:12px;color:var(--learning-ink);font-size:16px;font-weight:650}
+#content .ripple-basic .rb-effect-tabs button[aria-pressed=true]{background:var(--learning-selected);border-color:var(--learning-brand);color:var(--learning-brand);box-shadow:inset 0 -2px 0 var(--learning-brand)}
+#content .ripple-basic .rb-effect-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,1fr);gap:24px;align-items:start}
+#content .ripple-basic .rb-effect-layout>*{min-width:0}
+#content .ripple-basic .rb-effect-story{background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:16px;padding:28px}
+#content .ripple-basic .rb-effect-story>p{font-size:16px}
+#content .ripple-basic .rb-relation{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;list-style:none;padding:20px 0;margin:20px 0}
+#content .ripple-basic .rb-relation li{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;text-align:center}
+#content .ripple-basic .rb-relation li:not(:last-child)::after{content:'→';position:absolute;right:-20px;top:34px;font-size:24px;color:var(--learning-brand)}
+#content .ripple-basic .rb-relation svg{width:98px}
+#content .ripple-basic .rb-relation strong{font-size:16px;word-break:keep-all;line-height:1.5}
+#content .ripple-basic .rb-relation span{font-size:13px;line-height:1.5;color:var(--learning-muted-strong);word-break:keep-all}
+#content .ripple-basic .rb-condition{border-top:1px solid var(--learning-divider);padding-top:16px;margin-top:16px;font-size:15px;color:var(--learning-ink)}
+#content .ripple-basic .rb-condition strong{color:var(--learning-brand)}
+#content .ripple-basic .rb-effect-question{background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:14px;padding:24px}
+#content .ripple-basic .rb-effect-question h3{font-size:18px}
+#content .ripple-basic .rb-effect-question .learning-choice{font-size:14px;min-height:52px}
+#content .ripple-basic .rb-feedback{border-top:1px solid var(--learning-divider);padding:18px 0 0;margin-top:18px;font-size:15px}
+#content .ripple-basic .rb-feedback-title{display:flex;gap:9px;align-items:center;color:var(--learning-brand);font-size:17px;font-weight:700;margin-bottom:8px}
+#content .ripple-basic .rb-feedback-title>span:first-child{display:grid;place-items:center;flex:none;width:24px;height:24px;border:1px solid currentColor;border-radius:50%;font-size:14px}
+#content .ripple-basic .rb-feedback.wrong .rb-feedback-title,#content .ripple-basic .rb-feedback.is-incorrect .rb-feedback-title{color:var(--learning-danger)}
+#content .ripple-basic .rb-feedback p:last-child{margin-bottom:0}
+#content .ripple-basic .rb-policy{border-left:3px solid var(--diagram-blue);padding:2px 0 2px 18px;margin-top:24px}
+#content .ripple-basic .rb-policy h3{font-size:16px}
+#content .ripple-basic .rb-policy p{font-size:14px;margin-bottom:0}
+#content .ripple-basic .rb-question-index{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px;margin:0 0 20px}
+#content .ripple-basic .rb-question-index button{position:relative;background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:7px;padding:8px 4px;color:var(--learning-muted-strong);font-size:14px;font-variant-numeric:tabular-nums}
+#content .ripple-basic .rb-question-index button[aria-current=true],#content .ripple-basic .rb-question-index button[aria-current=step]{border-color:var(--learning-brand);background:var(--learning-brand);color:var(--learning-surface);font-weight:700}
+#content .ripple-basic .rb-question-index button[data-status=correct]::after,#content .ripple-basic .rb-question-index button[data-status=wrong]::after{position:absolute;right:4px;bottom:1px;font-size:10px;line-height:1}
+#content .ripple-basic .rb-question-index button[data-status=correct]::after{content:'✓'}
+#content .ripple-basic .rb-question-index button[data-status=wrong]::after{content:'·';font-size:20px}
+#content .ripple-basic .rb-question-art{display:flex;align-items:center;gap:14px;margin:18px 0}
+#content .ripple-basic .rb-question-art>svg{width:82px}
+#content .ripple-basic .rb-question-art :is(p,figcaption){font-size:15px;margin:0}
+#content .ripple-basic .rb-actions{display:flex;justify-content:flex-end;gap:10px;margin:22px 0 0;padding-top:20px;border-top:1px solid var(--learning-divider)}
+#content .ripple-basic .rb-next{background:var(--learning-brand);border:1px solid var(--learning-brand);color:var(--learning-surface)}
+#content .ripple-basic .rb-next:disabled{opacity:.5}
+#content .ripple-basic .rb-source{font-size:12px;color:var(--learning-muted-strong);line-height:1.7;border-top:1px solid var(--learning-divider);margin:30px 0 0;padding-top:16px;max-width:90ch}
+#content .ripple-basic .rb-source p{margin:0 0 7px}
+#content .ripple-basic .rb-result-summary{font-size:15px;max-width:72ch;margin:18px 0}
+#content .ripple-basic .rb-result-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:24px;padding-top:20px;border-top:1px solid var(--learning-divider)}
+#content .ripple-basic.rb-teacher :is(.rb-role-heading p,.rb-role-items p,.rb-example p,.rb-compare p,.rb-effect-story>p){font-size:18px}
+@media(hover:hover){
+ #content .ripple-basic :is(.rb-actor,.rb-rights button,.rb-effect-tabs button,.rb-question-index button):not(:disabled):hover{border-color:var(--learning-brand)}
 }
 @media(max-width:900px){
-.rr-workspace{grid-template-columns:1fr}
-.rr-network{width:100%;min-height:270px;gap:42px}
-.rr-choices{grid-template-columns:1fr 1fr}
-.rr-impact{grid-column:auto}
-.rr-surface{padding:24px}
-.rr-products{max-width:650px}
-.rr-stage-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.rr-stage-nav .btn{font-size:14px}
-.rr-stage-nav .btn:nth-child(n+4){grid-column:auto}
-.rr-checks{grid-template-columns:1fr 1fr}
+ #content .ripple-basic .rb-role-layout{grid-template-columns:190px minmax(0,1fr);gap:20px}
+ #content .ripple-basic .rb-actor{grid-template-columns:42px minmax(0,1fr);column-gap:9px;padding:12px}
+ #content .ripple-basic .rb-actor-art{width:42px}
+ #content .ripple-basic .rb-role-panel{padding:24px}
+ #content .ripple-basic .rb-role-items{gap:18px}
+ #content .ripple-basic .rb-effect-layout{grid-template-columns:minmax(0,1fr)}
+ #content .ripple-basic .rb-effect-question{max-width:none}
+ #content .ripple-basic .rb-effect-question .learning-choices{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:650px){
-.ripple{padding-top:12px}
-.rr-top{align-items:center}
-.rr-top .teacher-control{padding:9px;font-size:12px;gap:6px}
-.rr-top .teacher-control input{width:20px;height:20px}
-.rr-header{margin:14px 0 18px}
-.ripple h1{font-size:32px}
-.rr-header>span{font-size:15px}
-.rr-header p{font-size:13px}
-.rr-tabs button{font-size:14px;padding:10px 4px}
-.rr-stage-nav{gap:6px;margin-bottom:14px}
-.rr-stage-nav .btn{font-size:12px;padding:8px 5px}
-.rr-surface{padding:20px 16px}
-.rr-section-head{gap:10px;margin-bottom:18px}
-.ripple h2{font-size:22px}
-.rr-step{width:30px;height:30px;font-size:14px}
-.rr-section-head p{font-size:15px}
-.rr-products{gap:12px}
-.rr-product-art{min-height:150px}
-.rr-product-art .rr-icon{width:95px;height:95px}
-.rr-product>div:last-child{padding:14px 12px}
-.rr-product strong{font-size:24px}
-.rr-product small{font-size:12px}
-.rr-choices{grid-template-columns:1fr}
-.rr-flow{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.rr-flow button{padding:14px 6px}
-.rr-flow button::before{display:none}
-.rr-flow small{font-size:12px}
-.rr-reveal{padding:18px}
-.rr-network{gap:45px 34px;max-width:360px}
-.rr-actor{min-height:108px}
-.rr-actions .btn{flex:1 1 auto;font-size:14px;padding:10px 12px}
-.rr-case-menu{gap:8px}
-.rr-case-menu .btn{width:100%;font-size:14px;padding:10px 12px}
-.rr-case-heading h2{font-size:18px}
-.rr-timeline{flex-direction:column}
-.rr-timeline>div{display:flex;align-items:center}
-.rr-timeline time{font-size:19px;min-width:58px}
-.rr-checks{gap:8px}
-.rr-checks label{font-size:14px;padding:9px 10px}
-.rr-comparison{grid-template-columns:1fr;gap:12px}
-.rr-comparison>div{padding:18px}
-.rr-waterflow{padding:18px;gap:14px}
-.rr-waterflow span{font-size:14px}
-.rr-bids{padding:18px 12px}
-.rr-bid-row{gap:8px}
-.rr-bid-row span{font-size:12px}
-.rr-bid-row strong{font-size:14px}
+ #content .ripple-basic{padding-top:8px}
+ #content .ripple-basic .rb-intro{font-size:14px;margin-bottom:18px}
+ #content .ripple-basic .rb-role-layout{grid-template-columns:minmax(0,1fr);gap:18px}
+ #content .ripple-basic .rb-actors{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #content .ripple-basic .rb-actor{grid-template-columns:44px minmax(0,1fr);padding:10px 12px;column-gap:8px}
+ #content .ripple-basic .rb-actor-art{width:44px}
+ #content .ripple-basic .rb-actor strong{font-size:16px}
+ #content .ripple-basic .rb-actor>span:not(.rb-actor-art){font-size:11px}
+ #content .ripple-basic .rb-role-panel{padding:20px 18px;border-radius:13px}
+ #content .ripple-basic .rb-role-heading{gap:13px;padding-bottom:18px;margin-bottom:20px}
+ #content .ripple-basic .rb-role-heading>svg,#content .ripple-basic .rb-role-heading>.rb-actor-art{width:64px}
+ #content .ripple-basic .rb-role-heading p{font-size:15px}
+ #content .ripple-basic .rb-role-items{grid-template-columns:minmax(0,1fr);gap:18px;margin:20px 0}
+ #content .ripple-basic .rb-role-items h3{font-size:16px}
+ #content .ripple-basic .rb-role-items p{font-size:15px}
+ #content .ripple-basic .rb-example{gap:12px;margin:20px 0;padding:18px 0}
+ #content .ripple-basic .rb-example>svg{width:64px}
+ #content .ripple-basic .rb-example p{font-size:14px}
+ #content .ripple-basic .rb-compare{grid-template-columns:minmax(0,1fr);gap:20px;margin:20px 0}
+ #content .ripple-basic .rb-esg{gap:5px}
+ #content .ripple-basic .rb-esg>span{flex-direction:column;gap:1px;padding:9px 4px;font-size:12px}
+ #content .ripple-basic .rb-rights{gap:6px}
+ #content .ripple-basic .rb-rights button{padding:12px 6px}
+ #content .ripple-basic .rb-rights strong{font-size:15px}
+ #content .ripple-basic .rb-rights span{font-size:11px}
+ #content .ripple-basic .rb-right-note{min-height:0;font-size:14px}
+ #content .ripple-basic .rb-role-footer{gap:8px;margin-top:20px;padding-top:18px}
+ #content .ripple-basic :is(.rb-role-footer,.rb-actions,.rb-result-actions) .btn{flex:1 1 0;padding:10px 11px;font-size:14px}
+ #content .ripple-basic .rb-effect-tabs{gap:8px;margin-bottom:18px}
+ #content .ripple-basic .rb-effect-tabs button{font-size:15px;padding:11px 8px}
+ #content .ripple-basic .rb-effect-layout{gap:18px}
+ #content .ripple-basic .rb-effect-story{padding:22px 18px;border-radius:13px}
+ #content .ripple-basic .rb-effect-story>p{font-size:15px}
+ #content .ripple-basic .rb-relation{gap:16px;margin:16px 0;padding:12px 0}
+ #content .ripple-basic .rb-relation svg{width:74px}
+ #content .ripple-basic .rb-relation strong{font-size:14px}
+ #content .ripple-basic .rb-relation span{font-size:12px}
+ #content .ripple-basic .rb-relation li:not(:last-child)::after{right:-15px;top:24px;font-size:20px}
+ #content .ripple-basic .rb-condition{font-size:14px}
+ #content .ripple-basic .rb-effect-question{padding:20px 18px}
+ #content .ripple-basic .rb-effect-question .learning-choices{grid-template-columns:minmax(0,1fr)}
+ #content .ripple-basic .rb-question-index{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:16px}
+ #content .ripple-basic .rb-question-art{gap:12px}
+ #content .ripple-basic .rb-question-art>svg{width:68px}
+ #content .ripple-basic .rb-question-art :is(p,figcaption){font-size:14px}
+ #content .ripple-basic .rb-actions{gap:8px;margin-top:20px;padding-top:18px}
+ #content .ripple-basic .rb-source{font-size:11px;margin-top:26px}
+ #content .ripple-basic .rb-result-actions{gap:8px}
 }
 @media(max-width:360px){
-.rr-products{gap:8px}
-.rr-product strong{font-size:22px}
-.rr-top .teacher-control{font-size:11px}
-.rr-checks{grid-template-columns:1fr}
-.rr-tabs button{font-size:13px}
-.rr-stage-nav .btn{font-size:11px}
-.rr-flow span{font-size:16px}
+ #content .ripple-basic .rb-actor{grid-template-columns:34px minmax(0,1fr);padding:10px 8px;column-gap:6px}
+ #content .ripple-basic .rb-actor-art{width:34px}
+ #content .ripple-basic .rb-role-panel,#content .ripple-basic .rb-effect-story,#content .ripple-basic .rb-effect-question{padding:18px 14px}
+ #content .ripple-basic .rb-role-heading>svg,#content .ripple-basic .rb-role-heading>.rb-actor-art{width:50px}
+ #content .ripple-basic .rb-example>svg{width:50px}
+ #content .ripple-basic .rb-relation{gap:14px}
+ #content .ripple-basic .rb-relation svg{width:58px}
+ #content .ripple-basic .rb-relation strong{font-size:13px}
+ #content .ripple-basic .rb-relation span{font-size:11px}
+ #content .ripple-basic .rb-relation li:not(:last-child)::after{top:18px;right:-13px;font-size:18px}
+ #content .ripple-basic .rb-rights strong{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){
-.rr-network .rr-link-active{animation:none}
-.ripple *{scroll-behavior:auto!important}
+ #content .ripple-basic *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
-.rr-product:disabled,.rr-choice:disabled{opacity:1;cursor:default}

@@ -2,7 +2,7 @@
 .learning-v2{color:var(--learning-ink);font-family:Pretendard,'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif;font-size:16px;line-height:1.6;padding-top:20px}
 #content .learning-v2 :is(p,li,label,td){color:var(--learning-ink)}
 #content .learning-v2 :is(h1,h2,h3,h4){color:var(--learning-brand);letter-spacing:-.025em;line-height:1.4}
-#content .learning-v2 :is(.subtle,.ex-caption,.fn-caption,.rr-caption,.rr-note,.formula-note,.learning-privacy){color:var(--learning-muted);font-size:13px;line-height:1.65}
+#content .learning-v2 :is(.subtle,.ex-caption,.fn-caption,.formula-note,.learning-privacy){color:var(--learning-muted);font-size:13px;line-height:1.65}
 #content .learning-v2 :is(button,a,input,select,textarea):focus-visible{outline:3px solid var(--learning-brand);outline-offset:3px}
 #content .learning-v2 .btn{border-radius:8px;min-height:44px;padding:10px 16px;font-size:14px;line-height:1.45}
 #content .learning-v2 .btn.primary{background:var(--learning-brand);border-color:var(--learning-brand);color:var(--learning-surface)}
@@ -124,32 +124,6 @@
 #content .learning-v2 .fn-totals>div{background:var(--learning-subtle);border:1px solid var(--learning-line);padding:18px}
 #content .learning-v2 .fn-result-row p,#content .learning-v2 .fn-result-row small{color:var(--learning-muted)}
 #content .learning-v2 .fn-notice{font-size:13px;line-height:1.65;padding:12px 15px;margin:16px 0;border-radius:0 7px 7px 0;background:var(--learning-subtle)}
-#content .learning-v2 .rr-top{gap:12px;flex-wrap:wrap}
-#content .learning-v2 .rr-surface{background:var(--learning-surface);border-color:var(--learning-line);border-radius:13px;padding:26px}
-#content .learning-v2 .rr-products{gap:18px}
-#content .learning-v2 .rr-product{border-radius:12px;overflow:hidden;border-color:var(--learning-line);background:var(--learning-surface)}
-#content .learning-v2 .rr-product .rr-icon{width:70px;height:70px}
-#content .learning-v2 .rr-product>div:last-child{padding:18px}
-#content .learning-v2 .rr-product strong{color:var(--learning-brand);font-size:25px}
-#content .learning-v2 .rr-stage-nav{padding:10px;background:var(--learning-subtle);border-radius:10px;border:1px solid var(--learning-line);gap:5px}
-#content .learning-v2 .rr-stage-nav .btn{font-size:13px;min-height:44px;border-radius:6px;border-color:transparent}
-#content .learning-v2 .rr-stage-nav .rr-selected{background:var(--learning-surface)!important;box-shadow:0 1px 6px #1f293310;border-color:var(--learning-brand)!important}
-#content .learning-v2 .rr-actor{background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:10px;min-height:120px}
-#content .learning-v2 .rr-actor .rr-icon{color:var(--learning-ink)}
-#content .learning-v2 .rr-actor strong{color:var(--learning-brand)}
-#content .learning-v2 .rr-flow{gap:8px;margin:18px 0}
-#content .learning-v2 .rr-flow>button{background:var(--learning-subtle);border:1px solid var(--learning-line);border-radius:9px;padding:15px 10px}
-#content .learning-v2 .rr-flow>button:not(:last-child):after{content:'→';position:absolute;right:-10px;top:40%;color:var(--learning-brand);z-index:1;font-size:14px}
-#content .learning-v2 .rr-flow>button.rr-selected:after{content:'현재';right:6px;top:5px;font-size:10px}
-#content .learning-v2 .rr-reveal,#content .learning-v2 .rr-impact{background:var(--learning-subtle);border:1px solid var(--learning-line);border-radius:10px}
-#content .learning-v2 .rr-comparison{gap:16px}
-#content .learning-v2 .rr-comparison>div{background:var(--learning-surface);border:1px solid var(--learning-line);border-top:3px solid var(--learning-line);border-radius:9px;padding:20px}
-#content .learning-v2 .rr-comparison>div:last-child{border-top-color:var(--learning-brand);background:var(--learning-subtle)}
-#content .learning-v2 .rr-comparison span{font-size:12px;color:var(--learning-ink)}
-#content .learning-v2 .rr-comparison h3{font-size:18px;line-height:1.6;margin:9px 0}
-#content .learning-v2 .rr-writing textarea{background:var(--learning-surface);border-color:var(--learning-control);border-radius:8px}
-#content .learning-v2 .rr-choice,#content .learning-v2 .rr-pick{background:var(--learning-surface);border-color:var(--learning-line);border-radius:9px}
-#content .learning-v2 .rr-section-head p,#content .learning-v2 .rr-caption{color:var(--learning-muted)}
 #content .learning-v2 .learning-scene-art.hl-icon{display:block;width:100%;height:auto;max-width:240px;flex:none;color:inherit}
 #content .learning-v2 .studio-pathway{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;padding:0;margin:18px 0 24px}
 #content .learning-v2 .studio-pathway>li{position:relative;min-width:0;border:0;border-radius:0;background:none;padding:16px;text-align:center}
@@ -182,32 +156,10 @@
 #content .learning-v2 .studio-eyebrow{font-size:12px;font-weight:650;color:var(--learning-muted)}
 #content .finance.learning-v2 .studio-goal-art{width:170px;margin:0 0 14px}
 #content .finance.learning-v2 .studio-emergency-art{float:right;width:170px;margin:8px 0 12px 20px}
-#content .intervention.learning-v2 .ex-firms{gap:12px}
-#content .intervention.learning-v2 .ex-firms>div{border:1px solid var(--learning-line);background:var(--learning-subtle);border-radius:14px;padding:14px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
-#content .intervention.learning-v2 .studio-firm-art{display:block;width:150px;max-width:100%}
-#content .intervention.learning-v2 .ex-firms strong{font-size:21px;color:var(--learning-brand)}
-#content .intervention.learning-v2 .ex-firms small{line-height:1.5;font-size:12px}
-#content .intervention.learning-v2 .studio-village{display:flex;align-items:center;flex-direction:column;gap:12px;border-radius:16px;background:var(--learning-subtle);border:1px solid var(--learning-line);padding:20px;line-height:1.6}
-#content .intervention.learning-v2 .studio-village>.learning-scene-art{width:290px;max-width:100%}
-#content .intervention.learning-v2 .studio-village>span{font-size:19px;font-weight:650}
-#content .intervention.learning-v2 .studio-village>div{font-size:14px}
-#content .ripple.learning-v2 .rr-product-art .learning-scene-art{width:230px;max-width:85%;margin:auto}
-#content .ripple.learning-v2 .rr-product-art{background:var(--learning-subtle);min-height:190px}
-#content .ripple.learning-v2 .rr-product-b{background:var(--learning-subtle)}
-#content .ripple.learning-v2 .rr-product-b .learning-scene-art{filter:hue-rotate(25deg)}
-#content .ripple.learning-v2 .rr-flow button>.learning-scene-art{width:140px;max-width:100%;margin:0 auto}
-#content .ripple.learning-v2 .rr-flow button{gap:5px;background:var(--learning-subtle);border-color:var(--learning-line)}
-#content .ripple.learning-v2 .rr-flow button[aria-pressed=true]{background:var(--learning-selected);color:var(--learning-brand);border:2px solid var(--learning-brand);padding:17px 7px}
-#content .ripple.learning-v2 .rr-actor>.learning-scene-art{width:120px;max-width:85%;margin:auto}
-#content .ripple.learning-v2 .rr-actor{background:var(--learning-subtle);padding:12px 10px;gap:4px}
-#content .ripple.learning-v2 .rr-actor[aria-pressed=true]{background:var(--learning-selected);color:var(--learning-ink);border-color:var(--learning-brand);box-shadow:inset 0 0 0 1px #1f293310}
-#content .ripple.learning-v2 .rr-network{gap:45px 38px;min-height:350px}
-#content .ripple.learning-v2 .rr-bid-row .learning-scene-art{width:170px;max-width:100%}
-#content .ripple.learning-v2 .rr-waterflow .learning-scene-art{width:170px;max-width:100%}
 #content .ripple.learning-v2 .studio-contact-art{width:200px;max-width:80%;margin:16px auto}
-#content .learning-v2 :is(.step-actions,.rr-actions,.fn-actions,.hl-actions){gap:12px}
+#content .learning-v2 :is(.step-actions,.fn-actions,.hl-actions){gap:12px}
 #content .learning-v2{padding-top:12px;word-break:keep-all;overflow-wrap:anywhere}
-#content .learning-v2 :is(.learning-toolbar,.ex-top,.fn-top,.rr-top){display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 6px}
+#content .learning-v2 :is(.learning-toolbar,.ex-top,.fn-top){display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 6px}
 #content .learning-v2 .learning-header{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:32px;align-items:center;background:none;border:0;border-radius:0;padding:12px 4px 20px;margin:0}
 #content .learning-v2 .learning-header h1{font-size:32px;line-height:1.35;letter-spacing:-.045em;margin:9px 0;color:var(--learning-brand)}
 #content .learning-v2 .learning-header>div>p{margin:8px 0 0;font-size:16px;color:var(--learning-ink)}
@@ -302,17 +254,13 @@
 #content .history-lab.learning-v2 .hl-archive article:has(input:checked){border-left-color:var(--learning-brand);background:var(--learning-selected)}
 #content .history-lab.learning-v2 .hl-question{background:var(--learning-surface);border:1px solid var(--learning-line);border-radius:12px;padding:24px}
 #content .history-lab.learning-v2 .hl-actions{display:flex;gap:10px;justify-content:flex-end}
-#content .learning-v2 .rr-product-b{background:radial-gradient(ellipse at 50% 75%,var(--learning-subtle) 0,transparent 65%),var(--learning-subtle)}
-#content .learning-v2 .rr-products .btn{width:100%}
-#content .learning-v2 .rr-reveal{background:var(--learning-subtle);border-left:4px solid var(--learning-brand)}
-#content .learning-v2 .rr-network{border:0;border-radius:12px;background:radial-gradient(ellipse at center,var(--learning-subtle),white 70%)}
 #content .learning-v2 .fn-portfolio{background:var(--learning-subtle);align-self:start}
 #content .learning-v2 .fn-result-rows{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 #content .learning-v2 .fn-result-row{padding:14px;border:1px solid var(--learning-line);border-radius:9px;margin:0;border-top:3px solid var(--learning-brand)}
 #content .learning-v2 .fn-result-row>div b{font-size:22px;color:var(--learning-ink)}
 #content .learning-v2 .fn-totals strong{font-size:24px}
 #content .learning-v2 :is(input[type=number],select){min-height:44px;height:auto;line-height:1.4;max-width:100%}
-#content .learning-v2 :is(.fn-notice,.rr-note,.ex-notice){font-size:13px;line-height:1.6}
+#content .learning-v2 :is(.fn-notice,.ex-notice){font-size:13px;line-height:1.6}
 /* Formula values are HTML, so they reflow independently of the reusable SVG symbols. */
 #content .learning-v2 .learning-calculation{margin:18px 0;padding:16px 0;border-block:1px solid var(--learning-divider)}
 #content .learning-v2 .learning-calculation figcaption{font-size:12px;color:var(--learning-muted);margin-bottom:12px}
@@ -337,7 +285,6 @@
 #content .learning-v2 .studio-industry-key{display:flex;gap:20px;margin-bottom:14px}
 #content .learning-v2 .studio-industry-key>span{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--learning-ink)}
 #content .learning-v2 .studio-industry-key .hl-icon{width:90px;height:60px}
-#content .learning-v2 .rr-product-art{background:radial-gradient(ellipse at 50% 75%,var(--learning-subtle) 0,transparent 65%),var(--learning-subtle);min-height:140px;position:relative}
 #content .learning-v2 .studio-product-tag{position:absolute;top:12px;left:12px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--learning-subtle);color:var(--learning-muted);font-size:13px;font-weight:700}
 #content .learning-v2 .studio-problem-material{display:grid;grid-template-columns:68px minmax(0,1fr);gap:12px;align-items:center;background:var(--learning-material);border-radius:12px;padding:16px;margin-bottom:8px}
 #content .learning-v2 .studio-problem-material>.learning-scene-art.hl-icon{width:100%;max-width:68px;height:auto;flex:none}
@@ -358,9 +305,6 @@ body:has(.learning-v2) #content:focus{outline:none}
 #content .learning-v2 .tg-unit>.tg-unit-fill{position:absolute;inset:0 auto 0 0;overflow:hidden;background:var(--learning-subtle);height:100%;border-right:1px solid var(--learning-line)}
 #content .learning-v2 .tg-unit-fill .learning-good{width:52px;height:52px;max-width:none;position:absolute;top:3px;left:3px}
 @media(max-width:900px){
-#content .intervention.learning-v2 .ex-firms{grid-template-columns:repeat(3,minmax(0,1fr))}
-#content .intervention.learning-v2 .ex-firms>div{padding:12px 8px}
-#content .intervention.learning-v2 .ex-firms strong{font-size:18px}
 }
 @media(max-width:700px){
 #content .learning-v2 .ex-graph text{font-size:20px}
@@ -383,21 +327,9 @@ body:has(.learning-v2) #content:focus{outline:none}
 #content .finance.learning-v2 .studio-situation>.learning-scene-art{width:105px;max-width:30%}
 #content .finance.learning-v2 .studio-situation .fn-situation{font-size:15px}
 #content .finance.learning-v2 .studio-emergency-art{width:115px}
-#content .intervention.learning-v2 .ex-firms{gap:6px}
-#content .intervention.learning-v2 .ex-firms>div{padding:10px 5px;gap:5px}
-#content .intervention.learning-v2 .ex-firms strong{font-size:16px}
-#content .intervention.learning-v2 .ex-firms small{font-size:11px}
-#content .ripple.learning-v2 .rr-product-art{min-height:145px}
-#content .ripple.learning-v2 .rr-product-art .learning-scene-art{width:160px;max-width:95%}
-#content .ripple.learning-v2 .rr-flow button{padding:10px 6px}
-#content .ripple.learning-v2 .rr-flow button[aria-pressed=true]{padding:9px 5px}
-#content .ripple.learning-v2 .rr-flow span{font-size:15px}
-#content .ripple.learning-v2 .rr-actor>.learning-scene-art{width:110px}
-#content .ripple.learning-v2 .rr-network{gap:32px 25px;min-height:320px}
-#content .learning-v2 :is(.rr-actions,.fn-actions){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-#content .learning-v2 :is(.rr-actions,.fn-actions)>.btn{width:100%;min-width:0}
-#content .learning-v2 :is(.rr-actions,.fn-actions)>.btn:last-child:nth-child(odd){grid-column:1/-1}
-#content .ripple.learning-v2 .rr-flow button::before{display:none!important}
+#content .learning-v2 :is(.fn-actions){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#content .learning-v2 :is(.fn-actions)>.btn{width:100%;min-width:0}
+#content .learning-v2 :is(.fn-actions)>.btn:last-child:nth-child(odd){grid-column:1/-1}
 #content .learning-v2 .learning-header .learning-goal{display:none}
 #content .learning-v2.trade:has(.tc-activity) .lab-location{display:none}
 #content .learning-v2 .tc-activity .tc-lesson-heading p{display:none}
@@ -410,8 +342,8 @@ body:has(.learning-v2) .topbar .topnav button{padding:10px 6px;font-size:11px;mi
 body:has(.learning-v2) .brand img{width:86px}
 body:has(.learning-v2) .topbar .tagline{display:none}
 #content .learning-v2{padding-top:8px;font-size:15px}
-#content .learning-v2 :is(.learning-toolbar,.ex-top,.fn-top,.rr-top){margin-bottom:4px;gap:6px}
-#content .learning-v2 :is(.learning-toolbar,.ex-top,.fn-top,.rr-top)>.btn,#content .learning-v2 .page-return{padding:8px 9px;font-size:12px;min-height:44px}
+#content .learning-v2 :is(.learning-toolbar,.ex-top,.fn-top){margin-bottom:4px;gap:6px}
+#content .learning-v2 :is(.learning-toolbar,.ex-top,.fn-top)>.btn,#content .learning-v2 .page-return{padding:8px 9px;font-size:12px;min-height:44px}
 #content .learning-v2 .teacher-setting{font-size:12px}
 #content .learning-v2 .teacher-setting label{gap:6px}
 #content .learning-v2 .learning-header{display:block;padding:4px 0 10px}
@@ -474,13 +406,6 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 #content .learning-v2 .tl-chain{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 #content .learning-v2 .tl-chain>button:not(:last-child)::after{right:-12px;font-size:12px}
 #content .learning-v2 .tl-chain>button{padding:8px 3px;font-size:11px}
-#content .learning-v2 .rr-surface{padding:20px 14px}
-#content .learning-v2 .rr-stage-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;overflow:visible;padding:6px}
-#content .learning-v2 .rr-stage-nav .btn{padding:8px 2px;white-space:normal;min-width:0;font-size:10px}
-#content .learning-v2 .rr-products{gap:10px}
-#content .learning-v2 .rr-product>div:last-child{padding:12px}
-#content .learning-v2 .rr-product strong{font-size:22px}
-#content .learning-v2 .rr-flow>button{font-size:12px}
 #content .learning-v2 .fn-control{grid-template-columns:44px minmax(70px,1fr) 44px}
 #content .learning-v2 .fn-control input[type=range]{grid-column:1/-1}
 #content .learning-v2 .fn-result-rows{grid-template-columns:1fr}
@@ -504,14 +429,9 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 @media(max-width:360px){
 #content .finance.learning-v2 .studio-asset-art{width:56px}
 #content .finance.learning-v2 .fn-row>[data-amount]{font-size:14px}
-#content .intervention.learning-v2 .ex-firms{grid-template-columns:1fr}
-#content .intervention.learning-v2 .ex-firms>div{display:grid;grid-template-columns:80px minmax(0,1fr);text-align:left;column-gap:12px;padding:12px}
-#content .intervention.learning-v2 .ex-firms .studio-firm-art{grid-row:1/4;width:80px}
-#content .intervention.learning-v2 .ex-firms small{grid-column:2}
 #content .learning-v2 .learning-header h1,#content .history-lab.learning-v2 .learning-header h1{font-size:22px}
 #content .learning-v2 :is(.lab-tab-copy strong,.learning-step-nav>button){font-size:9px}
 }
-#content .learning-v2 .rr-stage-nav .rr-selected:after{content:none}
 @media(min-width:1200px){
 #content .learning-v2 .learning-compare-layout{grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr)}
 #content .learning-v2 .learning-compare-data>.tg-opportunities{display:grid;grid-template-columns:1fr 1fr}
