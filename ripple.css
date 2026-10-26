@@ -29,8 +29,21 @@
 #content .ripple-basic .rb-role-heading h2{margin:0 0 6px}
 #content .ripple-basic .rb-role-heading p{font-size:16px;margin:0;max-width:58ch}
 #content .ripple-basic .rb-role-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 28px;margin:24px 0}
-#content .ripple-basic .rb-role-items article{min-width:0;padding-left:14px;border-left:3px solid var(--learning-accent)}
-#content .ripple-basic .rb-role-items article:nth-child(even){border-left-color:var(--diagram-blue)}
+#content .ripple-basic .rb-role-items article{min-width:0;padding-bottom:20px;border-bottom:1px solid var(--learning-divider)}
+#content .ripple-basic .rb-role-items--government{grid-template-columns:minmax(0,1fr);gap:20px}
+#content .ripple-basic .rb-role-item-title{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+#content .ripple-basic .rb-role-item-title>span{font-size:13px;font-weight:750;color:var(--learning-brand);font-variant-numeric:tabular-nums}
+#content .ripple-basic .rb-role-item-title h3{margin:0;font-size:18px}
+#content .ripple-basic .rb-role-brief{font-weight:600;word-break:keep-all;overflow-wrap:anywhere}
+#content .ripple-basic .rb-key-points{display:grid;gap:7px;margin:12px 0 0;font-size:14px;line-height:1.6}
+#content .ripple-basic .rb-key-points>div{display:grid;grid-template-columns:2.8em minmax(0,1fr);gap:9px}
+#content .ripple-basic .rb-key-points dt{color:var(--learning-muted-strong);font-size:12px;padding-top:2px}
+#content .ripple-basic .rb-key-points dd{margin:0}
+#content .ripple-basic .rb-policy-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+#content .ripple-basic .rb-policy-link{display:grid;grid-template-columns:1fr auto;gap:5px 10px;padding:12px 14px;background:#f0f6f8;border-radius:7px;border-left:3px solid #8db5c4;font-size:13px}
+#content .ripple-basic .rb-policy-negative{background:#fcf6ec;border-left-color:#d9b66d}
+#content .ripple-basic .rb-policy-link>strong{grid-column:1/-1;color:var(--learning-ink);font-size:14px}
+#content .ripple-basic .rb-policy-direction{color:var(--learning-muted-strong);font-size:12px}
 #content .ripple-basic .rb-role-items p{font-size:15px;margin:0;color:var(--learning-ink)}
 #content .ripple-basic .rb-example{display:flex;align-items:center;gap:20px;padding:20px 0;border-block:1px solid var(--learning-divider);margin:24px 0}
 #content .ripple-basic .rb-example>svg{width:94px}
@@ -44,12 +57,33 @@
 #content .ripple-basic .rb-esg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:20px 0}
 #content .ripple-basic .rb-esg>span{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 8px;background:var(--learning-subtle);border-radius:6px;text-align:center;font-size:14px}
 #content .ripple-basic .rb-esg strong{color:var(--learning-brand);font-size:18px}
-#content .ripple-basic .rb-rights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:20px 0 12px}
-#content .ripple-basic .rb-rights button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 10px;border:1px solid var(--learning-line);border-radius:9px;background:var(--learning-surface);color:var(--learning-ink);text-align:center}
-#content .ripple-basic .rb-rights span{font-size:12px;color:var(--learning-muted-strong)}
-#content .ripple-basic .rb-rights strong{font-size:16px}
+#content .ripple-basic .rb-rights-studio{margin:28px 0;padding-top:4px}
+#content .ripple-basic .rb-rights-heading .rb-kicker{font-size:12px;color:var(--learning-muted-strong);margin-bottom:6px}
+#content .ripple-basic .rb-rights-heading h3{font-size:21px;color:var(--learning-brand);margin-bottom:6px}
+#content .ripple-basic .rb-rights-heading>p:last-child{font-size:14px;color:var(--learning-muted-strong)}
+#content .ripple-basic .rb-rights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+#content .ripple-basic .rb-rights button{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 10px 18px;border:1px solid var(--learning-line);border-radius:12px;background:var(--learning-surface);color:var(--learning-ink);text-align:center}
+#content .ripple-basic .rb-rights button>svg{width:100px}
+#content .ripple-basic .rb-right-label{display:flex;flex-direction:column;gap:2px}
+#content .ripple-basic .rb-right-short{font-size:13px;color:var(--learning-muted-strong)}
+#content .ripple-basic .rb-rights strong{font-size:17px}
+#content .ripple-basic .rb-right-mark{position:absolute;right:10px;top:9px;font-size:14px;line-height:22px;width:22px;height:22px;border-radius:50%;background:var(--learning-subtle);color:var(--learning-muted-strong)}
 #content .ripple-basic .rb-rights button[aria-pressed=true]{background:var(--learning-selected);border-color:var(--learning-brand);box-shadow:inset 0 -2px 0 var(--learning-brand)}
-#content .ripple-basic .rb-right-note{min-height:72px;padding:12px 0;font-size:15px;color:var(--learning-ink)}
+#content .ripple-basic .rb-rights button[aria-pressed=true] .rb-right-mark{background:var(--learning-brand);color:white}
+#content .ripple-basic .rb-right-detail{display:grid;grid-template-columns:180px minmax(0,1fr);gap:24px;padding:24px 0;border-block:1px solid var(--learning-divider)}
+#content .ripple-basic .rb-right-scene{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;min-width:0}
+#content .ripple-basic .rb-right-scene svg{width:150px}
+#content .ripple-basic .rb-right-scene p{margin:0;padding:9px 12px;background:#f0f6f8;border-radius:4px 14px 14px 14px;text-align:center;font-size:14px;font-weight:600;color:var(--learning-ink);word-break:keep-all}
+#content .ripple-basic .rb-right-explanation{min-width:0}
+#content .ripple-basic .rb-right-explanation h4{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px 12px;margin:0 0 8px;color:var(--learning-brand);font-size:19px}
+#content .ripple-basic .rb-right-explanation h4 span{font-size:13px;font-weight:500;color:var(--learning-muted-strong)}
+#content .ripple-basic .rb-right-explanation>p{font-size:15px;line-height:1.65}
+#content .ripple-basic .rb-right-example{margin:14px 0}
+#content .ripple-basic .rb-right-example>strong{display:block;margin-bottom:4px;font-size:12px;color:var(--learning-muted-strong);font-weight:600}
+#content .ripple-basic .rb-word-help{display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 12px;padding-left:12px;border-left:3px solid var(--learning-accent);margin:18px 0 0;font-size:14px;line-height:1.6}
+#content .ripple-basic .rb-word-help dt{font-weight:700;color:var(--learning-ink)}
+#content .ripple-basic .rb-word-help dd{margin:0}
+#content .ripple-basic .rb-right-explanation .rb-right-caution{font-size:12px;color:var(--learning-muted-strong);margin:12px 0 0}
 #content .ripple-basic .rb-role-footer{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--learning-divider)}
 #content .ripple-basic :is(.rb-role-footer,.rb-actions,.rb-result-actions) .btn{padding:10px 18px;font-size:15px;border-radius:8px}
 #content .ripple-basic .rb-effect-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:540px;margin:0 0 24px}
@@ -103,7 +137,9 @@
  #content .ripple-basic .rb-actor{grid-template-columns:42px minmax(0,1fr);column-gap:9px;padding:12px}
  #content .ripple-basic .rb-actor-art{width:42px}
  #content .ripple-basic .rb-role-panel{padding:24px}
- #content .ripple-basic .rb-role-items{gap:18px}
+ #content .ripple-basic .rb-role-items{gap:18px;grid-template-columns:minmax(0,1fr)}
+ #content .ripple-basic .rb-right-detail{grid-template-columns:130px minmax(0,1fr);gap:16px}
+ #content .ripple-basic .rb-right-scene svg{width:120px}
  #content .ripple-basic .rb-effect-layout{grid-template-columns:minmax(0,1fr)}
  #content .ripple-basic .rb-effect-question{max-width:none}
  #content .ripple-basic .rb-effect-question .learning-choices{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -130,11 +166,19 @@
  #content .ripple-basic .rb-compare{grid-template-columns:minmax(0,1fr);gap:20px;margin:20px 0}
  #content .ripple-basic .rb-esg{gap:5px}
  #content .ripple-basic .rb-esg>span{flex-direction:column;gap:1px;padding:9px 4px;font-size:12px}
- #content .ripple-basic .rb-rights{gap:6px}
- #content .ripple-basic .rb-rights button{padding:12px 6px}
- #content .ripple-basic .rb-rights strong{font-size:15px}
- #content .ripple-basic .rb-rights span{font-size:11px}
- #content .ripple-basic .rb-right-note{min-height:0;font-size:14px}
+ #content .ripple-basic .rb-policy-pair{grid-template-columns:minmax(0,1fr);gap:8px}
+ #content .ripple-basic .rb-rights{grid-template-columns:minmax(0,1fr);gap:8px}
+ #content .ripple-basic .rb-rights button{flex-direction:row;text-align:left;justify-content:flex-start;gap:12px;padding:9px 38px 9px 12px}
+ #content .ripple-basic .rb-rights button>svg{width:66px}
+ #content .ripple-basic .rb-rights strong{font-size:17px}
+ #content .ripple-basic .rb-right-short{font-size:13px}
+ #content .ripple-basic .rb-right-mark{top:50%;transform:translateY(-50%);text-align:center}
+ #content .ripple-basic .rb-right-detail{grid-template-columns:minmax(0,1fr);gap:20px;padding:20px 0}
+ #content .ripple-basic .rb-right-scene{flex-direction:row;justify-content:center;gap:14px}
+ #content .ripple-basic .rb-right-scene svg{width:110px}
+ #content .ripple-basic .rb-right-scene p{max-width:15ch;text-align:left}
+ #content .ripple-basic .rb-right-explanation h4{font-size:19px}
+ #content .ripple-basic .rb-word-help{grid-template-columns:minmax(0,1fr);gap:3px}
  #content .ripple-basic .rb-role-footer{gap:8px;margin-top:20px;padding-top:18px}
  #content .ripple-basic :is(.rb-role-footer,.rb-actions,.rb-result-actions) .btn{flex:1 1 0;padding:10px 11px;font-size:14px}
  #content .ripple-basic .rb-effect-tabs{gap:8px;margin-bottom:18px}
@@ -169,7 +213,9 @@
  #content .ripple-basic .rb-relation strong{font-size:13px}
  #content .ripple-basic .rb-relation span{font-size:11px}
  #content .ripple-basic .rb-relation li:not(:last-child)::after{top:18px;right:-13px;font-size:18px}
- #content .ripple-basic .rb-rights strong{font-size:14px}
+ #content .ripple-basic .rb-rights button>svg{width:58px}
+ #content .ripple-basic .rb-right-scene svg{width:90px}
+ #content .ripple-basic .rb-rights-heading h3{font-size:19px}
 }
 @media(prefers-reduced-motion:reduce){
  #content .ripple-basic *{scroll-behavior:auto!important;transition:none!important;animation:none!important}

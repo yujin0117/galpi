@@ -20,12 +20,27 @@
     return `<svg viewBox="0 0 160 110" aria-hidden="true"><g fill="none" stroke="var(--diagram-ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${positive?'<circle cx="80" cy="55" r="33" fill="var(--diagram-soft)"/><path d="m63 55 12 12 24-26"/>':'<path d="m80 20 39 69H41Z" fill="var(--learning-danger-soft)"/><path d="M80 43v22m0 11v1"/>'}</g></svg>`;
   }
   function source(text) { return `<p class="rb-source">${esc(text)} · 핵심 내용을 학습용으로 재구성했어요.</p>`; }
+  function rightArt(kind) {
+    const people='<circle cx="56" cy="36" r="9" fill="#f0d7af"/><path d="M39 76V62q0-14 17-14t17 14v14" fill="#8db5c4"/><circle cx="104" cy="36" r="9" fill="#f0d7af"/><path d="M87 76V62q0-14 17-14t17 14v14" fill="#82ab9b"/>';
+    const scene=kind==='organize'?'<circle cx="80" cy="22" r="9" fill="#f0d7af"/><path d="M65 57V47q0-13 15-13t15 13v10" fill="#d9b66d"/>'+people+'<path d="m68 65 12 7 12-7"/><path d="M30 87q50 15 100 0" stroke-dasharray="3 6"/>':kind==='bargain'?people+'<path d="M29 76h102v9H29z" fill="#e9c887"/><path d="M41 85v12m78-12v12"/><path d="M68 62h24v13H68z" fill="#fff"/><path d="M58 9h44v20H86l-6 6v-6H58z" fill="#fff"/><path d="M68 18h24"/>':people+'<path d="M70 35V16h42v27H87l-8 7v-7h-9z" fill="#e9c887"/><path d="M91 24v10m-5-5h10"/><path d="M80 44v42M37 84h23m41 0h23"/>';
+    return `<svg viewBox="0 0 160 110" aria-hidden="true"><g fill="none" stroke="#355e51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${scene}</g></svg>`;
+  }
+  function roleItem(item,index) {
+    const points=item.points?`<dl class="rb-key-points">${item.points.map(p=>`<div><dt>${esc(p.label)}</dt><dd>${esc(p.text)}</dd></div>`).join('')}</dl>`:'';
+    const policies=item.policies?`<div class="rb-policy-pair">${item.policies.map(p=>`<div class="rb-policy-link rb-policy-${p.kind}"><span>${esc(p.label)}</span><span class="rb-policy-direction">${esc(p.action)} <span aria-hidden="true">→</span></span><strong>${esc(p.text)}</strong></div>`).join('')}</div>`:'';
+    return `<article><header class="rb-role-item-title"><span aria-hidden="true">${String(index+1).padStart(2,'0')}</span><h3>${esc(item.title)}</h3></header><p class="rb-role-brief">${esc(item.text)}</p>${points}${policies}</article>`;
+  }
+  function workerRights() {
+    const current=D.rights[m.right];
+    return `<section class="rb-rights-studio" aria-labelledby="rb-rights-title"><header class="rb-rights-heading"><p class="rb-kicker">노동자의 권리 · 교과서 81쪽</p><h3 id="rb-rights-title">모이고, 의논하고, 행동할 권리</h3><p>그림을 눌러 노동 3권을 살펴보세요.</p></header><div class="rb-rights" role="group" aria-label="노동 3권 선택">${D.rights.map((r,i)=>button(`${rightArt(r.id)}<span class="rb-right-label"><span class="rb-right-short">${esc(r.short)}</span><strong>${esc(r.name)}</strong></span><span class="rb-right-mark" aria-hidden="true">${i===m.right?'✓':'+'}</span>`,'right',i,{extra:`aria-pressed="${i===m.right}" aria-controls="rb-right-note"`})).join('')}</div><div class="rb-right-detail" id="rb-right-note" role="region" aria-label="${esc(current.name)} 쉬운 설명"><div class="rb-right-scene">${rightArt(current.id)}<p>${esc(current.speech)}</p></div><div class="rb-right-explanation"><h4>${esc(current.name)}<span>${esc(current.short)}</span></h4><p>${esc(current.text)}</p><p class="rb-right-example"><strong>이런 모습이에요</strong>${esc(current.example)}</p><dl class="rb-word-help"><dt>${esc(current.term)}</dt><dd>${esc(current.meaning)}</dd></dl>${current.note?`<p class="rb-right-caution">${esc(current.note)}</p>`:''}</div></div></section>`;
+  }
   function roles() {
     const a=D.actors[m.actor];
     const items=a.items.filter(item=>!(a.id==='company'&&item.title==='ESG 경영'));
-    const rights=a.id==='worker'?`<section aria-labelledby="rb-rights-title"><h3 id="rb-rights-title">노동 3권, 이름과 뜻을 연결해요</h3><div class="rb-rights" role="group" aria-label="노동 3권 선택">${D.rights.map((r,i)=>button(`<strong>${esc(r.name)}</strong><span>${esc(r.short)}</span>`,'right',i,{extra:`aria-pressed="${i===m.right}"`})).join('')}</div><p class="rb-right-note" id="rb-right-note"><strong>${esc(D.rights[m.right].name)}</strong> · ${esc(D.rights[m.right].text)}</p></section>`:'';
-    const esg=a.id==='company'?'<div class="rb-esg" aria-label="ESG 경영의 세 요소"><span><strong>E</strong> 친환경</span><span><strong>S</strong> 사회적 책임</span><span><strong>G</strong> 건전한 지배 구조</span></div><p>ESG 경영은 이 세 요소를 고려하며 기업을 운영하는 것이에요.</p>':'';
-    return `<p class="rb-intro">주체를 선택하고 핵심 역할을 살펴보세요. 원하는 주체부터 볼 수 있어요.</p><div class="rb-role-layout"><nav class="rb-actors" aria-label="경제 주체 선택">${D.actors.map((x,i)=>`<button type="button" class="rb-actor" data-rb="actor" data-value="${i}" aria-pressed="${i===m.actor}"><span class="rb-actor-art">${art(x.art)}</span><strong>${esc(x.name)}</strong><span>${actorKeywords[i]}</span></button>`).join('')}</nav><section class="rb-role-panel" aria-labelledby="rb-role-title"><header class="rb-role-heading">${art(a.art)}<div><small>${esc(a.pages)}</small><h2 id="rb-role-title" tabindex="-1">${esc(a.name)}의 역할</h2><p>${esc(a.summary)}</p></div></header><div class="rb-role-items">${items.map(item=>`<article><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p></article>`).join('')}</div>${esg}<figure class="rb-example">${art(a.example.art)}<figcaption><h3>${esc(a.example.title)}</h3><p>${esc(a.example.text)}</p></figcaption></figure>${rights}<div class="rb-role-footer">${button('← 이전 주체','actor',m.actor-1,{disabled:m.actor===0})}${m.actor<3?button('다음 주체 →','actor',m.actor+1,{primary:true}):button('외부 효과 알아보기 →','tab','effects',{primary:true})}</div></section></div>`;
+    const rights=a.id==='worker'?workerRights():'';
+    const esg=a.id==='company'?'<div class="rb-esg" aria-label="ESG 경영의 세 요소"><span><strong>E</strong> 친환경</span><span><strong>S</strong> 사회적 책임</span><span><strong>G</strong> 건전한 지배 구조</span></div><p>ESG 경영: 세 요소를 고려한 지속가능한 기업 운영</p>':'';
+    const example=`<figure class="rb-example">${art(a.example.art)}<figcaption><h3>${esc(a.example.title)}</h3><p>${esc(a.example.text)}</p></figcaption></figure>`;
+    return `<p class="rb-intro">주체를 선택하고 핵심 역할을 살펴보세요.</p><div class="rb-role-layout"><nav class="rb-actors" aria-label="경제 주체 선택">${D.actors.map((x,i)=>`<button type="button" class="rb-actor" data-rb="actor" data-value="${i}" aria-pressed="${i===m.actor}"><span class="rb-actor-art">${art(x.art)}</span><strong>${esc(x.name)}</strong><span>${actorKeywords[i]}</span></button>`).join('')}</nav><section class="rb-role-panel" aria-labelledby="rb-role-title"><header class="rb-role-heading">${art(a.art)}<div><small>${esc(a.pages)}</small><h2 id="rb-role-title" tabindex="-1">${esc(a.name)}의 역할</h2><p>${esc(a.summary)}</p></div></header><div class="rb-role-items rb-role-items--${a.id}">${items.map(roleItem).join('')}</div>${esg}${a.id==='worker'?rights+example:example}<div class="rb-role-footer">${button('← 이전 주체','actor',m.actor-1,{disabled:m.actor===0})}${m.actor<3?button('다음 주체 →','actor',m.actor+1,{primary:true}):button('외부 효과 알아보기 →','tab','effects',{primary:true})}</div></section></div>`;
   }
   function revealed(id) { return !!m.responses.checked[id]&&(!m.teacher||!!m.revealed[id]); }
   function checked(id) { return !!m.responses.checked[id]; }
@@ -59,7 +74,7 @@
   }
   function practice() {
     if(m.results&&E.result(m.responses).complete)return results();
-    if(!m.quiz)return `<section class="learning-start-card"><div><p class="learning-overline">교과서 핵심 확인</p><h2 tabindex="-1" id="rb-practice-title">짧은 10문제로 개념을 확인해요.</h2><p>정부의 역할 → 외부 효과 → 기업 → 노동자 → 소비자 순서예요. 배운 개념만 물어봐요.</p><p>답을 선택하고 확인한 뒤, 해설을 읽고 직접 다음으로 이동하세요.</p>${button('10문제 시작하기 →','start','',{primary:true})}</div></section>`;
+    if(!m.quiz)return `<section class="learning-start-card"><div><p class="learning-overline">교과서 핵심 확인</p><h2 tabindex="-1" id="rb-practice-title">배운 내용을 문제로 풀어볼까요?</h2>${button('10문제 시작하기 →','start','',{primary:true})}</div></section>`;
     const z=m.quiz,q=D.questions.find(x=>x.id===z.ids[z.pos]);
     const currentChecked=checked(q.id),show=revealed(q.id);
     const material=q.material?`<p>${esc(q.material)}</p>`:'';
@@ -88,7 +103,7 @@
     const {rb:action,value,id}=b.dataset,position=window.scrollY;let target='',scroll='nearest',message='';
     if(action==='tab'&&tabs.some(x=>x[0]===value)){m.tab=value;m.notice='';target='#rb-panel';scroll='start';}
     else if(action==='actor'&&Number.isInteger(+value)&&D.actors[+value]){m.actor=+value;target='#rb-role-title';scroll='start';}
-    else if(action==='right'&&D.rights[+value]){m.right=+value;}
+    else if(action==='right'&&D.rights[+value]){m.right=+value;message=D.rights[m.right].name+' 설명이 표시되었어요.';}
     else if(action==='effect'&&D.effects[+value]){m.effect=+value;target='#rb-effect-title';scroll='start';}
     else if(action==='answer'){if(!E.select(m.responses,id,+value))return;message='답을 선택했어요. 확인 버튼을 눌러 주세요.';}
     else if(action==='check'){
