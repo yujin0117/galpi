@@ -6,6 +6,8 @@ const {initializeApp} = require("firebase-admin/app");
 const {getFirestore, FieldValue, Timestamp} = require("firebase-admin/firestore");
 const {getAuth} = require("firebase-admin/auth");
 const crypto = require("node:crypto");
+const {promisify} = require("node:util");
+const scrypt = promisify(crypto.scrypt);
 initializeApp();
 const db=getFirestore(), userAuth=getAuth();
 const options={region:"asia-northeast3",maxInstances:5};
@@ -13,7 +15,7 @@ const STUDENT_ID=/^[0-9]{4,8}$/;
 const DATE=/^\d{4}-\d{2}-\d{2}$/;
 const TIME=/^(?:[01]\d|2[0-3]):[0-5]\d$/;
 const rounds=new Set(["1차","2차"]), statuses=new Set(["예약","완료","취소"]);
-const emailOf=id=>"student-"+id+"@galpi.example";
+const derivePassword=async(password,salt)=>(await scrypt(password,salt,64,{N:16384,r:8,p:1,maxmem:67108864})).toString("hex");
 const string=(value,max=100)=>typeof value==="string"?value.trim().slice(0,max):"";
 const invalid=message=>{throw new HttpsError("invalid-argument",message);};
 const unauthorized=()=>{throw new HttpsError("permission-denied","권한이 없습니다.");};
@@ -57,16 +59,17 @@ exports.activateStudent=onCall({...options,memory:"256MiB"},async req=>{
   });
   let uid=null,created=false;
   try{
-    const email=emailOf(studentId);
-    try{const user=await userAuth.getUserByEmail(email);uid=user.uid;await userAuth.updateUser(uid,{password});}
-    catch(err){
-      if(err.code!=="auth/user-not-found")throw err;
-      const user=await userAuth.createUser({email,password,displayName:invite.studentName,emailVerified:false,disabled:false});
-      uid=user.uid;created=true;
-    }
+    const secretRef=db.doc("studentSecrets/"+studentId);
+    const previous=await secretRef.get();
+    if(previous.exists){uid=previous.data().uid;await userAuth.updateUser(uid,{displayName:invite.studentName});}
+    else{const user=await userAuth.createUser({displayName:invite.studentName});uid=user.uid;created=true;}
+    const salt=crypto.randomBytes(32).toString("hex");
+    const passwordHash=await derivePassword(password,salt);
     await db.doc("students/"+uid).set({studentId,name:invite.studentName,classNo:invite.classNo,
       updatedAt:FieldValue.serverTimestamp()},{merge:true});
+    await secretRef.set({uid,salt,passwordHash,failedLogins:0,lockUntil:null,updatedAt:FieldValue.serverTimestamp()});
     await inviteRef.update({status:"redeemed",redeemedAt:FieldValue.serverTimestamp(),codeHash:FieldValue.delete(),reservationToken:FieldValue.delete()});
+    if(!created)await userAuth.revokeRefreshTokens(uid);
     return {ok:true};
   }catch(error){
     if(created && uid){try{await userAuth.deleteUser(uid);}catch(_ignore){}}
@@ -77,6 +80,30 @@ exports.activateStudent=onCall({...options,memory:"256MiB"},async req=>{
     if(error instanceof HttpsError)throw error;
     throw new HttpsError("internal","계정 설정에 실패했습니다. 선생님에게 문의해 주세요.");
   }
+});
+// Authenticate student ID/password only on the server; Firebase Auth receives a custom token.
+// A raw student password is never stored or published.
+exports.studentLogin=onCall(options,async req=>{
+  const studentId=validatedId(req.data?.studentId);
+  const password=validatePassword(req.data?.password);
+  const ref=db.doc("studentSecrets/"+studentId),snap=await ref.get();
+  // Avoid disclosing whether a specific ID exists.
+  if(!snap.exists){
+    await derivePassword(password,"unknown-user-dummy-salt");
+    throw new HttpsError("unauthenticated","학번 또는 비밀번호를 확인해 주세요.");
+  }
+  const secret=snap.data();
+  if(secret.lockUntil&&secret.lockUntil.toMillis()>Date.now())
+    throw new HttpsError("resource-exhausted","로그인 시도가 많습니다. 잠시 후 다시 시도해 주세요.");
+  const actual=await derivePassword(password,secret.salt);
+  if(!safeEqual(actual,secret.passwordHash)){
+    const count=(secret.failedLogins||0)+1;
+    await ref.update({failedLogins:count,lockUntil:count>=5?Timestamp.fromMillis(Date.now()+15*60000):null});
+    throw new HttpsError("unauthenticated","학번 또는 비밀번호를 확인해 주세요.");
+  }
+  await ref.update({failedLogins:0,lockUntil:null});
+  const token=await userAuth.createCustomToken(secret.uid);
+  return {token};
 });
 exports.myBookings=onCall(options,async req=>{
   if(!req.auth)throw new HttpsError("unauthenticated","로그인이 필요합니다.");
