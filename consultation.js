@@ -116,30 +116,23 @@
   if(!list.length){wrapper.append(mk("p","small-muted","선택한 날짜에 공개된 상담 시간대가 없습니다."));return;}
   list.forEach(s=>{
    const row=mk("div","detail-row"),summary=mk("div"),strong=mk("strong","",s.time);
-   let status="신청 가능",pill="free";
-   if(s.booked>0){status="예약됨";pill="booked";}
-   if(s.remaining===0){status=s.completed===s.count?"상담 완료":"예약 마감";pill=s.completed===s.count?"complete":"booked";}
-   if(s.booked===0&&s.completed>0&&s.remaining>0){status="일부 완료 · 추가 가능";pill="free";}
-   if(s.booked===0&&s.completed>0&&s.remaining===0){status="상담 완료";pill="complete";}
-   if(s.booked>0 && s.completed>0 && s.remaining===0){status="일부 완료";pill="booked";}
-   if(s.remaining>0&&s.booked>0){status="추가 가능";pill="free";}
-   const note = s.count===0 ? "현재 예약자 없음" : "예약 "+s.booked+"명 · 완료 "+s.completed+"명 · 추가 "+s.remaining+"명";
-   summary.append(strong,mk("small","",note));
-   const past= s.date<todayInKorea()||(s.date===todayInKorea()&&s.time<nowInKorea());
-   if(past&&s.booked>0)summary.append(mk("small","","예정 시간이 지남 · 실제 완료 여부는 교사 확인"));
+   const status=s.state==="done"?"상담 완료":s.state==="full"?"예약 마감":"신청 가능";
+   const pill=s.state==="done"?"complete":s.state==="full"?"booked":"free";
+   summary.append(strong,mk("small","","학생 이름·예약 인원 미공개"));
    row.append(summary,mk("span","pill "+pill,status));wrapper.append(row);
   });
  }
  function renderTeacher(){
   const root=$("#teacherTable");root.replaceChildren();
-  const allDates=Object.keys(schedules);
+  const allDates=[...new Set([...Object.keys(schedules),...myState.slots.map(s=>s.date),...myState.entries.map(e=>e.date)])].sort();
   const dates=allDates.filter(d=>myState.period==="oct"?d<"2026-11-01":myState.period==="novEarly"?d>="2026-11-03"&&d<="2026-11-05":myState.period==="novLate"?d>="2026-11-10":true);
   const table=mk("table","consult-matrix");
   const head=mk("thead"),heading=mk("tr");
   ["시간",...dates.map(fmtDate)].forEach(label=>heading.append(mk("th","",label)));
   head.append(heading);table.append(head);
   const body=mk("tbody");
-  times.forEach(time=>{
+  const shownTimes=[...new Set([...times,...myState.slots.map(s=>s.time),...myState.entries.map(e=>e.time)])].sort();
+  shownTimes.forEach(time=>{
    const tr=mk("tr");tr.append(mk("th","",time));
    dates.forEach(date=>{
     const td=mk("td"),enabled=myState.slots.some(s=>s.date===date&&s.time===time);
@@ -190,18 +183,19 @@
   persist();renderTeacher();newForm(row.date,row.time);message(row.name+" 학생의 상담 정보를 저장했습니다. 아직 학생용 공개 화면에는 반영되지 않았습니다.");
  }
  function makePublicData(){
-  return {version:1,updatedAt:new Date().toISOString(),slots:myState.slots
+  return {version:2,updatedAt:new Date().toISOString(),slots:myState.slots
    .map(slot=>{
     const all=cellEntries(slot.date,slot.time);
-    const booked=all.filter(e=>e.status==="예약").length,completed=all.filter(e=>e.status==="완료").length;
-    const second=all.some(e=>e.round==="2차");
-    const capacity=second?1:2;
-    return {date:slot.date,time:slot.time,count:all.length,booked,completed,remaining:Math.max(0,capacity-all.length)};
+    const capacity=all.some(e=>e.round==="2차")?1:2;
+    const state=all.length>=capacity?(all.every(e=>e.status==="완료")?"done":"full"):"available";
+    return {date:slot.date,time:slot.time,state};
    }).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time))};
  }
  function isPublicPayload(x){
-  return x&&x.version===1&&Array.isArray(x.slots)&&x.slots.length<=2000&&x.slots.every(s=>
-    validDate(s.date)&&validTime(s.time)&&["count","booked","completed","remaining"].every(k=>Number.isInteger(s[k])&&s[k]>=0&&s[k]<=30));
+  if(!x||!Array.isArray(x.slots)||x.slots.length>2000)return false;
+  if(x.version===2)return x.slots.every(s=>validDate(s.date)&&validTime(s.time)&&["available","full","done"].includes(s.state)&&Object.keys(s).every(k=>["date","time","state"].includes(k)));
+  if(x.version===1)return x.slots.every(s=>validDate(s.date)&&validTime(s.time)&&["count","booked","completed","remaining"].every(k=>Number.isInteger(s[k])&&s[k]>=0&&s[k]<=30));
+  return false;
  }
  async function loadPublished(){
   try{
@@ -209,9 +203,14 @@
    if(!r.ok)throw new Error("HTTP "+r.status);
    const data=await r.json();
    if(!isPublicPayload(data))throw new Error("format");
-   myState.published=data;
+   // 구형 공개 파일을 사용하더라도 학생 화면에 정확한 예약 인원은 표시하지 않습니다.
+   const minimal=data.version===1?data.slots.map(s=>({
+    date:s.date,time:s.time,
+    state:s.remaining>0?"available":s.count>0&&s.completed===s.count?"done":"full"
+   })):data.slots;
+   myState.published={version:2,updatedAt:typeof data.updatedAt==="string"?data.updatedAt:null,slots:minimal};
    renderStudent();
-  }catch(e){myState.published={version:1,updatedAt:null,slots:[]};renderStudent();message("학생용 공개 현황을 읽지 못했습니다. 공개 데이터 파일을 확인해 주세요.",true);}
+  }catch(e){myState.published={version:2,updatedAt:null,slots:[]};renderStudent();message("학생용 공개 현황을 읽지 못했습니다. 공개 데이터 파일을 확인해 주세요.",true);}
  }
  $("#refreshPublic").addEventListener("click",loadPublished);
  $("#monthBack").addEventListener("click",()=>{
@@ -291,11 +290,20 @@
   }catch(e){message("명단 파일을 불러오지 못했습니다: "+e.message,true);}
   finally{event.target.value="";}
  });
+ const exportModel=()=>({entries:myState.entries,slots:myState.slots,schedules,times,period:myState.period});
+ $("#savePNG").addEventListener("click",async()=>{
+  try{await window.GALPIConsultationExporter.savePNG(exportModel());message("PNG를 이 기기에 저장했습니다. 학생 실명이 포함되어 있으므로 공개하거나 GitHub에 업로드하지 마세요.");}
+  catch(e){message("PNG 생성 실패: "+e.message,true);}
+ });
+ $("#printPDF").addEventListener("click",()=>{
+  try{window.GALPIConsultationExporter.printPDF(exportModel());message("인쇄 화면에서 ‘PDF로 저장’을 선택하세요. 용지 방향은 A4 가로로 확인해 주세요. 이 파일에는 학생 실명이 포함됩니다.");}
+  catch(e){message("인쇄 화면 열기 실패: "+e.message,true);}
+ });
  $("#exportPublic").addEventListener("click",()=>{
   if(!myState.entries.length){message("기존 구글 캘린더 예약을 등록한 뒤 공개 파일을 만드세요. 빈 데이터는 예약이 가능한 것으로 잘못 보일 수 있습니다.",true);return;}
   const sanitized=makePublicData();
   downloadJson("consultation-public.json",sanitized);
-  message("학생용 파일을 만들었습니다. 학생 이름·학번은 포함되지 않습니다. GitHub의 consultation-public.json 파일을 교체해야 학생 화면도 바뀝니다.");
+  message("학생용 공개 파일을 만들었습니다. 이름·반·학번·예약 인원은 포함되지 않습니다. 다만 공개 날짜·시간대는 간접 식별 위험이 있으므로 교사용 파일과 절대 혼동하지 마세요. GitHub에는 이 공개 파일만 올릴 수 있습니다.");
  });
  $("#clearLocal").addEventListener("click",()=>{
   if(!confirm("이 기기에서만 저장한 모든 교사용 상담 명단을 지울까요? 복구하려면 백업 파일이 필요합니다."))return;
