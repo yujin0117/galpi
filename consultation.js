@@ -102,6 +102,48 @@ async function loadMine(){
     if(!$("#page-mine").hidden)showNotice("학생 예약 조회 권한이 없습니다. 학생 계정으로 로그인해 주세요.",true);
   }
 }
+
+function drawTeacherMatrix(bookings){
+  const target=$("#teacherMatrix");if(!target)return;
+  const dates=["2026-10-22","2026-10-27","2026-10-28","2026-10-29","2026-11-03","2026-11-04","2026-11-05","2026-11-10","2026-11-11","2026-11-12"];
+  const times=["09:00","10:00","11:40","11:50","12:50","13:50","14:50"];
+  const table=document.createElement("table");table.className="matrix-table";
+  const thead=document.createElement("thead"),header=document.createElement("tr");
+  ["시간",...dates.map(d=>d.slice(5))].forEach(value=>{const th=document.createElement("th");th.textContent=value;header.append(th);});
+  thead.append(header);table.append(thead);
+  const tbody=document.createElement("tbody");
+  times.forEach(time=>{
+    const tr=document.createElement("tr"),first=document.createElement("th");first.textContent=time;tr.append(first);
+    dates.forEach(date=>{
+      const td=document.createElement("td");
+      const matched=bookings.filter(b=>b.date===date&&b.time===time&&b.status!=="취소");
+      if(!matched.length){
+        const button=document.createElement("button");button.type="button";button.textContent="+ 추가";
+        button.className="matrix-empty";
+        button.addEventListener("click",()=>{
+          resetBookingForm();
+          $("#bookingForm [name=date]").value=date;$("#bookingForm [name=time]").value=time;
+          $("#bookingForm").scrollIntoView({behavior:"smooth",block:"center"});
+        });
+        td.append(button);
+      }
+      matched.forEach(b=>{
+        const button=document.createElement("button");button.type="button";
+        button.className="matrix-booking "+(b.status==="완료"?"is-done":b.round==="2차"?"is-second":"is-first");
+        button.textContent=b.studentName+" ("+b.round+")"+(b.status==="완료"?" ✓":"");
+        button.addEventListener("click",()=>{
+          const form=$("#bookingForm");
+          ["bookingId","studentId","studentName","date","time","round","status"].forEach(key=>{
+            form.elements[key].value=key==="bookingId"?b.id:b[key];
+          });
+          form.scrollIntoView({behavior:"smooth",block:"center"});
+        });
+        td.append(button);
+      });tr.append(td);
+    });tbody.append(tr);
+  });table.append(tbody);target.replaceChildren(table);
+}
+
 function renderTeacher(bookings){
   const box=$("#teacherBookings");box.className="admin-list";box.replaceChildren();
   const table=document.createElement("table");table.className="admin-table";
@@ -119,6 +161,7 @@ function renderTeacher(bookings){
   });
   if(!bookings.length){const tr=document.createElement("tr");const td=document.createElement("td");td.colSpan=7;td.textContent="등록된 상담이 없습니다.";tr.append(td);body.append(tr);}
   table.append(body);box.append(table);
+  drawTeacherMatrix(bookings);
 }
 async function loadTeacher(){
   if(!authenticatedUser||!functions)return;
