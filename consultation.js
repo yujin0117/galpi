@@ -9,7 +9,7 @@ const escapeHTML = value => String(value??"").replace(/[&<>"']/g, ch=>({"&":"&am
 const todaySeoul = () => new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
 let year=2026, month=10, daySelected=null;
 let publicSlots=[], auth=null, functions=null, fns=null, authenticatedUser=null;
-const studentEmail = id => "student-"+id+"@galpi.example";
+// Student credentials are validated only by a server-side callable function.
 function selectPage(page){
   $$(".consult-nav [data-page]").forEach(btn=>btn.setAttribute("aria-current",btn.dataset.page===page?"page":"false"));
   $$(".consult-page").forEach(sec=>sec.hidden=sec.id!=="page-"+page);
@@ -173,7 +173,8 @@ $("#studentLogin").addEventListener("submit",async e=>{
   if(!auth){showNotice("서비스 인증 기능을 연결한 뒤 이용할 수 있습니다.",true);return;}
   const fd=new FormData(e.target);
   try{
-    await fns.signInWithEmailAndPassword(auth,studentEmail(fd.get("studentId")),String(fd.get("password")));
+    const result=await fns.call(functions,"studentLogin")({studentId:String(fd.get("studentId")),password:String(fd.get("password"))});
+    await fns.signInWithCustomToken(auth,result.data.token);
     e.target.reset();await loadMine();showNotice("");
   }catch(err){showNotice(explainError(err),true);}
 });
@@ -188,7 +189,8 @@ $("#studentActivate").addEventListener("submit",async e=>{
       activationCode:String(fd.get("activationCode")).trim(),
       password:String(fd.get("password"))
     });
-    await fns.signInWithEmailAndPassword(auth,studentEmail(fd.get("studentId")),String(fd.get("password")));
+    const login=await fns.call(functions,"studentLogin")({studentId:String(fd.get("studentId")),password:String(fd.get("password"))});
+    await fns.signInWithCustomToken(auth,login.data.token);
     e.target.reset();await loadMine();showNotice("비밀번호를 설정했습니다. 다음부터는 학번과 비밀번호로 로그인하세요.");
   }catch(err){showNotice(explainError(err),true);}
 });
