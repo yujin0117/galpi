@@ -242,20 +242,53 @@
    {version:1,entries:myState.entries,slots:myState.slots});
   message("교사용 백업 파일을 내려받았습니다. 실명이 포함되어 있으니 외부에 공유하지 마세요.");
  });
+
+ function fromMarkdown(text){
+  let classNo="", entries=[], skipped=0;
+  for(const line of text.split(/\r?\n/)){
+   const header=line.trim().match(/^(?:#{1,5}\s*)?(?:\*\*)?\s*(\d{1,2})반(?:\*\*)?/);
+   if(header){classNo=header[1];continue;}
+   if(!line.trim().startsWith("|"))continue;
+   const fields=line.split("|").map(x=>x.trim());
+   if(fields.length<5)continue;
+   const name=fields[1].replace(/<br\s*\/?>/gi,"").replace(/\*\*/g,"").trim();
+   if(!name||name==="----"||name==="학생"||name==="이름"||name.length>30)continue;
+   for(const [offset,round] of [[2,"1차"],[3,"2차"]]){
+    const cell=fields[offset]||"";
+    const match=cell.match(/(\d{1,2})\/(\d{1,2})\s+(\d{1,2}):(\d{2})/);
+    if(!match){if(/\d{1,2}\/\d{1,2}/.test(cell))skipped++;continue;}
+    const [,mo,day,hh,mm]=match;
+    const hour=Number(hh),normalized=hour>=1&&hour<=7?hour+12:hour;
+    const date="2026-"+String(Number(mo)).padStart(2,"0")+"-"+String(Number(day)).padStart(2,"0");
+    const time=String(normalized).padStart(2,"0")+":"+mm;
+    const status=/✅|완료/.test(cell)?"완료":"예약";
+    const row={id:Math.random().toString(36).slice(2,13),date,time,name,classNo,round,status};
+    if(validateEntry(row))entries.push(row);else skipped++;
+   }
+  }
+  if(!entries.length)throw new Error("날짜·시간이 포함된 학생 상담 행을 찾지 못했습니다.");
+  const slots=[...privateSlots.map(v=>({...v}))];
+  for(const row of entries)if(!slots.some(v=>v.date===row.date&&v.time===row.time))slots.push({date:row.date,time:row.time});
+  return {version:1,entries,slots,skipped};
+ }
  $("#importBackup").addEventListener("change",async event=>{
   const file=event.target.files?.[0];if(!file)return;
   try{
    if(file.size>1024*1024)throw Error("파일이 너무 큽니다.");
-   const obj=JSON.parse(await file.text());
+   const txt=await file.text();
+   const markdown=/\.(?:md|txt)$/i.test(file.name);
+   const obj=markdown?fromMarkdown(txt):JSON.parse(txt);
    if(obj.version!==1||!Array.isArray(obj.entries)||!Array.isArray(obj.slots))throw Error("백업 형식이 아닙니다.");
    if(obj.entries.length>500||obj.slots.length>500)throw Error("너무 많은 일정입니다.");
    if(obj.entries.some(row=>!validateEntry(row)))throw Error("상담 데이터에 잘못된 값이 있습니다.");
    if(obj.slots.some(row=>!row||!validDate(row.date)||!validTime(row.time)))throw Error("시간대 데이터에 잘못된 값이 있습니다.");
-   if(!confirm("현재 기기에 저장된 상담 명단을 선택한 백업 파일로 교체할까요?"))return;
-   myState.entries=obj.entries.map(sanitizeEntry);myState.slots=obj.slots.map(({date,time})=>({date,time}));
-   persist();renderTeacher();newForm();
-   message(myState.entries.length+"건의 상담을 불러왔습니다. 학생용 공개 데이터는 별도로 만들어야 합니다.");
-  }catch(e){message("백업 파일을 불러오지 못했습니다: "+e.message,true);}
+   const msg=(markdown?"기존 마크다운 학생 명단에서 "+obj.entries.length+"건을 확인했습니다. 날짜만 있고 시간이 없는 항목 "+obj.skipped+"건은 제외됩니다.\n":"")+"현재 기기에 저장된 상담 명단을 파일 내용으로 교체할까요?";
+   if(!confirm(msg))return;
+   myState.entries=obj.entries.map(sanitizeEntry);
+   myState.slots=obj.slots.map(({date,time})=>({date,time}));
+   persist();renderTeacher();newForm("2026-10-27","10:00","1차",false);
+   message(myState.entries.length+"건의 상담을 불러왔습니다. 이전 마크다운과 현재 예약에 차이가 있을 수 있으니 날짜·이름을 검수한 뒤 공개해 주세요.");
+  }catch(e){message("명단 파일을 불러오지 못했습니다: "+e.message,true);}
   finally{event.target.value="";}
  });
  $("#exportPublic").addEventListener("click",()=>{
