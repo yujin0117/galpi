@@ -235,6 +235,15 @@ $("#bookingForm").addEventListener("submit",async e=>{
     resetBookingForm();await loadTeacher();await fetchPublic();showNotice("상담 정보가 저장됐습니다.");
   }catch(err){showNotice(explainError(err),true);}
 });
+$("#initializeSlots").addEventListener("click",async()=>{
+  if(!functions)return;
+  if(!window.confirm("2026년 상담 시간대 기본 틀을 생성할까요? 기존 예약은 그대로 유지됩니다."))return;
+  try{
+    const result=await fns.call(functions,"initialize2026Slots")({});
+    await fetchPublic();
+    showNotice("상담 시간대 "+result.data.created+"개를 확인하고 등록했습니다.");
+  }catch(error){showNotice(explainError(error),true);}
+});
 $("#bookingReset").addEventListener("click",resetBookingForm);
 const route=location.hash.slice(1);
 selectPage(["mine","teacher","public"].includes(route)?route:"public");
