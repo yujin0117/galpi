@@ -161,11 +161,11 @@
    });body.append(tr);
   });table.append(body);root.append(table);
  }
- function newForm(date="",time="",round="1차"){
+ function newForm(date="",time="",round="1차",scroll=true){
   const f=$("#entryForm");f.reset();f.elements.id.value="";
   f.elements.date.value=date||"2026-10-27";f.elements.time.value=time||"10:00";
   f.elements.round.value=round;$("#formHeading").textContent="상담 등록";$("#deleteEntry").hidden=true;
-  $("#entryForm").scrollIntoView({behavior:"smooth",block:"center"});
+  if(scroll)$("#entryForm").scrollIntoView({behavior:"smooth",block:"center"});
  }
  function loadForm(entry){
   const f=$("#entryForm");
@@ -273,6 +273,6 @@
  loadLocal();
  const hash=location.hash.slice(1);
  select(hash==="teacher"?"teacher":"student");
- newForm("2026-10-27","10:00");
+ newForm("2026-10-27","10:00","1차",false);
  loadPublished();
 })();
