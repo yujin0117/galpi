@@ -23,7 +23,12 @@
 #content .learning-cost .cost-lesson-heading>p:last-child{font-size:16px;line-height:1.7;margin:0 0 24px;max-width:72ch}
 #content .learning-cost .cost-lesson-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:38px;align-items:start}
 #content .learning-cost .cost-reference{min-width:0;padding-top:8px}
-#content .learning-cost .cost-time{margin:0 0 18px;font-size:13px;line-height:1.7;color:var(--learning-muted)}
+#content .learning-cost .cost-time{margin:0 0 18px;font-size:16px;line-height:1.6;color:var(--learning-ink)}
+#content .learning-cost .cost-scenario-facts{display:grid;gap:8px;margin:0 0 22px;padding:14px 0;border-block:1px solid var(--learning-line)}
+#content .learning-cost .cost-scenario-facts>div{display:grid;grid-template-columns:2.5em minmax(0,1fr);gap:12px;align-items:baseline}
+#content .learning-cost .cost-scenario-facts dt{font-size:13px;font-weight:600;color:var(--learning-muted);line-height:1.6}
+#content .learning-cost .cost-scenario-facts dd{margin:0;font-size:16px;line-height:1.6;color:var(--learning-ink)}
+#content .learning-cost .cost-scenario-facts strong{font-weight:700}
 #content .learning-cost .cost-alternatives{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 #content .learning-cost .cost-alternatives>div{min-width:0;padding:0 0 18px;border-bottom:1px solid var(--learning-line)}
 #content .learning-cost .cost-alternatives .cost-choice-role{display:block;font-size:13px;line-height:1.5;color:var(--learning-muted);font-weight:600}
