@@ -14,7 +14,8 @@ function freeAnalysis(){try{const s=m.free,p=E.production(s.costs,s.hours,s.shar
 function free(){return W.free(m,field,exchangeControls,freeAnalysis());}
 function cases(){return W.cases(m,C);}
 const levels=['절대우위','기회비용','비교우위','특화 방향','같은 묶음의 비용 절약','교역 조건과 이익','생산 조건 변화'];
-function practice(){
+function practice(){return window.GalpiExamPractice.wrap('trade',practiceBase(),m.teacher);}
+function practiceBase(){
  const qz=m.quiz;
  if(qz){
   const q=qz.questions[qz.index],correct=qz.selected===q.correct;

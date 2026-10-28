@@ -1,0 +1,154 @@
+[
+  {
+    "questionId": "2025-1-10-21",
+    "kind": "network",
+    "image": "assets/exams/materials/2025-1-10-21-network.png",
+    "size": [
+      1217,
+      603
+    ],
+    "paper": "s_soc_mun_B2LWS32Q_1.pdf",
+    "pdfPage": 5,
+    "pdfBounds": [
+      433.46153846153845,
+      801.1538461538461,
+      737.6923076923076,
+      951.9230769230769
+    ],
+    "renderScale": 4,
+    "sha256": "9b718668f26235ae268de7c0d69f0d563c46be97f04a3ae05aea3d6d6ccb75a5"
+  },
+  {
+    "questionId": "2026-1-03-21",
+    "kind": "blocks",
+    "image": "assets/exams/materials/2026-1-03-21-blocks.png",
+    "size": [
+      1185,
+      631
+    ],
+    "paper": "s_soc_mun_8ZD1713K.pdf",
+    "pdfPage": 5,
+    "pdfBounds": [
+      448.0769230769231,
+      720.0,
+      744.2307692307693,
+      877.6923076923076
+    ],
+    "renderScale": 4,
+    "sha256": "4a12489f465aefa315489448011b4d14a8798e5ef0cff3d7729eb8a796d14281"
+  },
+  {
+    "questionId": "2026-1-09-20",
+    "kind": "carbon",
+    "image": "assets/exams/materials/2026-1-09-20-carbon.png",
+    "size": [
+      599,
+      700
+    ],
+    "paper": "s_soc_mun_J84CI6N2.pdf",
+    "pdfPage": 5,
+    "pdfBounds": [
+      443.84615384615387,
+      251.9230769230769,
+      593.4615384615385,
+      426.9230769230769
+    ],
+    "renderScale": 4,
+    "sha256": "91405b266b9601be1f70a018600314263801f0568c3382feb04a34d2eb696e00"
+  },
+  {
+    "questionId": "2026-2-03-21",
+    "kind": "cards",
+    "image": "assets/exams/materials/2026-2-03-21-cards.png",
+    "size": [
+      933,
+      283
+    ],
+    "paper": "s_soc_mun_Z719C37S.pdf",
+    "pdfPage": 5,
+    "pdfBounds": [
+      479.61538461538464,
+      596.1538461538462,
+      712.6923076923076,
+      666.9230769230769
+    ],
+    "renderScale": 4,
+    "sha256": "287fb751553e6ab55ab5d51959d389b13ae8995d2411d2accc212020c612b3e4"
+  },
+  {
+    "questionId": "2026-2-03-21",
+    "kind": "hands",
+    "image": "assets/exams/materials/2026-2-03-21-hands.png",
+    "size": [
+      1073,
+      528
+    ],
+    "paper": "s_soc_mun_Z719C37S.pdf",
+    "pdfPage": 5,
+    "pdfBounds": [
+      462.3076923076923,
+      834.6153846153845,
+      730.3846153846154,
+      966.5384615384614
+    ],
+    "renderScale": 4,
+    "sha256": "442c50d10017938110936abf4fe1ecc364e05d4a28beb31d44b098a98fce2dba"
+  },
+  {
+    "questionId": "2026-2-03-22",
+    "kind": "mural",
+    "image": "assets/exams/materials/2026-2-03-22-mural.png",
+    "size": [
+      922,
+      494
+    ],
+    "paper": "s_soc_mun_Z719C37S.pdf",
+    "pdfPage": 6,
+    "pdfBounds": [
+      140.0,
+      205.76923076923077,
+      370.38461538461536,
+      329.2307692307692
+    ],
+    "renderScale": 4,
+    "sha256": "2312638796a792251c51a1061d848e2099535fe40f6edcc18bc2432a732f3add"
+  },
+  {
+    "questionId": "2026-2-09-11",
+    "kind": "book",
+    "image": "assets/exams/materials/2026-2-09-11-book.png",
+    "size": [
+      1231,
+      797
+    ],
+    "paper": "s_soc_mun_423AOW2E.pdf",
+    "pdfPage": 3,
+    "pdfBounds": [
+      101.53846153846153,
+      773.8461538461538,
+      409.2307692307692,
+      973.0769230769231
+    ],
+    "renderScale": 4,
+    "sha256": "242cd4857e7072fc800c04c69d7a7f30ebb046a7bed7ae20dc62087ff5d64697"
+  },
+  {
+    "questionId": "2026-2-09-24",
+    "kind": "ppf",
+    "image": "assets/exams/materials/2026-2-09-24-ppf.png",
+    "size": [
+      578,
+      517
+    ],
+    "paper": "s_soc_mun_423AOW2E.pdf",
+    "pdfPage": 6,
+    "pdfBounds": [
+      450.3846153846154,
+      316.53846153846155,
+      595.0,
+      445.7692307692308
+    ],
+    "renderScale": 4,
+    "sha256": "6109f609fbe010698159a7832daab31504f66b875fb8d14ffde5ffe196fbfbba"
+  }
+]

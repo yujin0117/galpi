@@ -34,7 +34,8 @@
     const z=m.quiz,score=z.responses.filter(r=>r?.correct).length,good=z.ids.filter((_,i)=>z.responses[i]?.correct).map(id=>D.quiz.find(q=>q.id===id).topic),weak=z.ids.filter((_,i)=>!z.responses[i]?.correct).map(id=>D.quiz.find(q=>q.id===id).topic);
     return U.result({title:'배운 개념을 다시 짚어 봐요.',score,total:z.ids.length,good:good.join(' · ')||'이번에는 개념을 다시 살펴보고 재도전해 보세요.',weak:weak.join(' · ')||'이번 문항의 개념을 모두 확인했어요.',caption:z.retry?'이번 오답 재풀이 기준':'이번 7문항 기준',actions:`${weak.length?btn(`틀린 문항 다시 풀기 (${weak.length})`,'retry','',true)+btn('틀린 문항·해설 보기','review'):''}${btn('전체 다시 풀기','restart')}`})+(m.review&&weak.length?`<section class="cp-missed"><h3>다시 확인할 문항</h3>${z.ids.map((id,i)=>{const q=D.quiz.find(x=>x.id===id),r=z.responses[i];return r.correct?'':`<details open><summary>${q.topic} · ${q.pages}</summary><p>${q.prompt}</p><p>나의 답: ${esc(answerText(q,r.answer))}</p><p><strong>정답: ${esc(answerText(q,q.correct))}</strong></p><p>${q.explain}</p></details>`;}).join('')}</section>`:'');
   }
-  function quiz(){
+  function quiz(){return window.GalpiExamPractice.wrap('capitalism',quizBase(),m.teacher);}
+  function quizBase(){
     if(!m.quiz)return `<section class="learning-start-card"><div class="cp-quiz-intro"><p class="cp-eyebrow">03 · 개념 이해도 점검</p><h2>7문항으로 개념을 연결해 볼까요?</h2><p>역사적 전개부터 경제 체제까지, 한 문항씩 확인해요.<br>정답 개수와 다시 살펴볼 개념은 이 화면에만 남아요.</p><div class="cp-quiz-topics"><span>역사 순서</span><span>시대별 특징</span><span>경제 체제</span></div>${btn('7문항 시작하기 →','start','',true)}</div></section>`;
     const z=m.quiz;if(z.result)return quizResult();
     const q=question(),response=z.responses[z.index],checked=!!response,show=checked&&(!m.teacher||m.reveal);

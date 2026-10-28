@@ -51,7 +51,7 @@ function renderModule(){
   const U=window.GalpiLabUI,tabs=[['concept','개념 이해'],['textbook','예제 학습'],['simulate','자유 실험'],['quiz','문제 연습'],['results','학습 결과']],current=tabs.findIndex(x=>x[0]===state.tab);
   root.innerHTML=`<section class="learning-v2 learning-cost"><div class="learning-toolbar"><button type="button" class="page-return" data-action="goHome">← 전체 콘텐츠</button>${window.GalpiCurriculum.teacher('cost','id="teacherToggle"',state.teacher)}</div>${U.header('cost','기회비용 계산 실험실','선택의 숨은 비용을 발견하고, 더 합리적인 선택을 탐색해요.')}${state.teacher?'<p class="teacher-strip">교사 시연 · 답을 선택하고 정답을 확인한 뒤, 다음 단계로 직접 이동합니다.</p>':''}${U.stepNav(tabs,current,{idPrefix:'tab',panel:'moduleBody',attribute:key=>`data-tab="${key}"`,label:'학습 메뉴',extraClass:'module-tabs',completed:state.completed?[3,4]:[]})}<div id="moduleBody" role="tabpanel" aria-labelledby="tab-${state.tab}" tabindex="-1">${renderTab()}</div></section>`;U.mount(root);
 }
-function renderTab(){switch(state.tab){case 'concept':return renderConcept();case 'textbook':return renderTextbook();case 'simulate':return renderSimulation();case 'quiz':return renderQuiz();case 'results':return renderResults();default:return renderConcept()}}
+function renderTab(){switch(state.tab){case 'concept':return renderConcept();case 'textbook':return renderTextbook();case 'simulate':return renderSimulation();case 'quiz':return window.GalpiExamPractice.wrap('cost',renderQuiz(),state.teacher);case 'results':return renderResults();default:return renderConcept()}}
 function renderBody(){
   const el=document.querySelector('#moduleBody');if(!el)return;
   const active=document.activeElement;
