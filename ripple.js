@@ -6,7 +6,7 @@
   const root = () => document.querySelector('#content');
   const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
-  const m = {tab:'roles', actor:0, right:0, effect:0, teacher:false, revealed:{}, responses:E.createState(), quiz:null, results:false, notice:''};
+  const m = {tab:'roles', actor:0, right:0, effect:0, teacher:false, revealed:{}, responses:E.createState(), quiz:null, results:false, notice:'',resultSession:{}};
   const tabs = [['roles','주체별 역할'],['effects','외부 효과'],['practice','핵심 확인']];
   const actorKeywords = ['공정 경쟁·공공재','사회적 책임·혁신','노동·협력·권리','합리적·윤리적 소비'];
   function button(text, action, value='', {primary=false, disabled=false, extra=''}={}) {
@@ -70,7 +70,7 @@
   function results() {
     const r=E.result(m.responses),wrong=new Set(r.wrongIds),weak=[...new Set(D.questions.filter(q=>wrong.has(q.id)).map(q=>q.topic))];
     const good=[...new Set(D.questions.filter(q=>!wrong.has(q.id)).map(q=>q.topic))].filter(t=>!weak.includes(t));
-    return `<div class="rb-practice">${U().result({title:'선택의 파장 · 핵심 확인',score:r.score,total:r.total,good:esc(good.join(' · ')||'복습하면서 다시 확인해 보세요.'),weak:esc(weak.join(' · ')||'처음 확인에서 모든 문제를 맞혔어요.'),caption:'각 문항을 처음 확인했을 때의 답 기준',actions:button(`처음 틀린 문제 다시 풀기 (${r.wrongIds.length})`,'review','',{disabled:!r.wrongIds.length})+button('처음부터 다시 풀기','restart','',{primary:true})})}<p class="rb-result-summary">${r.wrongIds.length?`처음 틀린 ${r.wrongIds.length}문제 중 현재 다시 맞힌 문제는 ${r.resolvedWrongIds.length}개예요. 최초 정답 수는 재도전해도 바뀌지 않아요.`:'확인한 개념을 일상 속 사례에서도 찾아보세요.'}</p><div class="rb-result-actions">${button('주체별 역할 다시 보기','tab','roles')}${button('외부 효과 다시 보기','tab','effects')}</div></div>`;
+    return `<div class="rb-practice">${U().result({record:{session:m.resultSession,kind:'기초 연습',teacher:m.teacher,complete:r.complete,items:D.questions.map((q,i)=>({label:i+1,correct:m.responses.first[q.id]===q.correct,detail:q.topic}))},title:'선택의 파장 · 핵심 확인',score:r.score,total:r.total,good:esc(good.join(' · ')||'복습하면서 다시 확인해 보세요.'),weak:esc(weak.join(' · ')||'처음 확인에서 모든 문제를 맞혔어요.'),caption:'각 문항을 처음 확인했을 때의 답 기준',actions:button(`처음 틀린 문제 다시 풀기 (${r.wrongIds.length})`,'review','',{disabled:!r.wrongIds.length})+button('처음부터 다시 풀기','restart','',{primary:true})})}<p class="rb-result-summary">${r.wrongIds.length?`처음 틀린 ${r.wrongIds.length}문제 중 현재 다시 맞힌 문제는 ${r.resolvedWrongIds.length}개예요. 최초 정답 수는 재도전해도 바뀌지 않아요.`:'확인한 개념을 일상 속 사례에서도 찾아보세요.'}</p><div class="rb-result-actions">${button('주체별 역할 다시 보기','tab','roles')}${button('외부 효과 다시 보기','tab','effects')}</div></div>`;
   }
   function practice() {
     if(m.results&&E.result(m.responses).complete)return results();
@@ -112,7 +112,7 @@
     else if(action==='retry'){E.retry(m.responses,value);delete m.revealed[value];target=m.tab==='effects'?'#rb-effect-question':'#rb-practice-title';message='같은 문제를 다시 풀어 보세요.';}
     else if(action==='start'){startQuiz();target='#rb-practice-title';scroll='start';}
     else if(action==='review'){startQuiz(true);target='#rb-practice-title';scroll='start';}
-    else if(action==='restart'){E.restart(m.responses);m.revealed={};startQuiz();target='#rb-practice-title';scroll='start';}
+    else if(action==='restart'){E.restart(m.responses);m.resultSession={};m.revealed={};startQuiz();target='#rb-practice-title';scroll='start';}
     else if(action==='question'&&m.quiz&&m.quiz.ids[+value]){m.quiz.pos=+value;m.notice='';target='#rb-practice-title';scroll='start';}
     else if(action==='next'&&m.quiz){
       const z=m.quiz,id=z.ids[z.pos];if(!revealed(id))return;

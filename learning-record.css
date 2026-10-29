@@ -1,0 +1,50 @@
+/* Result sheet only: no home/global presentation overrides. */
+.learning-result.gr-result{display:block;max-width:100%;padding:clamp(20px,4vw,48px);background:#fff;border:1px solid #CBD5D1;border-radius:20px;text-align:left;color:#1F2933}
+.gr-result .gr-heading{display:block;padding-bottom:22px;border-bottom:1px solid #D6DFDA;text-align:left}
+.gr-result .gr-heading>p{display:flex;justify-content:space-between;gap:16px;margin:0 0 12px;font-size:14px;color:#64748B}
+.gr-result .gr-heading h2{margin:0;font-size:clamp(22px,2.6vw,32px);line-height:1.4;color:#00462A}
+.gr-result .gr-hero{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:20px;padding:28px 0}
+.gr-result .gr-eyebrow{font-size:14px;color:#64748B;margin:0}
+.gr-result .gr-fraction{display:flex;align-items:baseline;gap:12px;margin:4px 0 12px;line-height:1.12;font-variant-numeric:tabular-nums}
+.gr-result .gr-fraction strong{font-size:clamp(64px,8vw,100px);font-weight:750;letter-spacing:-.05em;color:#00462A}
+.gr-result .gr-fraction span{font-size:clamp(27px,3.2vw,40px);color:#64748B}
+.gr-result .gr-hero h3{font-size:20px;line-height:1.5;margin:0 0 8px;color:#00462A}
+.gr-result .gr-caption{font-size:14px;color:#64748B;margin:0;line-height:1.5}
+.gr-result .gr-sticker{display:block;width:180px;height:180px;object-fit:contain;margin:0;filter:none}
+.gr-result .gr-section-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center;border-top:1px solid #D6DFDA;padding-top:22px;margin-bottom:14px}
+.gr-result .gr-section-head h3{font-size:18px;margin:0;color:#00462A}
+.gr-result .gr-section-head p{display:flex;gap:14px;font-size:12px;margin:0;color:#64748B}
+.gr-result .gr-questions{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.gr-result .gr-questions li{display:flex;align-items:center;justify-content:space-between;gap:4px;min-width:0;padding:14px;border-radius:8px;background:#EAF3EE;color:#00462A;font-size:19px;font-variant-numeric:tabular-nums;border:1px solid transparent}
+.gr-result .gr-questions .is-revisit{background:#FFFCF5;border-color:#D9BE88;color:#815F2D}
+.gr-result .gr-questions b{font-size:19px;font-weight:500}
+.gr-result .gr-reflection{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:28px 0}
+.gr-result .gr-reflection section{background:none;border:0;padding:0;box-shadow:none}
+.gr-result .gr-reflection h3{font-size:14px;color:#64748B;margin:0 0 8px}
+.gr-result .gr-reflection p{font-size:16px;line-height:1.6;margin:0;color:#1F2933}
+.gr-result .gr-save{padding:20px 0;border-top:1px solid #D6DFDA}
+.gr-result .gr-save>.btn{min-height:44px;background:#00462A;color:#fff;border-color:#00462A}
+.gr-result .gr-save p{font-size:13px;color:#64748B;line-height:1.5;margin:10px 0 0}
+.gr-result .gr-actions{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding-top:10px}
+.gr-result .gr-actions>.btn{flex:1 1 180px}
+.gr-preview{padding:20px;max-width:min(90vw,680px);max-height:90dvh;border:1px solid #CBD5D1;border-radius:16px;background:#fff;color:#1F2933}
+.gr-preview::backdrop{background:rgb(20 36 28/.55)}
+.gr-preview header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+.gr-preview h2{font-size:20px;margin:0}
+.gr-preview img{display:block;width:100%;height:auto;border:1px solid #E5E7EB;margin-bottom:16px}
+.gr-preview .btn:focus-visible,.gr-result .btn:focus-visible{outline:3px solid #B58C45;outline-offset:3px}
+@media(max-width:600px){
+ .learning-result.gr-result{padding:20px 16px;border-radius:16px}
+ .gr-result .gr-hero{gap:8px;padding:24px 0;grid-template-columns:minmax(0,1fr) minmax(90px,30%)}
+ .gr-result .gr-hero:not(:has(.gr-sticker)){grid-template-columns:1fr}
+ .gr-result .gr-sticker{width:100%;height:auto;max-height:145px;object-fit:contain}
+ .gr-result .gr-hero h3{font-size:17px}
+ .gr-result .gr-questions{gap:6px}
+ .gr-result .gr-questions li{padding:12px 8px;font-size:16px}
+ .gr-result .gr-questions b{font-size:16px}
+ .gr-result .gr-reflection{grid-template-columns:1fr;gap:20px;padding:24px 0}
+ .gr-result .gr-save>.btn{width:100%}
+ .gr-result .gr-heading>p{font-size:12px}
+ .gr-preview{padding:14px;max-width:94vw}
+}
+@media(prefers-reduced-motion:reduce){.gr-result *, .gr-preview *{animation:none!important;transition:none!important}}

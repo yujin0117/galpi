@@ -7,7 +7,7 @@
   const qs = rotation => ({ order: [0, 1, 2].map(i => (i + rotation) % 3), selected: null, attempts: 0, resolved: false, correct: false, missed: false, message: '' });
   const basicState = i => ({ step: 0, prediction: null, scene: 0, seen: [], lowSeen: [], low: null, view: 'oil', hide: false, completed: false, questions: D.topics[i].questions.map((_, j) => qs((i + j) % 3)), sentences: ['', '', ''] });
   const m = {
-    mode: 'basic', topic: 0, teacher: false, reveal: false, zoom: false, results: false, notice: '', copy: '',
+    resultSession:{}, mode: 'basic', topic: 0, teacher: false, reveal: false, zoom: false, results: false, notice: '', copy: '',
     basic: D.topics.map((_, i) => basicState(i)),
     research: [
       { first: 1, second: 3, completed: false, question: qs(1) },
@@ -86,7 +86,8 @@
   function results() {
     const text = resultsText(), completed = (m.mode === 'basic' ? m.basic : m.research).filter(x => x.completed).length;
     const correct = m.basic.flatMap(x => x.questions).filter(q => q.correct).length, checked = m.basic.flatMap(x => x.questions).filter(q => q.resolved).length;
-    return `<h2>이번 화면에서 확인한 학습 결과</h2><p>완료한 ${m.mode === 'basic' ? '주제' : '연구 활동'} ${completed}/4${m.mode === 'basic' ? ` · 확인한 문항 ${checked}/12 · 정답 ${correct}개` : ''}</p><p class="ex-caption">정답 수는 현재 풀이 기준입니다. 힌트 후 재시도할 수 있으며 한 번이라도 틀렸던 개념은 복습 목록에 남습니다. 주제·연구 의견의 방향은 자동 채점하지 않습니다.</p><textarea id="hl-copy" class="hl-result-copy" readonly aria-label="텍스트로 가져갈 학습 결과">${esc(text)}</textarea><div class="hl-actions">${btn('결과 텍스트 복사', 'copy')}${btn('학습으로 돌아가기', 'resume')}</div>${m.copy ? `<p role="status">${esc(m.copy)}</p>` : ''}`;
+    const record=m.mode==='basic'?window.GalpiLearningRecord.render({session:m.resultSession,title:'대한민국 경제 변화 연구소 (기본)',subject:'한국사2',kind:'개념 확인',teacher:m.teacher,score:correct,total:12,complete:checked===12,items:m.basic.flatMap((s,i)=>s.questions.map((q,j)=>({label:i*3+j+1,correct:q.correct,detail:D.titles[i]}))),rewardEligible:m.basic.every(s=>s.questions.every(q=>!q.missed)),caption:'현재 풀이 기준 · 재도전 기록을 포함해요',good:m.basic.filter(s=>s.questions.every(q=>q.correct)).map(s=>D.titles[m.basic.indexOf(s)]).join(' · '),weak:m.basic.filter(s=>s.questions.some(q=>!q.correct||q.missed)).map(s=>D.titles[m.basic.indexOf(s)]).join(' · ')}):'';
+    return `${record}<h2>이번 화면에서 확인한 학습 결과</h2><p>완료한 ${m.mode === 'basic' ? '주제' : '연구 활동'} ${completed}/4${m.mode === 'basic' ? ` · 확인한 문항 ${checked}/12 · 정답 ${correct}개` : ''}</p><p class="ex-caption">정답 수는 현재 풀이 기준입니다. 힌트 후 재시도할 수 있으며 한 번이라도 틀렸던 개념은 복습 목록에 남습니다. 주제·연구 의견의 방향은 자동 채점하지 않습니다.</p><textarea id="hl-copy" class="hl-result-copy" readonly aria-label="텍스트로 가져갈 학습 결과">${esc(text)}</textarea><div class="hl-actions">${btn('결과 텍스트 복사', 'copy')}${btn('학습으로 돌아가기', 'resume')}</div>${m.copy ? `<p role="status">${esc(m.copy)}</p>` : ''}`;
   }
   function render(focus) {
     const basicMode = m.mode === 'basic', labels = basicMode ? D.titles : D.researchTitles;
@@ -135,7 +136,7 @@
       else if (s.step === 1 && m.topic === 1 && s.lowSeen.length < 3) m.notice = 'B · 3저의 유리한 조건에서 세 카드를 모두 확인해 주세요.';
       else if (s.step >= 2 && !s.questions[s.step - 2].resolved) m.notice = '현재 질문의 답을 선택하고 확인해 주세요. 힌트 뒤에도 재시도할 수 있습니다.';
       else { s.step = Math.min(4, s.step + 1); if (s.step === 1 && !s.seen.includes(0)) s.seen.push(0); m.reveal = false; }
-    } else if (action === 'restart-topic') { m.basic[m.topic] = basicState(m.topic); m.reveal = false; }
+    } else if (action === 'restart-topic') { m.basic[m.topic] = basicState(m.topic); m.resultSession={}; m.reveal = false; }
     else if (action === 'complete-basic') {
       if (!s.questions[2].resolved) m.notice = '마지막 역사 연결 질문을 먼저 확인해 주세요.';
       else if (m.topic === 3 && s.sentences.some(x => !x.trim())) m.notice = '성과·문제·나의 판단 세 문장을 완성해 주세요. 의견의 방향에는 정오 점수를 매기지 않습니다.';
