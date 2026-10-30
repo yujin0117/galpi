@@ -176,8 +176,8 @@
 #content .learning-v2 :is(.lab-location,.hl-location){position:static;display:flex;gap:10px;align-items:center;padding:0 0 12px;margin:0 0 18px;border-bottom:1px solid var(--learning-divider);background:none;font-size:13px}
 #content .learning-v2 .lab-location-count{margin-left:auto;background:var(--learning-subtle);border-radius:5px;padding:4px 8px;white-space:nowrap}
 #content .learning-v2 .lab-menu-jump{display:none}
-#content .learning-v2 :is(#tl-panel,#il-panel,#fn-panel,#hl-panel){min-width:0}
-#content .learning-v2 :is(#tl-panel,#fn-panel){background:var(--learning-surface);border:1px solid var(--learning-line);padding:26px;border-radius:16px}
+#content .learning-v2 :is(#tl-panel,#il-panel,#hl-panel){min-width:0}
+#content .learning-v2 :is(#tl-panel){background:var(--learning-surface);border:1px solid var(--learning-line);padding:26px;border-radius:16px}
 #content .learning-v2 #tl-panel:has(.tc-activity),#content .learning-v2 #tl-panel.lab-practice-panel{padding:0;border:0;background:none}
 #content .learning-v2 :is(.lab-prompt,.lab-step-card,.ex-controls,.lab-result){background:var(--learning-surface);border-color:var(--learning-line);box-shadow:none}
 #content .learning-v2 .lab-free-intro{padding:0;background:none;border:0}
@@ -358,7 +358,7 @@ body:has(.learning-v2) .topbar .tagline{display:none}
 #content .learning-v2 :is(.learning-step-number,.lab-tab-number,.hl-tabs>button>small){width:23px;height:23px;font-size:10px}
 #content .learning-v2 .learning-nav-wrap{margin:0}
 #content .learning-v2 :is(.lab-location,.hl-location){font-size:11px;margin-bottom:12px;padding-bottom:8px}
-#content .learning-v2 :is(#tl-panel,#fn-panel,#hl-panel){padding:18px 13px;border-radius:12px}
+#content .learning-v2 :is(#tl-panel,#hl-panel){padding:18px 13px;border-radius:12px}
 #content .learning-v2 :is(h2,.step-title){font-size:19px;line-height:1.5}
 #content .learning-v2 h3{font-size:17px;line-height:1.5}
 #content .learning-v2 :is(.tg-progress,.hl-step-nav){gap:3px;padding:7px;margin-bottom:16px}

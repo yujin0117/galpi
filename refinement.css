@@ -74,7 +74,6 @@
 }
 #content .module-tabs button { min-height: 40px; padding-block: 7.2px; border-radius: 6px; }
 #content .rr-tabs button { min-height: 40px; padding-block: 9.6px; border-radius: 6px; }
-#content .fn-tabs button { min-height: 53px; padding-block: 8px; }
 #content .ex-tabs button { min-height: 45px; padding-block: 9.6px; }
 #content .rr-stage-nav .btn { padding: 7.2px 12px; }
 #content .rr-actions .btn,
@@ -148,8 +147,4 @@ body.teacher-mode #content .btn,
 .teacher-help-panel>div{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .teacher-help-panel button{min-width:44px;min-height:44px;border:0;border-radius:6px;background:#F8FAF9;color:#00462a;font-size:24px}
 .teacher-help-panel p{margin:8px 0 0}
-#content .fn-tabs{gap:6px;padding:6px;background:#e5ebe1;border:1px solid #d1dccb;border-radius:12px}
-#content .fn-tabs button{min-height:52px;border:1px solid transparent;border-radius:8px;white-space:normal;word-break:keep-all;line-height:1.4;background:#f4f6ef;color:#536556}
-#content .fn-tabs button[aria-selected=true]{background:#00462a;color:#FFFFFF;border-color:#00462a;box-shadow:0 2px 5px #00462a18}
-#content .fn-tabs small{font-size:12px;opacity:.85}
-@media(max-width:650px){#content .fn-tabs button{font-size:14px;padding:8px 6px}#content .fn-top,#content .ex-top,#content .rr-top{gap:12px}}
+@media(max-width:650px){#content .fn-top,#content .ex-top,#content .rr-top{gap:12px}}
