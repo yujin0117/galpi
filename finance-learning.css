@@ -121,9 +121,9 @@
 #content .finance .fl-plan-copy{border-left:3px solid #00462A;padding:12px 18px;margin-top:18px}
 #content .finance .fl-plan-copy>strong{font-size:17px;color:#00462A}
 #content .finance .fl-plan-copy p{font-size:14px;color:#64748B}
-#content .finance .fn-review-nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
-#content .finance .fn-review-nav button{flex:1 1 180px}
-#content .finance .fn-review-nav [aria-pressed=true]{background:#00462A;border-color:#00462A;color:#fff}
+#content .finance .fn-allocation-nav{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+#content .finance .fn-allocation-nav button{flex:1 1 180px}
+#content .finance .fn-allocation-nav [aria-pressed=true]{background:#00462A;border-color:#00462A;color:#fff}
 #content .finance .fl-quiz-intro{padding:36px 0}
 #content .finance .fl-question-index{display:flex;gap:6px;flex-wrap:wrap;margin:20px 0}
 #content .finance .fl-question-index button{min-width:44px;padding:9px}
@@ -187,8 +187,8 @@
  #content .finance .fl-plan-copy{padding:10px 14px}
  #content .finance .fl-plan-copy>strong{font-size:15px}
  #content .finance .fl-plan-copy p{font-size:13px}
- #content .finance .fn-review-nav{gap:6px}
- #content .finance .fn-review-nav button{flex:1 1 120px;font-size:14px}
+ #content .finance .fn-allocation-nav{gap:6px}
+ #content .finance .fn-allocation-nav button{flex:1 1 120px;font-size:14px}
  #content .finance .fl-question-index{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
  #content .finance .fl-question-index button{min-width:0}
  #content .finance .fl-answer-type+.question-title{font-size:18px}
