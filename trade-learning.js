@@ -1,84 +1,229 @@
-/* Guided presentation reuses the existing exact-fraction trade engine. */
+/* The core lesson uses the same exact-fraction engine as the trade workshop. */
 (() => {
   'use strict';
-  const E = window.GalpiTradeEngine, D = window.GalpiTradeData, B = D.textbook;
-  const names = ['갑국', '을국'], goods = ['X재', 'Y재'], U = window.GalpiLabUI;
-  const button = (text, action, attrs = '') => `<button type="button" class="btn" data-tl="${action}" ${attrs}>${text}</button>`;
+  const E = window.GalpiTradeEngine;
+  const B = window.GalpiTradeData.textbook;
+  const names = ['갑국', '을국'];
+  const goods = ['X재', 'Y재'];
+  const conditions = E.conditions(B.costs);
+  const correct = [conditions.absolute[0], ...conditions.comparative];
+  const special = names.map((_, country) => conditions.comparative.indexOf(country));
+  const production = special.map(good => goods.map((_, index) => E.F(good === index ? B.units : 0)));
+  const trade = E.exchange(B.costs, production, conditions.comparative[0], B.ratio, B.quantity);
+  const labels = ['생산비 비교', 'X재의 기회비용', 'Y재의 기회비용', '비교우위 정리'];
+  const questions = [
+    '어느 나라가 X재와 Y재 모두 더 적은 비용으로 생산할까요?',
+    'X재 1단위를 만들 때 Y재를 더 적게 포기하는 나라는?',
+    'Y재 1단위를 만들 때 X재를 더 적게 포기하는 나라는?'
+  ];
+  const explanations = [
+    '갑국의 생산비가 X재와 Y재 모두 더 낮아요. 갑국은 두 재화에 절대우위가 있어요.',
+    '을국은 Y재 3/4단위, 갑국은 Y재 2단위를 포기해요. 을국이 덜 포기하므로 X재에 비교우위가 있어요.',
+    '갑국은 X재 1/2단위, 을국은 X재 4/3단위를 포기해요. 갑국이 덜 포기하므로 Y재에 비교우위가 있어요.'
+  ];
   const shown = m => !m.teacher || m.lessonReveal;
-  function initial() { return { compareStep: 0, answers: [null, null, null], checked: [false, false, false], feedback: '', bookPhase: 0, bookStep: 0, bookMessage: '', caseStages: [0, 0, 0] }; }
-  function shape(good, amount = 1) {
-    return `${window.GalpiLearningArt.good(good)}<span>${goods[good]} ${amount}단위</span>`;
+
+  function initial() {
+    return {
+      compareStep: 0, answers: [null, null, null], checked: [false, false, false],
+      feedback: '', exchanged: false
+    };
   }
-  function productionBoard(highlight, selected) {
-    return `<section class="studio-production" aria-label="두 나라의 생산비 비교"><div class="studio-board-caption"><span>같은 상품, 다른 생산비</span><small>재화 1단위 · 단위: 달러</small></div><div class="studio-country-grid">${B.costs.map((row,i)=>`<article class="studio-country ${selected===i?'is-selected':''}" data-country="${i}"><header><span class="studio-country-letter">${i===0?'A':'B'}</span><h3>${names[i]}</h3>${selected===i?'<span class="studio-my-choice">나의 선택 ✓</span>':''}</header>${window.GalpiLearningArt.world(i)}<div class="studio-costs">${row.map((cost,g)=>`<div>${window.GalpiLearningArt.good(g)}<span>${goods[g]} 1단위<strong>${cost}<small>달러</small></strong></span></div>`).join('')}</div>${highlight&&i===0?'<p class="studio-country-note">✓ 두 재화 모두 생산비가 더 낮아요</p>':''}</article>`).join('')}</div><p class="studio-board-hint">두 나라의 <strong>같은 재화끼리</strong> 생산비를 비교해 보세요.</p><details class="studio-source-table"><summary>생산 조건을 표로도 보기</summary>${conditionTable(highlight,selected)}</details></section>`;
+
+  function button(label, action, { primary = false, attrs = '' } = {}) {
+    return `<button type="button" class="btn${primary ? ' tg-primary' : ''}" data-tl="${action}" ${attrs}>${label}</button>`;
   }
-  function group(good, count) { return `<div class="tg-goods">${Array.from({ length: count }, () => `<span>${shape(good)}</span>`).join('')}</div>`; }
-  function conditionTable(highlight = false, selected = null) {
-    return `<div class="ex-table"><table><caption>${B.source}</caption><thead><tr><th>재화 1단위</th><th>갑국</th><th>을국</th></tr></thead><tbody>${[0, 1].map(i => `<tr><th>${goods[i]}</th><td class="${highlight ? 'tg-highlight' : selected === 0 ? 'learning-country-selected' : ''}">${B.costs[0][i]}달러</td><td class="${selected===1?'learning-country-selected':''}">${B.costs[1][i]}달러</td></tr>`).join('')}</tbody></table></div>`;
+
+  function good(index) {
+    return `<span class="tg-good">${window.GalpiLearningArt.good(index)}${goods[index]}</span>`;
   }
-  function progress(current, labels) { return `<ol class="tg-progress" aria-label="현재 학습 단계">${labels.map((s, i) => `<li ${current === i ? 'aria-current="step"' : ''}><span>${i < current ? '✓' : i + 1}</span>${s}</li>`).join('')}</ol>`; }
-  function opportunity(good) {
-    const c = E.conditions(B.costs), other = 1 - good;
-    return `<div class="tg-opportunities">${B.costs.map((costs, i) => {
-      const f = c.oc[i][good], value = E.num(f), units = Math.ceil(value);
-      return `<section class="tg-country">${U.country(i)}<div class="tg-making">${shape(good)}<span aria-hidden="true">→</span><strong>포기하는 ${goods[other]}</strong></div><div class="tg-fraction" role="img" aria-label="${goods[other]} ${E.text(f)}단위를 포기합니다">${Array.from({ length: units }, (_, j) => `<span class="tg-unit">${window.GalpiLearningArt.good(other)}<span class="tg-unit-fill" style="width:${Math.min(1, Math.max(0, value - j)) * 100}%">${window.GalpiLearningArt.good(other)}</span></span>`).join('')}</div><p><strong>${E.text(f)}단위</strong>${f.d !== 1n ? ` (약 ${+value.toFixed(3)}단위)` : ''}</p><details><summary>계산식 확인</summary><p>${goods[good]} 생산비 ${costs[good]} ÷ ${goods[other]} 생산비 ${costs[other]} = ${E.text(f)}</p></details></section>`;
-    }).join('')}</div><p class="ex-caption">채운 칸 하나가 재화 1단위입니다. 분수는 정확한 값, 소수는 근삿값이며 비교우위는 정확한 분수로 판정합니다.</p>`;
+
+  function table(kind, { active = -1, winners = false, visible = true } = {}) {
+    const opportunity = kind === 'opportunity';
+    const preferred = opportunity ? conditions.comparative : conditions.absolute;
+    const caption = opportunity ? '기회비용 · 다른 재화의 포기량' : '생산비 · 재화 1단위당';
+    const rows = goods.map((_, index) => {
+      const cells = names.map((_, country) => {
+        const cost = conditions.oc[country][index];
+        const value = opportunity ? `${goods[1 - index]} <b>${E.text(cost)}</b>단위` : `<b>${B.costs[country][index]}</b>달러`;
+        const best = winners && visible && preferred[index] === country;
+        return `<td${best ? ' class="tg-best"' : ''}>${visible ? value : '공개 전'}${best ? `<small>${opportunity ? '비교우위' : '절대우위'}</small>` : ''}</td>`;
+      }).join('');
+      return `<tr${active === index ? ' class="tg-active-row"' : ''}><th scope="row">${good(index)}</th>${cells}</tr>`;
+    }).join('');
+    return `<table class="tg-table"><caption>${caption}</caption><thead><tr><th scope="col">만드는 재화</th><th scope="col">갑국</th><th scope="col">을국</th></tr></thead><tbody>${rows}</tbody></table>`;
   }
+
+  function glossary(terms) {
+    return `<dl class="tg-glossary">${terms.map(([term, description]) =>
+      `<div><dt>${term}</dt><dd>${description}</dd></div>`).join('')}</dl>`;
+  }
+
+  function compareQuestion(m, step) {
+    const s = m.learning;
+    const selected = s.answers[step];
+    const checked = s.checked[step];
+    const ready = checked && shown(m);
+    const options = step === 0 ? [...names, '재화마다 다르다'] : names;
+    const previous = step > 0 ? button('← 이전 단계', 'learn-prev') : '';
+    const message = s.feedback || (checked ? shown(m) ? explanations[step] : '선택을 확인했어요. 교사가 현재 단계를 공개하면 풀이를 볼 수 있어요.' : '');
+    return `<section class="tg-check" aria-labelledby="tg-question">
+      <p class="tg-kicker">생각해 볼 질문</p>
+      <h3 id="tg-question" tabindex="-1">${questions[step]}</h3>
+      <div class="tg-choices" role="group" aria-label="답 선택">${options.map((label, index) => button(label, 'learn-answer', {
+        attrs: `data-value="${index}" aria-pressed="${selected === index}"`
+      })).join('')}</div>
+      ${message ? `<p class="tg-feedback${ready ? ' tg-correct' : ''}" role="status">${ready ? '<strong>✓ 정답</strong> ' : ''}${message}</p>` : ''}
+      <div class="tg-actions">
+        ${previous}
+        ${button('선택 확인하기', 'learn-check', {primary: !ready, attrs: selected === null ? 'disabled' : ''})}
+        ${button('다음 단계 →', 'learn-next', {primary: ready, attrs: ready ? '' : 'disabled'})}
+      </div>
+    </section>`;
+  }
+
+  function calculation(step) {
+    const goodIndex = step - 1;
+    const other = 1 - goodIndex;
+    const examples = names.map((name, index) =>
+      `${name} ${B.costs[index][goodIndex]} ÷ ${B.costs[index][other]} = ${E.text(conditions.oc[index][goodIndex])}`);
+    return `<p class="tg-note"><strong>${goods[goodIndex]}의 기회비용</strong> = ${goods[goodIndex]} 생산비 ÷ ${goods[other]} 생산비<br>${examples.join(' · ')} (${goods[other]} 단위)</p>`;
+  }
+
   function compare(m) {
-    const s = m.learning, n = s.compareStep, c = E.conditions(B.costs);
-    const questions = ['어느 나라가 두 상품 모두 더 낮은 비용으로 생산할까요?', 'X재 1단위를 만들 때 Y재를 더 적게 포기하는 나라는?', 'Y재 1단위를 만들 때 X재를 더 적게 포기하는 나라는?'];
-    const correct = [0, c.comparative[0], c.comparative[1]], explanations = [
-      '갑국은 X재 2달러 < 3달러, Y재 1달러 < 4달러로 두 재화 모두 절대우위입니다.',
-      '을국은 X재 1단위에 Y재 3/4단위를 포기합니다. 갑국의 2단위보다 적어 X재에 비교우위가 있습니다.',
-      '갑국은 Y재 1단위에 X재 1/2단위를 포기합니다. 을국의 4/3단위보다 적어 Y재에 비교우위가 있습니다.'
-    ];
-    return `${progress(n, ['생산비 비교', 'X재의 포기량', 'Y재의 포기량', '비교우위 정리'])}<h2>${n === 0 ? '더 싸게 만드는 나라부터 찾아볼까요?' : n === 3 ? '잘 만드는 것과 적게 포기하는 것은 달라요.' : '갑국이 둘 다 더 싸게 만드는데, 왜 무역할까요?'}</h2>${n<3?`<h3 class="learning-mobile-question">${questions[n]}</h3>`:''}<div class="learning-compare-layout"><div class="learning-compare-data">${n === 0 ? productionBoard(s.checked[0] && shown(m),s.answers[0]) : n < 3 ? shown(m) ? opportunity(n - 1) : '<p class="ex-empty">포기하는 양을 예측한 뒤 교사가 현재 단계의 그림을 공개합니다.</p>' : `<div class="tg-conclusion"><p>절대우위 · 같은 재화를 <strong>더 낮은 비용</strong>으로 생산</p><p>비교우위 · 다른 재화를 <strong>더 적게 포기</strong>하고 생산</p>${shown(m) ? `<p><strong>갑국 → Y재 / 을국 → X재에 비교우위</strong></p>` : '<p>교사가 현재 단계 공개 버튼으로 비교우위 결과를 보여 줍니다.</p>'}</div>`}</div>${n < 3 ? `<section class="tg-question"><h3>${questions[n]}</h3><div class="ex-options">${[0, 1].map(i => button(names[i], 'learn-answer', `data-value="${i}" aria-pressed="${s.answers[n] === i}"`)).join('')}</div>${button('선택 확인하기', 'learn-check')}${s.feedback ? `<p class="learning-inline-feedback" role="status">! ${s.feedback}</p>` : ''}${s.checked[n] ? shown(m) ? `${U.feedback({correct:true,answer:names[correct[n]],selected:names[s.answers[n]],explain:explanations[n]})}` : '<p role="status">선택을 확인했습니다. 교사의 현재 단계 공개를 기다려 주세요.</p>' : ''}</section>` : '<p>이 결과는 다음 화면의 ‘나의 무역 결정’에 계속 표시됩니다.</p>'}</div><div class="ex-options">${n > 0 ? button('← 이전 단계', 'learn-prev') : ''}${n < 3 ? button('다음 단계 →', 'learn-next') : button('02 특화와 무역으로 →', 'tab', 'data-i="1"')}</div><p class="ex-caption">현재 ${n + 1}/4단계 · ${n < 3 && !s.checked[n] ? '나라를 고르고 선택을 확인해 주세요.' : '이전 선택은 이동해도 유지됩니다.'}</p><details><summary>생산비 모형의 가정</summary><p>교과서 생산비를 고정된 공통 자원 비용으로 해석합니다. 노동시간을 바꾸는 자유 실험과 구분하며 환율·임금·현실의 가격을 예측하지 않습니다.</p></details>`;
+    const step = m.learning.compareStep;
+    const summary = step === 3;
+    const showResults = shown(m);
+    const progress = labels.map((label, index) =>
+      `<li${step === index ? ' aria-current="step"' : ''}><span>${index + 1}</span>${label}</li>`).join('');
+    const tables = `<div class="tg-data">
+      ${table('cost', {winners: showResults && (summary || (step === 0 && m.learning.checked[0]))})}
+      ${step > 0 ? table('opportunity', {active: summary ? -1 : step - 1, winners: summary, visible: showResults}) : ''}
+    </div>`;
+    return `<div class="tg-core" id="tg-lesson">
+      <ol class="tg-steps" aria-label="생산 조건 비교 단계">${progress}</ol>
+      <h2 id="tg-lesson-title" tabindex="-1">${summary ? '생산비와 포기량을 나란히 비교해요' : step === 0 ? '생산비가 더 낮으면, 무역할 이유가 없을까요?' : '갑국이 둘 다 더 싸게 만드는데, 왜 무역할까요?'}</h2>
+      ${glossary([
+        ['절대우위', '같은 재화를 더 적은 비용으로 만들어요.'],
+        ['기회비용', '여기서는 재화 1단위를 만들려고 포기하는 다른 재화의 양이에요.'],
+        ['비교우위', '같은 재화를 만들 때 다른 재화를 더 적게 포기해요.']
+      ])}
+      ${summary ? `
+        ${tables}
+        ${showResults ? '<p class="tg-takeaway"><strong>갑국은 두 재화 모두 절대우위예요.</strong> 하지만 Y재는 갑국이, X재는 을국이 더 적게 포기하며 만들어요. 그래서 서로 다른 재화에 특화할 수 있어요.</p>' : '<p class="tg-note">교사가 현재 단계를 공개하면 비교우위와 특화 방향을 볼 수 있어요.</p>'}
+        <div class="tg-actions">${button('← 이전 단계', 'learn-prev')}${button('특화와 무역으로 →', 'tab', {primary: true, attrs: 'data-i="1"'})}</div>
+        <p class="tg-note">다음 화면에서도 두 나라의 기회비용을 다시 볼 수 있어요.</p>
+      ` : `<div class="tg-compare-work">
+        <div>${tables}${step > 0 && showResults ? calculation(step) : ''}</div>
+        ${compareQuestion(m, step)}
+      </div>`}
+      <p class="tg-source">수업 자료 8~9쪽 · 생산비는 달러, 기회비용은 포기하는 재화의 단위로 읽어요.</p>
+    </div>`;
   }
-  function summary(m) {
-    const special=m.book.special;
-    return U.summary(`${conditionTable()}<p><strong>비교우위</strong><br>갑국 Y재 · 을국 X재</p><p><strong>내가 선택한 특화</strong><br>${special.map((v,i)=>`${names[i]}: ${v===null?'아직 선택하지 않음':goods[v]}`).join(' / ')}</p><p><strong>고정 교환 조건</strong><br>X재 1단위 ↔ Y재 1단위</p><p class="ex-caption">기본 학습은 생산비·교환 비율·수량을 고정합니다. 직접 조정하려면 03 자유 무역 실험을 이용하세요.</p>`,'나의 무역 결정 · 조건 다시 보기',innerWidth>900).replace('class="learning-selection-summary"','class="learning-selection-summary tg-summary"');
+
+  function exchangeDiagram() {
+    return `<div class="tg-exchange-flow" aria-label="두 나라의 특화 생산과 1 대 1 교환">
+      ${names.map((name, index) => {
+        const makes = special[index];
+        return `<div class="tg-producer"><strong>${name}</strong><span>${good(makes)} ${B.units}단위 생산</span></div>`;
+      }).join('')}
+      <ul class="tg-transfers">
+        <li><span>갑국</span><strong>→ Y재 1단위 →</strong><span>을국</span></li>
+        <li><span>갑국</span><strong>← X재 1단위 ←</strong><span>을국</span></li>
+      </ul>
+    </div>`;
   }
+
+  function tradeResult() {
+    return `<p class="tg-takeaway"><strong>두 나라 모두 X재 1단위와 Y재 1단위를 얻어요.</strong> 직접 만들 때와 같은 묶음인데, 생산비는 각각 1달러 줄어요.</p>
+      <p class="tg-note">X재 1단위의 교환값은 Y재 1단위예요. 을국은 X재를 만들며 포기한 Y재 3/4단위보다 많이 받고, 갑국은 X재를 직접 만들 때 포기할 Y재 2단위보다 적게 줘요.</p>
+      <table class="tg-table tg-result-table">
+        <caption>같은 소비 묶음을 얻는 데 드는 생산비</caption>
+        <thead><tr><th scope="col">나라</th><th scope="col">직접 생산</th><th scope="col">특화 후 교환</th><th scope="col">절약</th></tr></thead>
+        <tbody>${names.map((name, index) => `<tr><th scope="row">${name}</th>
+          <td>${E.text(trade.autarky[index])}달러</td><td>${E.text(trade.used[index])}달러</td>
+          <td class="tg-best"><b>${E.text(trade.gains[index])}</b>달러</td></tr>`).join('')}</tbody>
+      </table>
+      <p class="tg-note">갑국은 Y재 2단위(1×2), 을국은 X재 2단위(3×2)를 생산하는 데 든 비용이에요.</p>`;
+  }
+
   function book(m) {
-    const s = m.learning, b = m.book, n = s.bookStep;
-    const p = b.special.map(x => [E.F(x === 0 ? B.units : 0), E.F(x === 1 ? B.units : 0)]);
-    const valid = b.special[0] === 1 && b.special[1] === 0;
-    const result = valid ? E.exchange(B.costs, p, 1, B.ratio, B.quantity) : null;
-    const headings = ['① 무역 이전', '② 비교우위에 맞춰 특화', '③ 상품 교환', '④ 무역 이후의 소비', '⑤ 생산비 절약'];
-    const contents = [
-      `<p>두 나라 모두 X재 1단위와 Y재 1단위를 직접 만듭니다.</p><div class="tg-opportunities">${B.costs.map((row, i) => `<section class="tg-country">${U.country(i)}${group(0, 1)}${group(1, 1)}<p>직접 생산비 <strong>${row[0] + row[1]}달러</strong></p></section>`).join('')}</div>`,
-      `<p>각 나라는 선택한 재화를 2단위씩 생산합니다.</p><div class="tg-opportunities">${b.special.map((x, i) => `<section class="tg-country">${U.country(i,names[i]+' · '+goods[x])}${group(x, B.units)}<p>생산비 <strong>${B.costs[i][x] * B.units}달러</strong></p></section>`).join('')}</div>`,
-      `<div class="studio-exchange-scene"><div>${U.country(0)}<span>Y재 1단위를 보내요</span>${shape(1)}</div><div class="studio-shipping">${window.GalpiLearningArt.scene('ship')}<p>← X재 1단위</p><p>Y재 1단위 →</p></div><div>${U.country(1)}<span>X재 1단위를 보내요</span>${shape(0)}</div></div><p>둘 다 1단위를 건네고, 다른 재화 1단위를 받습니다. 교환이 재화를 새로 만들지는 않습니다.</p>`,
-      `<div class="tg-opportunities">${names.map((name,i) => `<section class="tg-country">${U.country(i,name+' · 소비할 묶음')}${group(0, 1)}${group(1, 1)}</section>`).join('')}</div><p>무역 이전과 똑같은 X재 1단위·Y재 1단위를 확보했습니다.</p>`,
-      result ? `<div class="tg-opportunities">${result.gains.map((g, i) => `<section class="tg-country">${U.country(i)}${U.bars('같은 소비 묶음에 필요한 생산비',[{label:'직접 생산',value:E.num(result.autarky[i])},{label:'특화·교환',value:E.num(result.used[i])}],{unit:'달러'})}<p class="tg-saving"><strong>${E.text(g)}달러 절약</strong></p></section>`).join('')}</div><p>같은 소비 묶음을 얻는 데 두 나라 모두 생산비가 줄었습니다.</p>` : ''
-    ];
-    return `<h2>${s.bookPhase === 0 ? 'STEP A · 각 나라는 무엇에 특화할까요?' : 'STEP B · 같은 묶음을 얻는 과정을 따라가요.'}</h2><div class="tg-book-layout"><div>${s.bookPhase === 0 ? `<p>비교우위를 확인하고 두 나라의 특화 상품을 각각 골라 주세요.</p><div class="tg-opportunities">${names.map((name, i) => `<section class="tg-country">${U.country(i,name+'의 특화 상품')}<p>비교우위: <strong>${i === 0 ? 'Y재' : 'X재'}</strong></p><div class="ex-options">${[0, 1].map(v => button(goods[v], 'book-choice', `data-country="${i}" data-value="${v}" aria-pressed="${b.special[i] === v}"`)).join('')}</div></section>`).join('')}</div>${s.bookMessage ? `<p class="ex-notice" role="status">${s.bookMessage}</p>` : ''}${button('선택 확인하고 무역 과정 보기 →', 'book-next')}<p class="ex-caption">두 나라의 상품을 선택하면 STEP B로 이동합니다. 틀린 선택도 다시 고칠 수 있습니다.</p>` : `${progress(n, ['무역 이전', '특화', '교환', '소비', '이익'])}<section class="tg-scene" aria-live="polite"><h3 tabindex="-1" id="tg-scene-title">${headings[n]}</h3>${shown(m) ? contents[n] : '<p class="ex-empty">이번 단계에서 무엇이 달라질지 예측해 보세요. 교사가 현재 단계를 공개합니다.</p>'}</section><div class="ex-options">${button(n === 0 ? '← 특화 선택으로' : '← 이전 과정', 'book-prev')}${n < 4 ? button('다음 과정 →', 'book-next') : button('05 문제 연습으로 →', 'tab', 'data-i="4"')}</div><p class="ex-caption">자동으로 넘어가지 않습니다. 확인한 뒤 다음 과정을 눌러 주세요.</p>`}</div>${summary(m)}</div><p class="ex-caption">학습용 생산비 모형 · 교환·운송 비용과 관세를 고려하지 않으며 재화는 나누어 생산·교환할 수 있다고 가정합니다. 원문 대조 전인 사용자 제공 예제입니다.</p>`;
+    const visible = shown(m);
+    const exchanged = m.learning.exchanged;
+    return `<div class="tg-core" id="tg-lesson">
+      <h2 id="tg-lesson-title" tabindex="-1">각자 덜 포기하는 재화를 만들면 어떻게 될까요?</h2>
+      ${glossary([
+        ['특화', '생산에 유리한 재화에 집중해요.'],
+        ['국제 분업', '나라별로 서로 다른 재화의 생산을 맡아요.'],
+        ['무역', '나라 사이에 재화나 서비스를 거래해요.']
+      ])}
+      <div class="tg-book-work">
+        <section class="tg-specialization">
+          <h3>① 기회비용으로 특화 방향 찾기</h3>
+          ${table('opportunity', {winners: true, visible})}
+          ${visible ? '<p class="tg-note"><strong>갑국은 Y재, 을국은 X재에 특화해요.</strong> 각 재화를 만들 때 상대국보다 덜 포기하기 때문이에요.</p>' : '<p class="tg-note">교사가 현재 단계를 공개하면 특화 방향을 확인할 수 있어요.</p>'}
+          ${table('cost')}
+        </section>
+        <section class="tg-check tg-book-action" aria-labelledby="tg-exchange-title">
+          <h3 id="tg-exchange-title">② 한 단위씩 주고받기</h3>
+          ${visible ? `${exchangeDiagram()}
+            <p class="tg-note">X재와 Y재를 하나씩 직접 만들 때보다 생산비가 줄어드는지 확인해 보세요.</p>`
+            : '<p class="tg-note">각 나라가 어떤 재화를 생산해 건네면 좋을지 먼저 예상해 보세요.</p>'}
+          <div class="tg-actions">${button(exchanged ? '교환 전으로 돌아가기' : '1:1로 교환해 보기 →', 'book-exchange', {
+            primary: !exchanged, attrs: visible ? '' : 'disabled'
+          })}${exchanged && visible ? button('문제 연습으로 →', 'tab', {primary: true, attrs: 'data-i="4"'}) : ''}</div>
+          ${exchanged && visible ? `<div class="tg-book-result" tabindex="-1" role="region" aria-label="교환 결과">${tradeResult()}</div>` : ''}
+        </section>
+      </div>
+      <p class="tg-source">수업 자료 8~10쪽 · 운송비와 관세를 제외하고 1:1로 교환하는 학습용 예제입니다.</p>
+    </div>`;
   }
+
   function handle(m, action, element) {
     const s = m.learning;
-    if (action === 'learn-answer') { s.answers[s.compareStep] = +element.dataset.value; s.checked[s.compareStep] = false; s.feedback = ''; }
-    else if (action === 'learn-check') {
-      const n = s.compareStep, selected = s.answers[n], correct = [0, 1, 0][n];
-      if (selected === null) s.feedback = '먼저 갑국 또는 을국을 선택해 주세요.';
-      else if (selected !== correct) s.feedback = n === 0 ? '같은 재화의 생산비를 두 나라끼리 비교해 보세요. 선택을 바꿀 수 있습니다.' : '포기하는 다른 재화의 양이 더 적은 나라를 다시 찾아보세요.';
-      else { s.checked[n] = true; s.feedback = ''; }
-    } else if (action === 'learn-next') {
-      if (!s.checked[s.compareStep]) s.feedback = '현재 질문에서 나라를 고르고 선택 확인하기를 눌러 주세요.';
-      else if (!shown(m)) s.feedback = '교사가 현재 단계 결과를 공개한 뒤 이동할 수 있습니다.';
-      else { s.compareStep = Math.min(3, s.compareStep + 1); s.feedback = ''; m.lessonReveal = false; }
-    } else if (action === 'learn-prev') { s.compareStep = Math.max(0, s.compareStep - 1); s.feedback = ''; m.lessonReveal = false; }
-    else if (action === 'book-choice') { m.book.special[+element.dataset.country] = +element.dataset.value; s.bookPhase = 0; s.bookStep = 0; s.bookMessage = ''; m.lessonReveal = false; }
-    else if (action === 'book-next') {
-      if (s.bookPhase === 0) {
-        if (m.book.special[0] === null) s.bookMessage = '갑국이 특화할 상품을 선택해 주세요.';
-        else if (m.book.special[1] === null) s.bookMessage = '을국의 특화 상품도 선택해 주세요.';
-        else if (m.book.special[0] !== 1 || m.book.special[1] !== 0) s.bookMessage = '갑국은 Y재, 을국은 X재를 더 적게 포기하고 만듭니다. 비교우위에 맞게 선택을 바꿔 보세요.';
-        else { s.bookPhase = 1; s.bookStep = 0; s.bookMessage = ''; m.lessonReveal = false; }
-      } else if (shown(m)) { s.bookStep = Math.min(4, s.bookStep + 1); m.lessonReveal = false; }
-      else return { handled: true, focus: '[data-tl="lesson-reveal"]' };
-    } else if (action === 'book-prev') { if (s.bookStep === 0) s.bookPhase = 0; else s.bookStep--; m.lessonReveal = false; }
-    else if (action === 'lesson-reveal') m.lessonReveal = !m.lessonReveal;
-    else return { handled: false };
-    return { handled: true, focus: action === 'book-next' && s.bookPhase === 1 ? '#tg-scene-title' : `[data-tl="${action}"]${element.dataset.value !== undefined ? `[data-value="${element.dataset.value}"]` : ''}${element.dataset.country !== undefined ? `[data-country="${element.dataset.country}"]` : ''}` };
+    const step = s.compareStep;
+    let focus;
+    let scroll;
+
+    switch (action) {
+      case 'learn-answer':
+        s.answers[step] = Number(element.dataset.value);
+        s.checked[step] = false;
+        s.feedback = '';
+        focus = `[data-tl="learn-answer"][data-value="${element.dataset.value}"]`;
+        break;
+      case 'learn-check':
+        if (s.answers[step] === null) return {handled: true, focus: '.tg-choices button'};
+        s.checked[step] = s.answers[step] === correct[step];
+        s.feedback = s.checked[step] ? '' : step === 0
+          ? '같은 재화의 달러 금액을 갑국과 을국끼리 비교해 보세요.'
+          : `${goods[step - 1]} 행에서 포기하는 ${goods[2 - step]}의 양이 더 작은 쪽을 찾아보세요.`;
+        focus = s.checked[step] && shown(m) ? '[data-tl="learn-next"]' : '[data-tl="learn-check"]';
+        break;
+      case 'learn-next':
+      case 'learn-prev':
+        if (action === 'learn-next' && (!s.checked[step] || !shown(m))) return {handled: true};
+        s.compareStep += action === 'learn-next' ? 1 : -1;
+        s.feedback = '';
+        m.lessonReveal = false;
+        focus = s.compareStep === 3 ? '#tg-lesson-title' : '#tg-question';
+        scroll = {selector: '#tg-lesson', block: 'start'};
+        break;
+      case 'book-exchange':
+        if (!shown(m)) return {handled: true};
+        s.exchanged = !s.exchanged;
+        focus = s.exchanged ? '.tg-book-result' : '[data-tl="book-exchange"]';
+        if (s.exchanged) scroll = {selector: focus, block: 'nearest'};
+        break;
+      case 'lesson-reveal':
+        m.lessonReveal = !m.lessonReveal;
+        focus = '[data-tl="lesson-reveal"]';
+        break;
+      default:
+        return {handled: false};
+    }
+    return {handled: true, focus, scroll};
   }
-  window.GalpiTradeLearning = { initial, compare, book, handle };
+
+  window.GalpiTradeLearning = {initial, compare, book, handle};
 })();
