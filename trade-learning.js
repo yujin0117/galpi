@@ -158,15 +158,16 @@
         ['무역', '나라 사이에 재화나 서비스를 거래해요.']
       ])}
       <div class="tg-book-work">
-        <section class="tg-specialization">
-          <h3>① 기회비용으로 특화 방향 찾기</h3>
+        <section class="tg-check tg-specialization" aria-labelledby="tg-specialization-title">
+          <h3 id="tg-specialization-title"><span class="tg-step-badge">1</span> 기회비용으로 특화 방향 찾기</h3>
           ${table('opportunity', {winners: true, visible})}
           ${visible ? '<p class="tg-note"><strong>갑국은 Y재, 을국은 X재에 특화해요.</strong> 각 재화를 만들 때 상대국보다 덜 포기하기 때문이에요.</p>' : '<p class="tg-note">교사가 현재 단계를 공개하면 특화 방향을 확인할 수 있어요.</p>'}
           ${table('cost')}
         </section>
         <section class="tg-check tg-book-action" aria-labelledby="tg-exchange-title">
-          <h3 id="tg-exchange-title">② 한 단위씩 주고받기</h3>
-          ${visible ? `${exchangeDiagram()}
+          <h3 id="tg-exchange-title"><span class="tg-step-badge">2</span> 한 단위씩 주고받기</h3>
+          ${visible ? `<p class="tg-book-caption">교환하기 전 생산량</p>
+            ${exchangeDiagram()}
             <p class="tg-note">X재와 Y재를 하나씩 직접 만들 때보다 생산비가 줄어드는지 확인해 보세요.</p>`
             : '<p class="tg-note">각 나라가 어떤 재화를 생산해 건네면 좋을지 먼저 예상해 보세요.</p>'}
           <div class="tg-actions">${button(exchanged ? '교환 전으로 돌아가기' : '1:1로 교환해 보기 →', 'book-exchange', {

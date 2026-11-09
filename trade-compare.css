@@ -62,7 +62,18 @@
 #content .trade :is(.tg-note, .tg-source) { font-size: 12px; line-height: 1.5; color: var(--learning-muted); margin: 7px 0 0; }
 #content .trade .tg-source { margin-top: 12px; }
 #content .trade .tg-takeaway { margin: 10px 0 0; padding: 8px 10px; border-radius: 6px; background: var(--learning-selected); font-size: 13px; line-height: 1.55; }
+#content .trade .tg-book-work > section { min-width: 0; }
+#content .trade .tg-book-work > section > h3 { display: flex; align-items: center; gap: 6px; }
+#content .trade .tg-step-badge {
+  display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--learning-brand); color: var(--learning-surface); font-size: 12px;
+}
+#content .trade .tg-book-caption {
+  margin: 0; padding-bottom: 5px; color: var(--learning-brand); font-size: 14px; font-weight: 750; line-height: 1.4;
+}
+#content .trade .tg-specialization .tg-table { table-layout: fixed; }
 #content .trade .tg-specialization .tg-note { margin-bottom: 10px; }
+#content .trade .tg-book-action .tg-exchange-flow { margin-top: 0; }
 #content .trade .tg-exchange-flow {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 8px 0;
 }
@@ -90,6 +101,7 @@
   #content .trade .tg-core .btn { min-height: 44px; }
   #content .trade .tg-steps li { flex-direction: column; gap: 1px; font-size: 10px; padding: 4px 2px; }
   #content .trade .tg-table { font-size: 13px; }
+  #content .trade .tg-book-caption { font-size: 13px; }
   #content .trade .tg-table :is(th, td) { padding: 7px 4px; }
   #content .trade .tg-result-table th { font-size: 11px; }
 }
