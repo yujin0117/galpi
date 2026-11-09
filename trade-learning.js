@@ -121,16 +121,24 @@
     </div>`;
   }
 
-  function exchangeDiagram() {
-    return `<div class="tg-exchange-flow" aria-label="두 나라의 특화 생산과 1 대 1 교환">
-      ${names.map((name, index) => {
-        const makes = special[index];
-        return `<div class="tg-producer"><strong>${name}</strong><span>${good(makes)} ${B.units}단위 생산</span></div>`;
-      }).join('')}
-      <ul class="tg-transfers">
-        <li><span>갑국</span><strong>→ Y재 1단위 →</strong><span>을국</span></li>
-        <li><span>갑국</span><strong>← X재 1단위 ←</strong><span>을국</span></li>
-      </ul>
+  function exchangeDiagram(exchanged) {
+    const holdings = exchanged ? trade.after : production;
+    return `<div class="tg-exchange-flow${exchanged ? ' tg-exchanged' : ''}" role="group" aria-label="두 나라의 보유량과 교환 방향">
+      ${names.map((name, index) => `<div class="tg-producer">
+        <strong>${name}</strong>
+        <div class="tg-holdings">${holdings[index].map((quantity, i) =>
+          `<span>${good(i)} <b>${E.text(quantity)}</b>단위</span>`).join('')}</div>
+      </div>`).join('')}
+      <div class="tg-transfers">
+        <div class="tg-transfer tg-transfer-east" role="img" aria-label="갑국이 을국에 Y재 1단위를 보냅니다">
+          <span class="tg-transfer-arrow" aria-hidden="true">→</span>
+          <span class="tg-transfer-good" aria-hidden="true">${good(1)} 1단위</span>
+        </div>
+        <div class="tg-transfer tg-transfer-west" role="img" aria-label="을국이 갑국에 X재 1단위를 보냅니다">
+          <span class="tg-transfer-arrow" aria-hidden="true">←</span>
+          <span class="tg-transfer-good" aria-hidden="true">${good(0)} 1단위</span>
+        </div>
+      </div>
     </div>`;
   }
 
@@ -166,9 +174,11 @@
         </section>
         <section class="tg-check tg-book-action" aria-labelledby="tg-exchange-title">
           <h3 id="tg-exchange-title"><span class="tg-step-badge">2</span> 한 단위씩 주고받기</h3>
-          ${visible ? `<p class="tg-book-caption">교환하기 전 생산량</p>
-            ${exchangeDiagram()}
-            <p class="tg-note">X재와 Y재를 하나씩 직접 만들 때보다 생산비가 줄어드는지 확인해 보세요.</p>`
+          ${visible ? `<p class="tg-book-caption" id="tg-stock-heading" tabindex="-1">${exchanged ? '교환 후 보유량' : '교환 전 보유량'}</p>
+            ${exchangeDiagram(exchanged)}
+            <p class="tg-note">${exchanged
+              ? '갑국은 Y재를 보내고 X재를 받았어요. 을국은 X재를 보내고 Y재를 받았어요.'
+              : '갑국의 Y재 하나와 을국의 X재 하나가 서로 반대 방향으로 이동해요.'}</p>`
             : '<p class="tg-note">각 나라가 어떤 재화를 생산해 건네면 좋을지 먼저 예상해 보세요.</p>'}
           <div class="tg-actions">${button(exchanged ? '교환 전으로 돌아가기' : '1:1로 교환해 보기 →', 'book-exchange', {
             primary: !exchanged, attrs: visible ? '' : 'disabled'
@@ -178,6 +188,32 @@
       </div>
       <p class="tg-source">수업 자료 8~10쪽 · 운송비와 관세를 제외하고 1:1로 교환하는 학습용 예제입니다.</p>
     </div>`;
+  }
+
+  async function exchange(m, buttonElement) {
+    const s = m.learning;
+    const ignored = {handled: true, render: false};
+    if (!shown(m) || buttonElement.getAttribute('aria-disabled') === 'true') return ignored;
+    if (s.exchanged) {
+      s.exchanged = false;
+      return {handled: true, focus: '[data-tl="book-exchange"]'};
+    }
+
+    const diagram = buttonElement.closest('.tg-book-action')?.querySelector('.tg-exchange-flow');
+    if (typeof diagram?.animate === 'function' && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      buttonElement.setAttribute('aria-disabled', 'true');
+      buttonElement.textContent = '교환 중…';
+      diagram.scrollIntoView({block: 'nearest', behavior: 'instant'});
+      const cargo = [...diagram.querySelectorAll('.tg-transfer-good')];
+      const journey = [{left: '0%', transform: 'translateX(0)'}, {left: '100%', transform: 'translateX(-100%)'}];
+      await Promise.allSettled(cargo.map((token, index) =>
+        token.animate(index === 0 ? journey : [...journey].reverse(), {
+          duration: 1050, easing: 'ease-in-out', fill: 'forwards'
+        }).finished));
+    }
+    if (!buttonElement.isConnected) return ignored;
+    s.exchanged = true;
+    return {handled: true, focus: '#tg-stock-heading'};
   }
 
   function handle(m, action, element) {
@@ -210,12 +246,6 @@
         focus = s.compareStep === 3 ? '#tg-lesson-title' : '#tg-question';
         scroll = {selector: '#tg-lesson', block: 'start'};
         break;
-      case 'book-exchange':
-        if (!shown(m)) return {handled: true};
-        s.exchanged = !s.exchanged;
-        focus = s.exchanged ? '.tg-book-result' : '[data-tl="book-exchange"]';
-        if (s.exchanged) scroll = {selector: focus, block: 'nearest'};
-        break;
       case 'lesson-reveal':
         m.lessonReveal = !m.lessonReveal;
         focus = '[data-tl="lesson-reveal"]';
@@ -226,5 +256,5 @@
     return {handled: true, focus, scroll};
   }
 
-  window.GalpiTradeLearning = {initial, compare, book, handle};
+  window.GalpiTradeLearning = {initial, compare, book, exchange, handle};
 })();
