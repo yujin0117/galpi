@@ -8,7 +8,7 @@
  const basic=[
   {topic:'명시적 비용',prompt:'영화를 선택할 때 실제로 지출하는 명시적 비용은 얼마일까요?',options:[8000,16000,24000,0],answerValue:8000,formula:['명시적 비용 = 선택을 위해 실제로 지출하는 금액'],explain:'영화표에 직접 지불하는 8,000원이 명시적 비용이에요. 다른 비용은 없어요.',steps:[step('실제로 나가는 돈을 찾아요','명시적 비용 = 실제 지출액','아르바이트 수입은 받지 못하는 돈이고, 영화표 값은 실제로 내는 돈이에요. 지금은 실제 지출만 묻고 있어요.','영화표 값 8,000원 = 명시적 비용 8,000원')]},
   {topic:'암묵적 비용',prompt:'영화를 선택하면서 포기하는 암묵적 비용은 얼마일까요?',options:[8000,16000,24000,0],answerValue:16000,formula:['암묵적 비용 = 포기한 아르바이트에서 얻을 수 있었던 수입'],explain:'영화를 보는 같은 2시간 동안 아르바이트를 할 수 없으므로, 받을 수 있었던 수입 16,000원을 포기해요.',steps:[step('돈을 내지는 않아도 포기한 기회가 있어요','암묵적 비용 = 포기한 최선의 대안에서 얻을 수 있었던 가치','포기한 대안은 아르바이트예요. 다른 비용이 없으므로 받을 수 있었던 수입 전체를 포기해요. 영화표 값과 구분해 보세요.','포기한 아르바이트 수입 16,000원 = 암묵적 비용 16,000원')]},
-  {topic:'기회비용',prompt:'영화를 선택할 때의 기회비용은 얼마일까요?',options:[8000,16000,24000,30000],answerValue:24000,formula:['기회비용 = 명시적 비용 + 암묵적 비용'],explain:'영화표 값 8,000원 + 포기한 아르바이트 수입 16,000원 = 기회비용 24,000원이에요.',steps:[step('두 종류의 비용을 합해요','기회비용 = 명시적 비용 + 암묵적 비용','영화 선택에는 실제 지출과 포기한 기회가 모두 있어요. 어느 한쪽만 계산하면 선택의 전체 비용을 놓치게 돼요.','8,000원 + 16,000원 = 24,000원')]},
+  {topic:'기회비용',prompt:'영화를 선택할 때의 기회비용은 얼마일까요?',options:[8000,16000,24000,30000],answerValue:24000,formula:['기회비용 = 명시적 비용 + 암묵적 비용'],explain:'영화표 값 8,000원 + 포기한 아르바이트 수입 16,000원 = 기회비용 24,000원이에요.',steps:[step('두 종류의 비용을 합해요','기회비용 = 명시적 비용 + 암묵적 비용','영화 선택에는 실제 지출과 포기한 기회가 모두 있어요. 영화를 고르는 순간 영화표 값은 나가고, 일했다면 들어올 돈도 놓쳐요. 두 일이 같은 선택에서 생기므로 비용을 더해요.','8,000원 + 16,000원 = 24,000원')]},
   {topic:'순편익',prompt:'영화의 편익이 30,000원이라면, 영화 선택의 순편익은 얼마일까요?',conditions:[['영화의 편익',30000],['앞에서 구한 기회비용',24000]],note:'편익은 실제로 받는 돈이 아니라, 선택으로 얻는 만족이나 이익을 금전적으로 평가한 값이에요.',options:[6000,22000,14000,30000],answerValue:6000,formula:['순편익 = 편익 − 기회비용'],explain:'영화의 만족을 평가한 편익 30,000원에서 기회비용 24,000원을 빼면 순편익은 6,000원이에요.',steps:[step('얻는 편익에서 전체 비용을 빼요','순편익 = 편익 − 기회비용','영화표 값만 빼면 포기한 아르바이트 수입이 빠져요. 앞에서 구한 기회비용 전체를 빼야 순편익을 알 수 있어요.','30,000원 − 24,000원 = 6,000원')]}
  ];
  const applied=[
@@ -23,12 +23,62 @@
  function guide(q){return `<ol class="cost-guide-steps">${q.steps.map(s=>`<li><h4>${s.title}</h4><p class="cost-guide-formula">${s.formula}</p><p>${s.why}</p><p class="cost-guide-calculation">${s.equation}</p></li>`).join('')}</ol>`;}
  function formulas(q){return `<section class="cost-formulas" aria-label="${q.type==='sunk'?'판단 기준':'기본 공식'}"><h4>${q.type==='sunk'?'판단 기준':'이번 단계의 기본 공식'}</h4>${q.formula.map(t=>`<p>${t}</p>`).join('')}</section>`;}
  function conditions(rows){return rows?.length?`<dl class="cost-conditions">${rows.map(([label,value])=>`<div><dt>${label}</dt><dd>${typeof value==='number'?won(value):value}</dd></div>`).join('')}</dl>`:'';}
+ function implicitWalkthrough(){
+  const questions=[
+   {
+    title:'포기한 김밥에서 무엇을 잃었을까요?',
+    explanation:'김밥을 먹지 않아서 7,000원어치 만족을 놓쳤지만, 김밥 값 4,500원도 내지 않았어요. 그래서 김밥을 먹었다면 남았을 이득만큼 포기한 거예요.',
+    equation:'김밥의 편익 7,000원 − 김밥 값 4,500원 = 암묵적 비용 2,500원'
+   },
+   {
+    title:'두 비용을 왜 더할까요?',
+    explanation:'떡볶이를 고르면서 떡볶이 값을 실제로 냈고, 동시에 김밥을 먹었다면 얻었을 이득도 놓쳤어요. 두 가지 모두 떡볶이 선택 때문에 생긴 비용이에요.',
+    equation:'떡볶이 값 5,000원 + 포기한 이득 2,500원 = 기회비용 7,500원'
+   },
+   {
+    title:'순편익은 이제 어느 쪽을 볼까요?',
+    explanation:'이번에는 선택한 떡볶이를 봐요. 떡볶이에서 얻은 만족을 금액으로 평가한 편익에서, 앞에서 구한 전체 비용을 빼요.',
+    equation:'떡볶이 편익 9,000원 − 기회비용 7,500원 = 순편익 1,500원'
+   }
+  ];
+  return `<section class="cost-implicit-walkthrough" aria-label="암묵적 비용부터 순편익까지">
+   <p class="cost-walkthrough-case"><strong>선택한 쪽</strong> 떡볶이 <strong>포기한 쪽</strong> 김밥</p>
+   <p>떡볶이와 김밥 중 하나만 먹을 수 있어요. 떡볶이를 골랐다고 생각하고, 질문을 차례로 열어 보세요.</p>
+   ${questions.map((q,i)=>`<details class="learning-explanation">
+    <summary>${i+1}. ${q.title}</summary>
+    <div><p>${q.explanation}</p><p class="cost-walkthrough-equation">${q.equation}</p></div>
+   </details>`).join('')}
+  </section>`;
+ }
  function bridge(where='example'){
-  return `<section class="cost-price-bridge" aria-labelledby="cost-bridge-title"><p class="cost-kicker">${where==='quiz'?'종합 응용을 풀기 전':'응용 예제를 시작하기 전'} · 한 번만 자세히 알아보기</p><h2 id="cost-bridge-title">포기한 대안에도 가격이 있다면?</h2><p>아르바이트에는 다른 비용이 없어서 수입 전체가 암묵적 비용이었어요. 하지만 포기한 대안에도 지출이 있다면 달라져요.</p><div class="cost-bridge-equation"><div>${window.GalpiLearningArt.scene('gimbap')}<strong>김밥의 편익</strong><b>7,000원</b><span>김밥을 먹으면 얻을 만족</span></div><span aria-hidden="true">−</span><div>${window.GalpiLearningArt.scene('wallet')}<strong>김밥 가격</strong><b>4,500원</b><span>김밥을 먹지 않으면 내지 않는 돈</span></div><span aria-hidden="true">=</span><div>${window.GalpiLearningArt.scene('currency')}<strong>포기한 김밥의 이익</strong><b>2,500원</b><span>떡볶이 선택의 암묵적 비용</span></div></div><p>김밥을 포기하면 편익 7,000원을 얻지 못하지만 가격 4,500원도 내지 않아요. 따라서 <strong>편익에서 가격을 뺀 이익 2,500원</strong>을 포기하는 거예요.</p><p class="cost-rule">이처럼 편익과 가격이 주어진 사례의 암묵적 비용 = 포기한 최선의 대안의 편익 − 그 대안의 가격</p><p class="cost-source">미래엔 『통합사회2』 75쪽 사례의 수치와 개념을 바탕으로 새로 설명했습니다.</p><button type="button" class="btn primary" data-action="costPriceReady">이해했어요. ${where==='quiz'?'문제 풀기':'응용 예제로'} →</button></section>`;
+  return `<section class="cost-price-bridge" aria-labelledby="cost-bridge-title">
+   <h2 id="cost-bridge-title">포기한 대안에서 얻을 수 있었던 이득</h2>
+   <p><strong>암묵적 비용</strong>은 선택하지 않은 대안 중 가장 유리한 것에서 얻을 수 있었던 이득이에요. 그 대안을 선택할 때만 드는 돈이 있다면, 편익에서 그 돈을 빼서 얼마가 남았을지 계산해요.</p>
+   <p>영화 예제에서는 아르바이트를 하는 데 별도 비용이 없었으므로, 받을 수 있었던 16,000원 전체가 암묵적 비용이었어요.</p>
+   ${implicitWalkthrough()}
+   <p class="cost-source">미래엔 『통합사회2』 75쪽 사례의 수치와 개념을 바탕으로 새로 설명했습니다.</p>
+   <button type="button" class="btn primary" data-action="costPriceReady">${where==='quiz'?'문제 풀기':'응용 예제로'} →</button>
+  </section>`;
  }
  function reference(mode,stepIndex){
   if(mode==='basic')return `<section class="cost-reference" aria-label="선택한 활동과 포기한 활동"><dl class="cost-scenario-facts" aria-label="예제의 공통 조건"><div><dt>시간</dt><dd>토요일 오후 <strong>2시간</strong></dd></div><div><dt>선택</dt><dd>두 활동 중 <strong>하나만 선택</strong></dd></div><div><dt>비용</dt><dd>표에 제시된 금액 외 <strong>추가 비용 없음</strong></dd></div></dl><div class="cost-alternatives"><div class="cost-chosen"><span class="cost-choice-role">✓ 선택한 대안</span>${art()}<h3>영화 관람</h3><p>영화표 가격 <strong>8,000원</strong></p></div><div class="cost-forgone"><span class="cost-choice-role">↗ 포기한 대안</span>${art(true)}<h3>아르바이트</h3><p>받을 수입 <strong>16,000원</strong></p></div></div>${stepIndex===3?'<p class="cost-benefit-note">이 단계에서는 영화의 편익을 30,000원으로 제시해요.</p>':''}</section>`;
-  return `<section class="cost-reference" aria-label="교과서 응용 예제의 조건"><p class="cost-time">미래엔 통합사회2 75쪽 · 두 메뉴 중 하나만 선택</p><div class="cost-alternatives"><div>${window.GalpiLearningArt.scene('tteokbokki')}<h3>떡볶이</h3>${conditions([['편익 (만족의 금전 평가)',9000],['가격 (실제 지출)',5000]])}</div><div>${window.GalpiLearningArt.scene('gimbap')}<h3>김밥</h3>${conditions([['편익 (만족의 금전 평가)',7000],['가격 (실제 지출)',4500]])}</div></div><p class="cost-benefit-note">편익은 만족이나 이익을 금액으로 평가한 값이며, 현금 수입이 아니에요.</p><details class="cost-compact-help"><summary>가격을 빼는 이유 다시 보기</summary><p>포기한 메뉴의 편익은 얻지 못하지만, 그 메뉴의 가격도 내지 않아요. 그래서 편익에서 가격을 뺀 이익을 포기해요.</p></details></section>`;
+  const roles=stepIndex===3?[]:stepIndex===2?['포기한 대안','선택한 대안']:['선택한 대안','포기한 대안'];
+  return `<section class="cost-reference" aria-label="교과서 응용 예제의 조건">
+   <p class="cost-time">미래엔 통합사회2 75쪽 · 두 메뉴 중 하나만 선택</p>
+   <div class="cost-alternatives">
+    <div class="${roles[0]==='선택한 대안'?'cost-chosen':'cost-forgone'}">
+     ${roles[0]?`<span class="cost-choice-role">${roles[0]}</span>`:''}
+     ${window.GalpiLearningArt.scene('tteokbokki')}<h3>떡볶이</h3>
+     ${conditions([['편익 (만족의 금전 평가)',9000],['가격 (선택하면 내는 돈)',5000]])}
+    </div>
+    <div class="${roles[1]==='선택한 대안'?'cost-chosen':'cost-forgone'}">
+     ${roles[1]?`<span class="cost-choice-role">${roles[1]}</span>`:''}
+     ${window.GalpiLearningArt.scene('gimbap')}<h3>김밥</h3>
+     ${conditions([['편익 (만족의 금전 평가)',7000],['가격 (선택하면 내는 돈)',4500]])}
+    </div>
+   </div>
+   <p class="cost-benefit-note">편익은 만족이나 이익을 금액으로 평가한 값이에요.</p>
+  </section>`;
  }
  function lessonCalculation(mode,i){
   if(mode!=='basic'||i<2)return '';
@@ -43,11 +93,17 @@
    {label:basic[3].topic,value:won(basic[3].answerValue),art:'wallet'}
   ],[i===2?'+':'−','=']);
  }
+ function lessonCue(mode,i){
+  const cues=mode==='basic'
+   ? ['선택한 영화의 표 값을 보세요.','포기한 아르바이트에서 들어왔을 돈을 보세요.','영화표에 낸 돈과 아르바이트에서 포기한 이득을 함께 보세요.','선택한 영화의 편익에서 영화 선택의 기회비용을 빼 보세요.']
+   : ['포기한 김밥의 편익과 김밥 가격을 보세요.','떡볶이에 낸 돈에, 김밥을 포기한 이득을 더해 보세요.','이번에는 김밥을 골랐어요. 포기한 떡볶이의 편익과 가격을 보세요.','두 메뉴를 각각 골랐을 때의 순편익을 비교해 보세요.'];
+  return `<p class="cost-lesson-cue">${cues[i]}</p>`;
+ }
  function renderLesson(m){
   const mode=m.mode,list=mode==='basic'?basic:applied,i=m.positions[mode],q=list[i],selected=m.answers[mode][i],checked=m.checked[mode][i],correct=selected!==null&&q.options[selected]===q.answerValue;
   const modes=`<nav class="cost-example-modes" aria-label="예제 선택"><button type="button" data-action="costMode" data-mode="basic" aria-pressed="${mode==='basic'}">01 기본 · 영화와 아르바이트</button><button type="button" data-action="costMode" data-mode="applied" aria-pressed="${mode==='applied'}">02 응용 · 떡볶이와 김밥</button></nav>`;
   if(mode==='applied'&&!m.bridgeSeen)return modes+bridge();
-  return `${modes}<header class="cost-lesson-heading">${mode==='applied'?'<p class="cost-kicker">교과서 사례로 확인하는 응용 예제</p>':''}<h2>${mode==='basic'?'영화를 선택하면 무엇을 포기할까요?':'포기한 메뉴에도 가격이 있다면?'}</h2><p>${mode==='basic'?'영화를 선택했다고 생각하고, 한 단계씩 답해 보세요.':'앞에서 배운 방법으로 포기한 메뉴의 이익을 계산해 보세요.'}</p></header><div class="cost-lesson-layout">${reference(mode,i)}<section class="cost-lesson-work" aria-labelledby="cost-lesson-question"><nav class="cost-lesson-steps" aria-label="예제의 네 단계">${list.map((x,j)=>`<button type="button" data-action="costStep" data-i="${j}" aria-current="${j===i?'step':'false'}"><span>${j+1}</span>${x.topic}</button>`).join('')}</nav><p class="cost-kicker">${i+1} / 4 단계</p><h3 id="cost-lesson-question" tabindex="-1">${q.prompt}</h3>${q.note?`<p class="cost-benefit-note">${q.note}</p>`:''}${conditions(q.conditions)}<div class="cost-lesson-choices" role="group" aria-label="답 선택">${q.options.map((value,j)=>U().choice({text:typeof value==='number'?won(value):value,index:j,selected:selected===j,checked,correct:value===q.answerValue,attributes:`data-action="costAnswer" data-i="${j}"`})).join('')}</div>${checked?`<section class="cost-lesson-feedback ${correct?'is-success':'is-incorrect'}" role="status"><strong>${correct?'✓ 정답이에요':'! 정답과 이유를 확인해요'}</strong><p>${q.explain}</p>${lessonCalculation(mode,i)}${formulas(q)}</section><details class="learning-explanation"><summary>풀이 힌트 자세히 보기</summary><div>${guide(q)}</div></details>`:`<button type="button" class="btn primary" data-action="costCheck" ${selected===null?'disabled':''}>정답 확인</button>`}<div class="cost-lesson-actions"><button type="button" class="btn" data-action="costPrev" ${i===0?'disabled':''}>← 이전 단계</button>${checked?'<button type="button" class="cost-text-action" data-action="costRetry">다시 풀기</button>':''}<button type="button" class="btn primary" data-action="costNext" ${!checked?'disabled':''}>${i<3?'다음 단계 →':mode==='basic'?'응용 예제로 →':'문제 연습으로 →'}</button></div>${mode==='basic'&&m.checked.basic.every(Boolean)?`<p class="cost-completion">확인한 흐름: 명시적 비용 8,000원 + 암묵적 비용 16,000원 = 기회비용 24,000원<br>편익 30,000원 − 기회비용 24,000원 = 순편익 6,000원</p>`:''}${mode==='applied'&&i===3&&checked?'<p class="cost-source">교과서 사례 계산 결과: 떡볶이 기회비용 7,500원·순편익 1,500원 / 김밥 기회비용 8,500원·순편익 −1,500원</p>':''}</section></div>`;
+  return `${modes}<header class="cost-lesson-heading">${mode==='applied'?'<p class="cost-kicker">교과서 사례로 확인하는 응용 예제</p>':''}<h2>${mode==='basic'?'영화를 선택하면 무엇을 포기할까요?':'포기한 메뉴에도 가격이 있다면?'}</h2><p>${mode==='basic'?'영화를 선택했다고 생각하고, 한 단계씩 답해 보세요.':'앞에서 배운 방법으로 포기한 메뉴의 이익을 계산해 보세요.'}</p></header><div class="cost-lesson-layout">${reference(mode,i)}<section class="cost-lesson-work" aria-labelledby="cost-lesson-question"><nav class="cost-lesson-steps" aria-label="예제의 네 단계">${list.map((x,j)=>`<button type="button" data-action="costStep" data-i="${j}" aria-current="${j===i?'step':'false'}"><span>${j+1}</span>${x.topic}</button>`).join('')}</nav><p class="cost-kicker">${i+1} / 4 단계</p><h3 id="cost-lesson-question" tabindex="-1">${q.prompt}</h3>${lessonCue(mode,i)}${q.note?`<p class="cost-benefit-note">${q.note}</p>`:''}${conditions(q.conditions)}<div class="cost-lesson-choices" role="group" aria-label="답 선택">${q.options.map((value,j)=>U().choice({text:typeof value==='number'?won(value):value,index:j,selected:selected===j,checked,correct:value===q.answerValue,attributes:`data-action="costAnswer" data-i="${j}"`})).join('')}</div>${checked?`<section class="cost-lesson-feedback ${correct?'is-success':'is-incorrect'}" role="status"><strong>${correct?'✓ 정답이에요':'! 정답과 이유를 확인해요'}</strong><p>${q.explain}</p>${lessonCalculation(mode,i)}${formulas(q)}</section><details class="learning-explanation"><summary>풀이 힌트 자세히 보기</summary><div>${guide(q)}</div></details>`:`<button type="button" class="btn primary" data-action="costCheck" ${selected===null?'disabled':''}>정답 확인</button>`}<div class="cost-lesson-actions"><button type="button" class="btn" data-action="costPrev" ${i===0?'disabled':''}>← 이전 단계</button>${checked?'<button type="button" class="cost-text-action" data-action="costRetry">다시 풀기</button>':''}<button type="button" class="btn primary" data-action="costNext" ${!checked?'disabled':''}>${i<3?'다음 단계 →':mode==='basic'?'응용 예제로 →':'문제 연습으로 →'}</button></div>${mode==='basic'&&m.checked.basic.every(Boolean)?`<p class="cost-completion">확인한 흐름: 명시적 비용 8,000원 + 암묵적 비용 16,000원 = 기회비용 24,000원<br>편익 30,000원 − 기회비용 24,000원 = 순편익 6,000원</p>`:''}${mode==='applied'&&i===3&&checked?'<p class="cost-source">교과서 사례 계산 결과: 떡볶이 기회비용 7,500원·순편익 1,500원 / 김밥 기회비용 8,500원·순편익 −1,500원</p>':''}</section></div>`;
  }
  function handle(action,data,m){
   const mode=m.mode,i=m.positions[mode],list=mode==='basic'?basic:applied;
@@ -105,5 +161,5 @@
   const feedback=z.checked?U().feedback({correct:z.selected===q.correct,answer:esc(q.options[q.correct]),selected:esc(q.options[z.selected]),explain:q.explain,visual:formulas(q),guide:guide(q),wrongReason:z.selected!==q.correct?q.wrongReasons[z.selected]:'',next:`<button type="button" class="btn primary" data-action="nextQ">${z.index===z.questions.length-1?'학습 결과 확인':'다음 문제 →'}</button>`}):'';
   return U().question({number:z.index+1,total:z.questions.length,topic:q.topic,prompt:`<p class="cost-kicker">${q.phase}</p><p class="cost-situation">${q.situation}</p><h2 class="question-title">${q.prompt}</h2>`,evidence:conditions(q.conditions)+(q.requiresBridge?'<details class="cost-compact-help"><summary>포기한 대안의 가격을 빼는 이유</summary><p>그 대안을 선택하지 않으면 편익을 얻지 못하지만 가격도 내지 않아요. 따라서 편익에서 가격을 뺀 이익을 포기해요.</p></details>':''),choices,feedback,action:z.checked?'':`<button type="button" class="btn primary" data-action="grade" ${z.selected===null?'disabled':''}>정답 확인</button>`,retry:z.mode==='retry'})+'<p class="learning-privacy">문제와 풀이 결과는 새로고침하면 초기화됩니다.</p>';
  }
- window.GalpiCostLearning={art,basic,applied,order,createState,renderLesson,bridge,handle,question,renderPractice};
+ window.GalpiCostLearning={art,basic,applied,order,createState,renderLesson,bridge,implicitWalkthrough,handle,question,renderPractice};
 })();

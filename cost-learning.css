@@ -66,14 +66,6 @@
 #content .learning-cost .cost-alternatives .cost-conditions dd{font-size:18px}
 #content .learning-cost .cost-price-bridge{max-width:1000px;margin:0 auto;padding:8px 0 24px}
 #content .learning-cost .cost-price-bridge>p{font-size:16px;line-height:1.8;margin:14px 0}
-#content .learning-cost .cost-bridge-equation{display:grid;grid-template-columns:1fr 20px 1fr 20px 1fr;gap:12px;align-items:center;margin:24px 0;padding:24px 0;border-block:1px solid var(--learning-divider)}
-#content .learning-cost .cost-bridge-equation>div{min-width:0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:7px}
-#content .learning-cost .cost-bridge-equation .learning-scene-art.hl-icon{width:100%;height:auto;max-width:150px}
-#content .learning-cost .cost-bridge-equation strong{font-size:15px;line-height:1.6}
-#content .learning-cost .cost-bridge-equation b{font-size:25px;color:var(--learning-brand);white-space:nowrap;font-variant-numeric:tabular-nums}
-#content .learning-cost .cost-bridge-equation div>span{font-size:12px;line-height:1.6;color:var(--learning-muted)}
-#content .learning-cost .cost-bridge-equation>span{font-size:24px;text-align:center;color:var(--learning-brand)}
-#content .learning-cost .cost-price-bridge .cost-rule{border-left:2px solid var(--learning-brand);padding-left:14px;font-size:15px;font-weight:600}
 #content .learning-cost .cost-price-bridge .cost-source{font-size:12px}
 #content .learning-cost .cost-compact-help{background:none;border:0;border-radius:0;padding:0;margin:12px 0}
 #content .learning-cost .cost-compact-help>summary{font-size:13px;line-height:1.6;min-height:44px;padding:10px 0;color:var(--learning-muted);cursor:pointer}
@@ -106,10 +98,25 @@
  #content .learning-cost .cost-lesson-actions{gap:8px}
  #content .learning-cost .cost-lesson-actions>.btn{font-size:12px;padding:9px 10px}
  #content .learning-cost .cost-conditions>div{font-size:14px}
- #content .learning-cost .cost-bridge-equation{grid-template-columns:1fr 12px 1fr 12px 1fr;gap:5px;padding:16px 0;margin:18px 0}
- #content .learning-cost .cost-bridge-equation strong{font-size:12px}
- #content .learning-cost .cost-bridge-equation b{font-size:18px}
- #content .learning-cost .cost-bridge-equation div>span{font-size:11px}
- #content .learning-cost .cost-bridge-equation>span{font-size:18px}
  #content .learning-cost .cost-price-bridge>p{font-size:15px;line-height:1.75}
+}
+
+#content .learning-cost .cost-implicit-walkthrough {
+  margin-block: 16px; padding: clamp(12px, 2vw, 20px);
+  border: 1px solid var(--learning-line); border-radius: 10px; background: var(--learning-subtle);
+}
+#content .learning-cost .cost-implicit-walkthrough > p {
+  margin: 0 0 10px; font-size: 14px; line-height: 1.6;
+}
+#content .learning-cost .cost-walkthrough-case strong {
+  color: var(--learning-brand); margin-inline-end: 4px;
+}
+#content .learning-cost .cost-walkthrough-case strong:nth-of-type(2) { margin-inline-start: 12px; }
+#content .learning-cost .cost-implicit-walkthrough .learning-explanation { margin-block: 6px; }
+#content .learning-cost .cost-walkthrough-equation {
+  background: var(--learning-selected); color: var(--learning-brand);
+  border-radius: 6px; padding: 8px 10px; font-weight: 700;
+}
+#content .learning-cost .cost-lesson-cue {
+  font-size: 14px; line-height: 1.6; color: var(--learning-brand); margin: 0 0 10px;
 }
