@@ -6,7 +6,7 @@
 
   const store = window.GalpiBoardStore.createStore();
   const G = window.GalpiBoardGraphics;
-  const tools = {view: '보기', pen: '펜', marker: '형광펜', pencil: '연필', shape: '도형', eraser: '지우개', select: '올가미', text: '텍스트', laser: '레이저'};
+  const tools = {view: '이동/조작', pen: '펜', marker: '형광펜', pencil: '연필', shape: '도형', eraser: '지우개', select: '올가미', text: '텍스트', laser: '레이저'};
   const shapes = {line: '직선', arrow: '화살표', circle: '원', ellipse: '타원', square: '정사각형', rectangle: '직사각형', triangle: '삼각형', star: '별', heart: '하트'};
   const palette = {'#18242a': '검정', '#ce333c': '빨강', '#2354be': '파랑', '#087451': '초록', '#f5cd35': '노랑', '#764abc': '보라', '#ffffff': '흰색'};
   const style = {
@@ -18,47 +18,100 @@
   ui.className = 'galpi-board';
   ui.hidden = true;
   ui.setAttribute('aria-label', '교실 판서');
+  const paths = {
+    board: '<path d="m13 6 5 5M4 20l4.5-1 11-11a2 2 0 0 0-3-3l-11 11L4 20ZM13 20h7"/>',
+    view: '<path d="m5 3 14 9-7 1.5-3 6L5 3Z"/><path d="m13 14 3 5"/>',
+    pen: '<path d="m13 6 5 5M4 20l4.5-1 11-11a2 2 0 0 0-3-3l-11 11L4 20Z"/>',
+    marker: '<path d="m11 6 7 7M8 17l-4 1 1-4 10-10a2 2 0 0 1 3 0l2 2a2 2 0 0 1 0 3L10 19l-2-2ZM4 21h9"/>',
+    pencil: '<path d="m14 5 5 5M4 20l4-1 12-12a1.5 1.5 0 0 0 0-2l-1-1a1.5 1.5 0 0 0-2 0L5 16l-1 4ZM5 16l3 3"/>',
+    shape: '<circle cx="8" cy="8" r="4"/><rect x="11" y="11" width="9" height="9" rx="1.4"/>',
+    eraser: '<path d="m7 19-3-3a2 2 0 0 1 0-3l8-8a2 2 0 0 1 3 0l5 5a2 2 0 0 1 0 3l-6 6H7Zm2-10 8 8m-3 2h7"/>',
+    more: '<path d="M5 12h.01m7 0h.01m7 0h.01" stroke-width="3.2"/>',
+    close: '<path d="m6 10 6 6 6-6"/>',
+    back: '<path d="m14 6-6 6 6 6"/>',
+    undo: '<path d="M9 5 4 10l5 5m-5-5h9a5 5 0 0 1 0 10"/>',
+    redo: '<path d="m15 5 5 5-5 5m5-5h-9a5 5 0 0 0 0 10"/>',
+    select: '<path d="M8 17c-3-.5-5-2.4-5-5.5C3 7.5 7 5 12 5s9 2.7 9 6.5-4 6-9 6H9m0 0c3-3 6 0 3 2s-5-1-3-2Z" stroke-dasharray="2 2"/>',
+    text: '<path d="M5 7V5h14v2m-7-2v14m-3 0h6"/>',
+    laser: '<path d="m5 19 9-9m-3 1 3 3m2-9V3m3 5h2m-3-3 1-1"/>',
+    sliders: '<path d="M4 7h4m4 0h8M4 17h8m4 0h4"/><circle cx="10" cy="7" r="2"/><circle cx="14" cy="17" r="2"/>',
+    eye: '<path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="2.4"/>',
+    eyeOff: '<path d="m3 3 18 18M10 6c6-1 11 4 12 6a14 14 0 0 1-4 4m-3 2C8 20 3 14 2 12a13 13 0 0 1 4-4"/>',
+    clear: '<path d="M5 7h14M9 7V4h6v3m2 0-1 13H8L7 7m3 3v6m4-6v6"/>',
+    export: '<path d="M12 3v12m-4-4 4 4 4-4m-11 4v5h14v-5"/>',
+    pin: '<path d="M5 5h14v12H5zM8 20h8m-4-3v3"/>',
+    check: '<path d="m5 12 4 4 10-10"/>'
+  };
+  const icon = name => `<svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">${paths[name]}</svg>`;
   const button = (action, title, extra = '') => `<button type="button" data-board-action="${action}" ${extra}>${title}</button>`;
+  const iconButton = (action, label, glyph, extra = '', decoration = '') =>
+    button(action, icon(glyph) + decoration, `class="board-icon" aria-label="${label}" title="${label}" ${extra}`);
+  const toolButton = (name, compact) => compact
+    ? iconButton('tool-' + name, tools[name], name, 'aria-pressed="false"' + (style[name] ? ' ' + popupAttrs : ''), style[name] ? '<span class="board-tool-color"></span>' : '')
+    : button('tool-' + name, icon(name) + tools[name], 'aria-pressed="false"');
+  const menuRow = (action, glyph, label, extra = '') =>
+    button(action, icon(glyph) + `<span>${label}</span>`, `class="board-menu-row" ${extra}`);
+  const popupAttrs = 'aria-controls="galpi-board-popover" aria-expanded="false"';
   ui.innerHTML = `
-    ${button('open', '<span aria-hidden="true">✎</span>판서하기', 'class="board-launch" aria-controls="galpi-board-panel" aria-expanded="false"')}
-    <div id="galpi-board-panel" class="board-panel" hidden>
-      <div class="board-row">
-        ${button('grip', '↔ 이동', 'class="board-grip" aria-label="판서 도구 이동" title="드래그 또는 방향키로 이동"')}
-        ${Object.entries(tools).map(([key, label]) => button('tool-' + key, label, 'aria-pressed="false"')).join('')}
-        ${button('close', '접기', 'class="board-close"')}
+    ${iconButton('open', '판서하기', 'board', 'aria-controls="galpi-board-panel" aria-expanded="false"')}
+    <div id="galpi-board-panel" class="board-panel" role="group" aria-label="판서 기본 도구" hidden>
+      ${iconButton('tool-view', '이동/조작', 'view', 'aria-pressed="false"', '<span class="board-grip-mark" aria-hidden="true"></span>')}
+      <div class="board-primary">
+        ${['pen', 'marker', 'pencil', 'shape', 'eraser'].map(name => toolButton(name, true)).join('')}
       </div>
-      <div class="board-row" data-board="shape" hidden>
-        <label>도형 <select data-setting="shape">${Object.entries(shapes).map(([k, t]) => `<option value="${k}">${t}</option>`).join('')}</select></label>
-        <label><input type="checkbox" data-setting="fill"> 채우기</label>
-        <label>채움 색 <input type="color" value="#f5cd35" data-setting="fillColor"></label>
+      <div class="board-utilities">
+        ${iconButton('more', '더보기', 'more', popupAttrs)}
+        ${iconButton('close', '접기', 'close')}
       </div>
-      <details class="board-options" data-board="style"><summary>색상·두께 설정</summary>
-        <div class="board-row">
-          <div class="board-swatches" aria-label="빠른 색상">${Object.entries(palette).map(([hex, label]) => button('color-' + hex, '', `class="board-swatch" style="--swatch:${hex};--swatch-ink:${['#f5cd35', '#ffffff'].includes(hex) ? '#18242a' : '#fff'}" aria-label="${label}" title="${label}" aria-pressed="false"`)).join('')}</div>
-          <label>색상 <input type="color" data-setting="color"></label>
-          <label>HEX <input type="text" data-setting="hex" maxlength="7" placeholder="#2354be"></label>
+    </div>
+    <div id="galpi-board-popover" class="board-popover" role="region" aria-labelledby="galpi-board-popover-title" hidden>
+      <header class="board-popover-head">
+        ${iconButton('back', '더보기로 돌아가기', 'back', 'hidden')}
+        <strong id="galpi-board-popover-title" data-board="popover-title">더보기</strong>
+        ${iconButton('dismiss', '팝오버 닫기', 'close')}
+      </header>
+      <div data-board="more-panel">
+        <div class="board-history">
+          ${iconButton('undo', '실행 취소', 'undo')}${iconButton('redo', '다시 실행', 'redo')}
+          ${button('original', '보정 취소', 'class="board-inline" hidden')}
         </div>
-        <div class="board-row">
-          <label><span data-board="size-label">두께</span><input type="range" data-setting="width"><output data-board="width"></output></label>
-          <label data-board="opacity-row">불투명도 <input type="range" min="10" max="80" data-setting="opacity"><output data-board="opacity"></output></label>
+        <div class="board-extra-tools" aria-label="보조 판서 도구">
+          ${['pencil', 'select', 'text', 'laser'].map(name => toolButton(name, false)).join('')}
         </div>
-      </details>
-      <div class="board-row">
-        ${button('undo', '실행 취소')}${button('redo', '다시 실행')}${button('original', '보정 취소', 'hidden')}
-        ${button('edit', '글 편집', 'hidden')}${button('delete', '선택 삭제', 'hidden')}
-        ${button('visibility', '필기 숨기기', 'aria-pressed="false"')}
-        ${button('clear', '현재 화면 지우기')}
+        <div class="board-menu">
+          ${menuRow('settings', 'sliders', '도구 설정')}
+          ${menuRow('edit', 'text', '글 편집', 'hidden')}
+          ${menuRow('delete', 'clear', '선택 삭제', 'hidden')}
+          ${menuRow('visibility', 'eyeOff', '필기 숨기기', 'aria-pressed="false"')}
+          ${menuRow('clear', 'clear', '현재 화면 지우기')}
+          ${menuRow('preferences', 'pin', '위치·입력 설정')}
+          ${menuRow('export', 'export', '필기 화면 PNG 저장')}
+        </div>
       </div>
-      <details class="board-options"><summary>위치·입력·저장</summary>
-        <div class="board-row">
-          <label><input type="checkbox" data-setting="finger" checked> 손가락 필기</label>
-          <label>자동 보정 <select data-setting="recognition"><option value="shape">정형 도형</option><option value="outline">손그림 윤곽</option><option value="off">끄기</option></select></label>
-          ${button('left', '왼쪽 아래')}${button('center', '아래 가운데')}${button('right', '오른쪽 아래')}
-          ${button('export', '필기 화면 PNG 저장')}${button('reset', '전체 판서 초기화')}
+      <div class="board-fields" data-board="style" hidden>
+        <div class="board-fields" data-board="shape" hidden>
+          <label class="board-field">도형 <select data-setting="shape">${Object.entries(shapes).map(([k, t]) => `<option value="${k}">${t}</option>`).join('')}</select></label>
+          <label class="board-field">채우기 <input type="checkbox" data-setting="fill"></label>
+          <label class="board-field" data-board="fill-row">채움 색 <input type="color" value="#f5cd35" data-setting="fillColor"></label>
         </div>
-      </details>
-      <p class="board-status" role="status" data-board="status"></p>
-    </div>`;
+        <span class="board-field-label">색상</span>
+        <div class="board-swatches" aria-label="빠른 색상">${Object.entries(palette).map(([hex, label]) => button('color-' + hex, icon('check'), `class="board-swatch" style="--swatch:${hex};--swatch-ink:${['#f5cd35', '#ffffff'].includes(hex) ? '#18242a' : '#fff'}" aria-label="${label}" title="${label}" aria-pressed="false"`)).join('')}</div>
+        <div class="board-color-fields">
+          <label class="board-field">사용자 색 <input type="color" data-setting="color"></label>
+          <label class="board-field">HEX <input type="text" data-setting="hex" maxlength="7" placeholder="#2354be" spellcheck="false"></label>
+        </div>
+        <label class="board-field board-range"><span data-board="size-label">두께</span><output data-board="width"></output><input type="range" data-setting="width"></label>
+        <label class="board-field board-range" data-board="opacity-row"><span>불투명도</span><output data-board="opacity"></output><input type="range" min="10" max="80" data-setting="opacity"></label>
+      </div>
+      <div class="board-fields" data-board="preferences-panel" hidden>
+        <label class="board-field">손가락 필기 <input type="checkbox" data-setting="finger" checked></label>
+        <label class="board-field">자동 도형 보정 <select data-setting="recognition"><option value="shape">정형 도형</option><option value="outline">손그림 윤곽</option><option value="off">끄기</option></select></label>
+        <span class="board-field-label">툴바 위치</span>
+        <div class="board-presets">${[['left', '왼쪽 아래'], ['center', '아래 가운데'], ['right', '오른쪽 아래']].map(([name, label]) => button(name, label)).join('')}</div>
+        ${menuRow('reset', 'clear', '전체 판서 초기화')}
+      </div>
+    </div>
+    <p class="board-status" role="status" data-board="status"></p>`;
   const canvas = document.createElement('canvas');
   canvas.className = 'galpi-board-ink';
   canvas.setAttribute('aria-hidden', 'true');
@@ -77,6 +130,8 @@
   const part = name => ui.querySelector(`[data-board="${name}"]`);
   const panel = ui.querySelector('.board-panel');
   const launch = action('open');
+  const grip = action('tool-view');
+  const popover = ui.querySelector('.board-popover');
   const note = dialog.querySelector('textarea');
   const anchorSelectors = [
     '[data-board-anchor]', '.ep-choices > button', '.learning-choices button', '.hl-answer-grid > button',
@@ -85,6 +140,7 @@
     'h2', 'h3', 'h4', 'p', 'li', 'label', 'button', 'section'
   ];
   let scope, state, anchors = new Map(), activeTool = 'view', shape = 'line', recognition = 'shape';
+  let popup = '', popupTrigger = null, settingsFromMore = false;
   let expanded = false, concealed = false, finger = true, position, preset = 'right';
   let gesture, selection = new Set(), textEdit, laser, laserTimer, frame, loadRenderer, layoutDirty = true;
   let dimensions, boundsCache = new Map(), viewport = {width: 0, height: 0}, cursorClick = false;
@@ -124,6 +180,8 @@
       laser = null;
       state = scope && store.screen(scope.key);
       part('status').textContent = '';
+      popup = '';
+      popupTrigger = null;
     }
     if (previous?.target !== scope?.target) {
       if (previous) size.unobserve(previous.target);
@@ -158,20 +216,57 @@
     const width = ui.offsetWidth, height = ui.offsetHeight, margin = 12;
     const maxX = Math.max(margin, viewport.width - width - margin);
     const maxY = Math.max(margin, viewport.height - height - margin);
-    const x = position?.x ?? (preset === 'left' ? margin : preset === 'center' ? (viewport.width - width) / 2 : maxX);
+    const x = position ? position.right - width : preset === 'left' ? margin
+      : preset === 'center' ? (viewport.width - width) / 2 : maxX;
     const y = position?.y ?? (viewport.height - height - (preset === 'right' ? 108 : 24));
     ui.style.left = Math.max(margin, Math.min(maxX, x)) + 'px';
     ui.style.top = Math.max(margin, Math.min(maxY, y)) + 'px';
+
+    const statusAbove = ui.offsetTop >= 82 || ui.offsetTop + height + 82 > viewport.height;
+    ui.style.setProperty('--board-status-top', statusAbove ? 'auto' : 'calc(100% + 8px)');
+    ui.style.setProperty('--board-status-bottom', statusAbove ? 'calc(100% + 8px)' : 'auto');
+    if (popover.hidden) return;
+    const bar = ui.getBoundingClientRect(), anchor = popupTrigger?.getBoundingClientRect();
+    const above = bar.top - margin - 8, below = viewport.height - bar.bottom - margin - 8;
+    const popupWidth = popover.offsetWidth;
+    const align = anchor?.width ? anchor.left + anchor.width / 2 - popupWidth / 2 : bar.right - popupWidth;
+    popover.style.maxHeight = Math.max(0, Math.min(440, Math.max(above, below))) + 'px';
+    const openAbove = above >= popover.offsetHeight || above >= below;
+    popover.style.left = Math.max(margin, Math.min(viewport.width - popupWidth - margin, align)) + 'px';
+    popover.style.top = (openAbove ? bar.top - popover.offsetHeight - 8 : bar.bottom + 8) + 'px';
+  }
+
+  function showPopup(name, trigger, fromMore = false) {
+    const changed = popup !== name;
+    popup = name;
+    popupTrigger = trigger;
+    settingsFromMore = fromMore;
+    if (changed) popover.scrollTop = 0;
+  }
+
+  function closePopup(restoreFocus = false) {
+    const trigger = popupTrigger;
+    popup = '';
+    popupTrigger = null;
+    sync();
+    if (restoreFocus) (trigger?.getClientRects().length ? trigger : action('more')).focus({preventScroll: true});
   }
 
   function sync() {
     launch.hidden = expanded;
     launch.setAttribute('aria-expanded', String(expanded));
     panel.hidden = !expanded;
+    popover.hidden = !expanded || !popup;
+    action('more').setAttribute('aria-expanded', String(Boolean(popup) && (popup !== 'style' || settingsFromMore)));
+    action('back').hidden = popup !== 'preferences' && !settingsFromMore;
+    part('popover-title').textContent = popup === 'style' ? tools[activeTool] + ' 설정'
+      : popup === 'preferences' ? '위치·입력 설정' : '더보기';
+    part('more-panel').hidden = popup !== 'more';
+    part('preferences-panel').hidden = popup !== 'preferences';
     canvas.hidden = !scope || concealed;
     canvas.toggleAttribute('data-drawing', Boolean(scope && expanded && activeTool !== 'view' && !concealed));
     canvas.toggleAttribute('data-pen-only', !finger);
-    action('visibility').textContent = concealed ? '필기 다시 표시' : '필기 숨기기';
+    action('visibility').innerHTML = icon(concealed ? 'eye' : 'eyeOff') + '<span>' + (concealed ? '필기 다시 표시' : '필기 숨기기') + '</span>';
     action('visibility').setAttribute('aria-pressed', String(concealed));
     action('clear').disabled = !state?.items.length;
     action('undo').disabled = !state?.undo.length;
@@ -180,8 +275,17 @@
     action('delete').hidden = !selection.size;
     action('edit').hidden = selection.size !== 1 || !state?.items.some(item => selection.has(item) && item.type === 'text');
     part('shape').hidden = activeTool !== 'shape';
-    part('style').hidden = !style[activeTool];
-    for (const name of Object.keys(tools)) action('tool-' + name).setAttribute('aria-pressed', String(activeTool === name));
+    part('style').hidden = popup !== 'style' || !style[activeTool];
+    action('settings').hidden = !style[activeTool];
+    part('fill-row').hidden = !style.shape.fill;
+    ui.querySelectorAll('[data-board-action^="tool-"]').forEach(button => {
+      const name = button.dataset.boardAction.slice(5);
+      button.setAttribute('aria-pressed', String(activeTool === name));
+      if (style[name]) button.style.setProperty('--tool-color', style[name].color);
+      if (button.classList.contains('board-icon') && style[name]) {
+        button.setAttribute('aria-expanded', String(popup === 'style' && popupTrigger === button));
+      }
+    });
     const current = style[activeTool];
     if (!current) return;
     const color = current.color;
@@ -522,40 +626,45 @@
   });
 
   let drag;
-  for (const grip of [launch, action('grip')]) {
-    grip.addEventListener('pointerdown', e => {
+  function rememberPosition() {
+    setPosition();
+    position = {right: ui.offsetLeft + ui.offsetWidth, y: ui.offsetTop};
+  }
+  for (const handle of [launch, grip]) {
+    handle.addEventListener('pointerdown', e => {
       if (e.button !== 0 || drag) return;
       const r = ui.getBoundingClientRect();
-      drag = {id: e.pointerId, x: e.clientX, y: e.clientY, left: r.left, top: r.top,
-        time: performance.now(), moved: false, hold: grip === launch};
-      grip.setPointerCapture(e.pointerId);
+      drag = {handle, id: e.pointerId, x: e.clientX, y: e.clientY, right: r.right, top: r.top,
+        time: performance.now(), moved: false};
     });
-    grip.addEventListener('pointermove', e => {
-      if (drag?.id !== e.pointerId) return;
-      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
-      if (drag.hold && performance.now() - drag.time < 320) return;
-      if (!drag.moved && Math.hypot(dx, dy) < 5) return;
-      drag.moved = true;
-      position = {x: drag.left + dx, y: drag.top + dy};
-      setPosition();
-      position = {x: ui.offsetLeft, y: ui.offsetTop};
-    });
-    for (const event of ['pointerup', 'pointercancel', 'lostpointercapture']) grip.addEventListener(event, e => {
-      if (drag?.id !== e.pointerId) return;
-      cursorClick = drag.moved && event === 'pointerup';
-      if (cursorClick) setTimeout(() => { cursorClick = false; }, 0);
-      drag = null;
-    });
-    grip.addEventListener('contextmenu', e => e.preventDefault());
-    grip.addEventListener('keydown', e => {
+    handle.addEventListener('contextmenu', e => e.preventDefault());
+    handle.addEventListener('keydown', e => {
       const delta = {ArrowLeft: [-24, 0], ArrowRight: [24, 0], ArrowUp: [0, -24], ArrowDown: [0, 24]}[e.key];
       if (!delta) return;
       e.preventDefault();
-      position = {x: ui.offsetLeft + delta[0], y: ui.offsetTop + delta[1]};
-      setPosition();
-      position = {x: ui.offsetLeft, y: ui.offsetTop};
+      position = {right: ui.offsetLeft + ui.offsetWidth + delta[0], y: ui.offsetTop + delta[1]};
+      rememberPosition();
     });
   }
+  window.addEventListener('pointermove', e => {
+    if (drag?.id !== e.pointerId) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.moved) {
+      if (drag.handle === launch && performance.now() - drag.time < 320) return;
+      if (Math.hypot(dx, dy) < 5) return;
+      closePopup();
+      drag.handle.setPointerCapture(e.pointerId);
+      drag.moved = true;
+    }
+    position = {right: drag.right + dx, y: drag.top + dy};
+    rememberPosition();
+  });
+  for (const event of ['pointerup', 'pointercancel', 'lostpointercapture']) window.addEventListener(event, e => {
+    if (drag?.id !== e.pointerId) return;
+    cursorClick = drag.moved && event === 'pointerup';
+    if (cursorClick) setTimeout(() => { cursorClick = false; }, 0);
+    drag = null;
+  });
 
   function setStyle(name, value) {
     if (!style[activeTool]) return;
@@ -568,7 +677,7 @@
       case 'color': setStyle('color', input.value); break;
       case 'width': setStyle('width', Number(input.value)); break;
       case 'opacity': setStyle('opacity', Number(input.value) / 100); break;
-      case 'fill': style.shape.fill = input.checked; break;
+      case 'fill': style.shape.fill = input.checked; sync(); setPosition(); break;
       case 'fillColor': style.shape.fillColor = input.value; break;
       case 'shape': shape = input.value; break;
       case 'recognition': recognition = input.value; break;
@@ -586,16 +695,33 @@
     const b = e.target.closest('[data-board-action]');
     if (!b || !state) return;
     const name = b.dataset.boardAction;
-    if (name === 'open' && cursorClick) return;
+    if (cursorClick && (b === launch || b === grip)) return;
     cancelGesture();
     if (name.startsWith('tool-')) {
-      activeTool = name.slice(5);
-      selection.clear();
-      if (activeTool !== 'view') concealed = false;
-    } else if (name.startsWith('color-')) setStyle('color', name.slice(6));
-    else if (['left', 'center', 'right'].includes(name)) { preset = name; position = null; }
+      const next = name.slice(5);
+      const useSettings = style[next] && (next === 'shape' || next === 'text' || next === activeTool || popup === 'style');
+      const fromMore = popover.contains(b);
+      const trigger = fromMore ? action('more') : b;
+      if (activeTool !== next) selection.clear();
+      activeTool = next;
+      if (next !== 'view') concealed = false;
+      if (useSettings && !(popup === 'style' && popupTrigger === trigger && b.getAttribute('aria-expanded') === 'true')) {
+        showPopup('style', trigger, fromMore);
+      } else {
+        closePopup();
+        if (fromMore) action('more').focus({preventScroll: true});
+      }
+    } else if (name === 'more') {
+      if (popup === 'more') closePopup();
+      else showPopup('more', b);
+    } else if (name === 'preferences' || name === 'settings') {
+      showPopup(name === 'preferences' ? 'preferences' : 'style', action('more'), true);
+    } else if (name === 'back') showPopup('more', action('more'));
+    else if (name === 'dismiss') closePopup(true);
+    else if (name.startsWith('color-')) setStyle('color', name.slice(6));
+    else if (['left', 'center', 'right'].includes(name)) { preset = name; position = null; closePopup(true); }
     else if (name === 'open') { expanded = true; activeTool = 'view'; }
-    else if (name === 'close') { expanded = false; activeTool = 'view'; selection.clear(); }
+    else if (name === 'close') { expanded = false; activeTool = 'view'; selection.clear(); closePopup(); }
     else if (name === 'visibility') { concealed = !concealed; selection.clear(); }
     else if (name === 'clear') commit([]);
     else if (name === 'reset' && window.confirm('모든 학습 화면의 판서를 지울까요?')) {
@@ -606,7 +732,7 @@
       store[name](state);
       selection.clear();
     } else if (name === 'delete') commit(state.items.filter(item => !selection.has(item)));
-    else if (name === 'edit') editText([...selection][0]);
+    else if (name === 'edit') { closePopup(true); editText([...selection][0]); }
     else if (name === 'original') {
       const index = state.items.findLastIndex(item => item.original);
       if (index !== -1) commit(state.items.map((item, i) => i === index ? item.original : item));
@@ -614,12 +740,21 @@
     sync();
     layoutDirty = true;
     schedule();
-    if (name === 'open') action('tool-view').focus({preventScroll: true});
+    if (name === 'open') grip.focus({preventScroll: true});
+    if (popup && (['more', 'settings', 'preferences', 'back'].includes(name) ||
+      (popup === 'style' && name.startsWith('tool-') && (e.detail === 0 || popover.contains(b))))) {
+      action('dismiss').focus({preventScroll: true});
+    }
     if (name === 'close') launch.focus({preventScroll: true});
   });
 
+  document.addEventListener('pointerdown', e => {
+    if (popup && !ui.contains(e.target)) closePopup();
+  }, true);
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && expanded && !dialog.open && scope) {
+      if (popup) { closePopup(true); return; }
       if (activeTool === 'view') action('close').click();
       else action('tool-view').click();
     }
@@ -648,6 +783,7 @@
   async function exportPng() {
     const button = action('export');
     button.disabled = true;
+    closePopup(true);
     part('status').textContent = 'PNG를 만드는 중이에요…';
     const exporting = scope;
     try {
@@ -682,6 +818,8 @@
       part('status').textContent = 'PNG를 만들지 못했어요. 화면을 그대로 두고 다시 시도해 주세요.';
     } finally {
       button.disabled = false;
+      const message = part('status').textContent;
+      setTimeout(() => { if (part('status').textContent === message) part('status').textContent = ''; }, 3600);
       layoutDirty = true;
       schedule();
     }
