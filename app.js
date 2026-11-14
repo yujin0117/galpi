@@ -108,7 +108,7 @@ app.addEventListener('click',event=>{
   const lessonAction=window.GalpiCostLearning.handle(cmd.dataset.action,cmd.dataset,state.costLesson);
   if(lessonAction){
     if(lessonAction==='practice'){state.tab='quiz';renderModule();}
-    else {renderBody();if(lessonAction==='navigate'){const heading=root.querySelector('#cost-lesson-question,#cost-bridge-title,.learning-question-card');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});heading.scrollIntoView({block:'start',behavior:'instant'});}}else if(lessonAction==='feedback'){const feedback=root.querySelector('.cost-lesson-feedback');if(feedback){feedback.tabIndex=-1;feedback.focus({preventScroll:true});feedback.scrollIntoView({block:'nearest',behavior:'instant'});}}}
+    else {renderBody();if(lessonAction==='navigate'){const heading=root.querySelector('#cost-lesson-question,#cost-bridge-title,.learning-question-card');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});(heading.closest('.cost-lesson-sheet')||heading).scrollIntoView({block:'start',behavior:'instant'});}}else if(lessonAction==='feedback'){const feedback=root.querySelector('.cost-lesson-feedback');if(feedback){feedback.tabIndex=-1;feedback.focus({preventScroll:true});feedback.scrollIntoView({block:'nearest',behavior:'instant'});}}}
     return;
   }
 

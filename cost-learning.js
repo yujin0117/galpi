@@ -19,7 +19,7 @@
  ];
  const order=['explicit','forgone','implicit','opportunity','benefit','net','rational','sunk','application-cost','application-net'];
  function createState(){return {mode:'basic',positions:{basic:0,applied:0},answers:{basic:Array(4).fill(null),applied:Array(4).fill(null)},checked:{basic:Array(4).fill(false),applied:Array(4).fill(false)},bridgeSeen:false};}
- function art(work=false){return window.GalpiLearningArt.scene(work?'work':'cinema').replace('class="learning-scene-art hl-icon"','class="cost-lesson-art"');}
+ function art(name){return window.GalpiLearningArt.scene(name).replace('class="learning-scene-art hl-icon"','class="cost-lesson-art"');}
  function guide(q){return `<ol class="cost-guide-steps">${q.steps.map(s=>`<li><h4>${s.title}</h4><p class="cost-guide-formula">${s.formula}</p><p>${s.why}</p><p class="cost-guide-calculation">${s.equation}</p></li>`).join('')}</ol>`;}
  function formulas(q){return `<section class="cost-formulas" aria-label="${q.type==='sunk'?'판단 기준':'기본 공식'}"><h4>${q.type==='sunk'?'판단 기준':'이번 단계의 기본 공식'}</h4>${q.formula.map(t=>`<p>${t}</p>`).join('')}</section>`;}
  function conditions(rows){return rows?.length?`<dl class="cost-conditions">${rows.map(([label,value])=>`<div><dt>${label}</dt><dd>${typeof value==='number'?won(value):value}</dd></div>`).join('')}</dl>`:'';}
@@ -43,15 +43,15 @@
   ];
   return `<section class="cost-implicit-walkthrough" aria-label="암묵적 비용부터 순편익까지">
    <p class="cost-walkthrough-case"><strong>선택한 쪽</strong> 떡볶이 <strong>포기한 쪽</strong> 김밥</p>
-   <p>떡볶이와 김밥 중 하나만 먹을 수 있어요. 떡볶이를 골랐다고 생각하고, 질문을 차례로 열어 보세요.</p>
-   ${questions.map((q,i)=>`<details class="learning-explanation">
-    <summary>${i+1}. ${q.title}</summary>
-    <div><p>${q.explanation}</p><p class="cost-walkthrough-equation">${q.equation}</p></div>
-   </details>`).join('')}
+   <p>떡볶이와 김밥 중 하나만 먹을 수 있어요. 떡볶이를 골랐다고 생각하고, 포기한 김밥에서 시작해 선택한 떡볶이의 순편익까지 계산해 봐요.</p>
+   <ol class="cost-walkthrough-flow">${questions.map((q,i)=>`<li>
+    <span class="cost-flow-number" aria-hidden="true">${i+1}</span>
+    <div><h3>${q.title}</h3><p class="cost-walkthrough-equation">${q.equation}</p><p>${q.explanation}</p></div>
+   </li>`).join('')}</ol>
   </section>`;
  }
  function bridge(where='example'){
-  return `<section class="cost-price-bridge" aria-labelledby="cost-bridge-title">
+  return `<section class="cost-price-bridge" data-board-screen="cost-price-bridge" aria-labelledby="cost-bridge-title">
    <h2 id="cost-bridge-title">포기한 대안에서 얻을 수 있었던 이득</h2>
    <p><strong>암묵적 비용</strong>은 선택하지 않은 대안 중 가장 유리한 것에서 얻을 수 있었던 이득이에요. 그 대안을 선택할 때만 드는 돈이 있다면, 편익에서 그 돈을 빼서 얼마가 남았을지 계산해요.</p>
    <p>영화 예제에서는 아르바이트를 하는 데 별도 비용이 없었으므로, 받을 수 있었던 16,000원 전체가 암묵적 비용이었어요.</p>
@@ -60,25 +60,30 @@
    <button type="button" class="btn primary" data-action="costPriceReady">${where==='quiz'?'문제 풀기':'응용 예제로'} →</button>
   </section>`;
  }
- function reference(mode,stepIndex){
-  if(mode==='basic')return `<section class="cost-reference" aria-label="선택한 활동과 포기한 활동"><dl class="cost-scenario-facts" aria-label="예제의 공통 조건"><div><dt>시간</dt><dd>토요일 오후 <strong>2시간</strong></dd></div><div><dt>선택</dt><dd>두 활동 중 <strong>하나만 선택</strong></dd></div><div><dt>비용</dt><dd>표에 제시된 금액 외 <strong>추가 비용 없음</strong></dd></div></dl><div class="cost-alternatives"><div class="cost-chosen"><span class="cost-choice-role">✓ 선택한 대안</span>${art()}<h3>영화 관람</h3><p>영화표 가격 <strong>8,000원</strong></p></div><div class="cost-forgone"><span class="cost-choice-role">↗ 포기한 대안</span>${art(true)}<h3>아르바이트</h3><p>받을 수입 <strong>16,000원</strong></p></div></div>${stepIndex===3?'<p class="cost-benefit-note">이 단계에서는 영화의 편익을 30,000원으로 제시해요.</p>':''}</section>`;
-  const roles=stepIndex===3?[]:stepIndex===2?['포기한 대안','선택한 대안']:['선택한 대안','포기한 대안'];
-  return `<section class="cost-reference" aria-label="교과서 응용 예제의 조건">
-   <p class="cost-time">미래엔 통합사회2 75쪽 · 두 메뉴 중 하나만 선택</p>
-   <div class="cost-alternatives">
-    <div class="${roles[0]==='선택한 대안'?'cost-chosen':'cost-forgone'}">
-     ${roles[0]?`<span class="cost-choice-role">${roles[0]}</span>`:''}
-     ${window.GalpiLearningArt.scene('tteokbokki')}<h3>떡볶이</h3>
-     ${conditions([['편익 (만족의 금전 평가)',9000],['가격 (선택하면 내는 돈)',5000]])}
-    </div>
-    <div class="${roles[1]==='선택한 대안'?'cost-chosen':'cost-forgone'}">
-     ${roles[1]?`<span class="cost-choice-role">${roles[1]}</span>`:''}
-     ${window.GalpiLearningArt.scene('gimbap')}<h3>김밥</h3>
-     ${conditions([['편익 (만족의 금전 평가)',7000],['가격 (선택하면 내는 돈)',4500]])}
-    </div>
-   </div>
-   <p class="cost-benefit-note">편익은 만족이나 이익을 금액으로 평가한 값이에요.</p>
+ function exampleAlternative({name,role,illustration,rows,active}){
+  return `<section class="cost-alternative${active?' is-relevant':''}">
+   <div class="cost-alternative-heading">${illustration}<div>${role?`<span class="cost-choice-role">${role}</span>`:''}<h4>${name}</h4></div></div>
+   <dl>${rows.map(([label,value])=>`<div><dt>${label}</dt><dd>${won(value)}</dd></div>`).join('')}</dl>
   </section>`;
+ }
+ function reference(mode,i){
+  const basicMode=mode==='basic';
+  const roles=i===3&&!basicMode?['첫 번째 대안','두 번째 대안']:i===2&&!basicMode?['포기한 대안','선택한 대안']:['선택한 대안','포기한 대안'];
+  const examples=basicMode
+   ? [['영화 관람',art('cinema'),[['영화표 가격',8000]]],['아르바이트',art('work'),[['받을 수입',16000]]]]
+   : [['떡볶이',art('tteokbokki'),[['편익',9000],['가격',5000]]],['김밥',art('gimbap'),[['편익',7000],['가격',4500]]]];
+  const active=basicMode?[[0],[1],[0,1],[]][i]:[[1],[0,1],[0],[0,1]][i];
+  return `<section class="cost-reference" aria-label="예제에서 주어진 자료">
+   <h3>비교할 대안</h3>
+   <p class="cost-time">${basicMode?'토요일 오후 2시간 · 두 활동 중 하나만 선택 · 추가 비용 없음':'두 메뉴 중 하나만 선택 · 편익은 만족이나 이익을 금액으로 평가한 값'}</p>
+   <div class="cost-alternatives">${examples.map(([name,illustration,rows],j)=>exampleAlternative({name,illustration,rows,role:roles[j],active:active.includes(j)})).join('')}</div>
+   ${qConditions(mode,i)}
+  </section>`;
+ }
+ function qConditions(mode,i){
+  if(mode!=='basic'||i!==3)return '';
+  const q=basic[i];
+  return `<div class="cost-given">${conditions(q.conditions)}<p class="cost-benefit-note">${q.note}</p></div>`;
  }
  function lessonCalculation(mode,i){
   if(mode!=='basic'||i<2)return '';
@@ -103,7 +108,11 @@
   const mode=m.mode,list=mode==='basic'?basic:applied,i=m.positions[mode],q=list[i],selected=m.answers[mode][i],checked=m.checked[mode][i],correct=selected!==null&&q.options[selected]===q.answerValue;
   const modes=`<nav class="cost-example-modes" aria-label="예제 선택"><button type="button" data-action="costMode" data-mode="basic" aria-pressed="${mode==='basic'}">01 기본 · 영화와 아르바이트</button><button type="button" data-action="costMode" data-mode="applied" aria-pressed="${mode==='applied'}">02 응용 · 떡볶이와 김밥</button></nav>`;
   if(mode==='applied'&&!m.bridgeSeen)return modes+bridge();
-  return `${modes}<header class="cost-lesson-heading">${mode==='applied'?'<p class="cost-kicker">교과서 사례로 확인하는 응용 예제</p>':''}<h2>${mode==='basic'?'영화를 선택하면 무엇을 포기할까요?':'포기한 메뉴에도 가격이 있다면?'}</h2><p>${mode==='basic'?'영화를 선택했다고 생각하고, 한 단계씩 답해 보세요.':'앞에서 배운 방법으로 포기한 메뉴의 이익을 계산해 보세요.'}</p></header><div class="cost-lesson-layout">${reference(mode,i)}<section class="cost-lesson-work" aria-labelledby="cost-lesson-question"><nav class="cost-lesson-steps" aria-label="예제의 네 단계">${list.map((x,j)=>`<button type="button" data-action="costStep" data-i="${j}" aria-current="${j===i?'step':'false'}"><span>${j+1}</span>${x.topic}</button>`).join('')}</nav><p class="cost-kicker">${i+1} / 4 단계</p><h3 id="cost-lesson-question" tabindex="-1">${q.prompt}</h3>${lessonCue(mode,i)}${q.note?`<p class="cost-benefit-note">${q.note}</p>`:''}${conditions(q.conditions)}<div class="cost-lesson-choices" role="group" aria-label="답 선택">${q.options.map((value,j)=>U().choice({text:typeof value==='number'?won(value):value,index:j,selected:selected===j,checked,correct:value===q.answerValue,attributes:`data-action="costAnswer" data-i="${j}"`})).join('')}</div>${checked?`<section class="cost-lesson-feedback ${correct?'is-success':'is-incorrect'}" role="status"><strong>${correct?'✓ 정답이에요':'! 정답과 이유를 확인해요'}</strong><p>${q.explain}</p>${lessonCalculation(mode,i)}${formulas(q)}</section><details class="learning-explanation"><summary>풀이 힌트 자세히 보기</summary><div>${guide(q)}</div></details>`:`<button type="button" class="btn primary" data-action="costCheck" ${selected===null?'disabled':''}>정답 확인</button>`}<div class="cost-lesson-actions"><button type="button" class="btn" data-action="costPrev" ${i===0?'disabled':''}>← 이전 단계</button>${checked?'<button type="button" class="cost-text-action" data-action="costRetry">다시 풀기</button>':''}<button type="button" class="btn primary" data-action="costNext" ${!checked?'disabled':''}>${i<3?'다음 단계 →':mode==='basic'?'응용 예제로 →':'문제 연습으로 →'}</button></div>${mode==='basic'&&m.checked.basic.every(Boolean)?`<p class="cost-completion">확인한 흐름: 명시적 비용 8,000원 + 암묵적 비용 16,000원 = 기회비용 24,000원<br>편익 30,000원 − 기회비용 24,000원 = 순편익 6,000원</p>`:''}${mode==='applied'&&i===3&&checked?'<p class="cost-source">교과서 사례 계산 결과: 떡볶이 기회비용 7,500원·순편익 1,500원 / 김밥 기회비용 8,500원·순편익 −1,500원</p>':''}</section></div>`;
+  return `${modes}<article class="cost-lesson-sheet">
+   <nav class="cost-lesson-steps" aria-label="예제의 네 단계">${list.map((x,j)=>`<button type="button" data-action="costStep" data-i="${j}" aria-current="${j===i?'step':'false'}"><span>${j+1}</span>${x.topic}</button>`).join('')}</nav>
+   <header class="cost-lesson-heading"><h2>${mode==='basic'?'영화를 선택하면 무엇을 포기할까요?':'포기한 메뉴에도 가격이 있다면?'}</h2>${mode==='applied'?'<p class="cost-source">미래엔 『통합사회2』 75쪽</p>':''}</header>
+   <div class="cost-lesson-layout">${reference(mode,i)}<section class="cost-lesson-work" aria-labelledby="cost-lesson-question">
+   <h3 id="cost-lesson-question" tabindex="-1">${q.prompt}</h3>${lessonCue(mode,i)}<div class="cost-lesson-choices" role="group" aria-label="답 선택">${q.options.map((value,j)=>U().choice({text:typeof value==='number'?won(value):value,index:j,selected:selected===j,checked,correct:value===q.answerValue,attributes:`data-action="costAnswer" data-i="${j}"`})).join('')}</div>${checked?`<section class="cost-lesson-feedback ${correct?'is-success':'is-incorrect'}" role="status"><strong>${correct?'✓ 정답이에요':'! 정답과 이유를 확인해요'}</strong><p>${q.explain}</p>${lessonCalculation(mode,i)}${formulas(q)}</section><details class="learning-explanation"><summary>풀이 힌트 자세히 보기</summary><div>${guide(q)}</div></details>`:`<button type="button" class="btn primary" data-action="costCheck" ${selected===null?'disabled':''}>정답 확인</button>`}<div class="cost-lesson-actions"><button type="button" class="btn" data-action="costPrev" ${i===0?'disabled':''}>← 이전 단계</button>${checked?'<button type="button" class="cost-text-action" data-action="costRetry">다시 풀기</button>':''}${checked?`<button type="button" class="btn primary" data-action="costNext">${i<3?'다음 단계 →':mode==='basic'?'응용 예제로 →':'문제 연습으로 →'}</button>`:''}</div>${mode==='basic'&&m.checked.basic.every(Boolean)?`<p class="cost-completion">확인한 흐름: 명시적 비용 8,000원 + 암묵적 비용 16,000원 = 기회비용 24,000원<br>편익 30,000원 − 기회비용 24,000원 = 순편익 6,000원</p>`:''}${mode==='applied'&&i===3&&checked?'<p class="cost-source">교과서 사례 계산 결과: 떡볶이 기회비용 7,500원·순편익 1,500원 / 김밥 기회비용 8,500원·순편익 −1,500원</p>':''}</section></div></article>`;
  }
  function handle(action,data,m){
   const mode=m.mode,i=m.positions[mode],list=mode==='basic'?basic:applied;
