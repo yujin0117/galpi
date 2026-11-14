@@ -7,7 +7,19 @@
   pointer-events: none;
 }
 .galpi-board-ink[data-drawing] { pointer-events: auto; cursor: crosshair; touch-action: none; }
-.galpi-board-ink[data-pen-only] { touch-action: pan-x pan-y pinch-zoom; }
+.galpi-board-ink[data-drawing][data-pen-only] { touch-action: pan-x pan-y pinch-zoom; }
+.galpi-board-ink[data-drawing],
+#content[data-board-drawing] :where(*) {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+#content[data-board-drawing] :is(input, textarea, select, [contenteditable]:not([contenteditable="false"])),
+#content[data-board-drawing] :where([contenteditable]:not([contenteditable="false"]) *) {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
 .board-dialog {
   box-sizing: border-box;
   width: min(460px, calc(100vw - 32px));

@@ -264,7 +264,15 @@
     part('more-panel').hidden = popup !== 'more';
     part('preferences-panel').hidden = popup !== 'preferences';
     canvas.hidden = !scope || concealed;
-    canvas.toggleAttribute('data-drawing', Boolean(scope && expanded && activeTool !== 'view' && !concealed));
+    const drawing = Boolean(scope && expanded && activeTool !== 'view' && !concealed);
+    canvas.toggleAttribute('data-drawing', drawing);
+    if (drawing && !host.hasAttribute('data-board-drawing')) {
+      const selection = window.getSelection();
+      if (selection && !selection.isCollapsed && (host.contains(selection.anchorNode) || host.contains(selection.focusNode))) {
+        selection.removeAllRanges();
+      }
+    }
+    host.toggleAttribute('data-board-drawing', drawing);
     canvas.toggleAttribute('data-pen-only', !finger);
     action('visibility').innerHTML = icon(concealed ? 'eye' : 'eyeOff') + '<span>' + (concealed ? '필기 다시 표시' : '필기 숨기기') + '</span>';
     action('visibility').setAttribute('aria-pressed', String(concealed));
@@ -528,6 +536,23 @@
     }
     if (delta >= 1.25) g.last = p;
   }
+
+  const editableSelector = 'input, textarea, select, [contenteditable]:not([contenteditable="false"])';
+
+  // WebKit can start its native selection gesture independently of Pointer Events.
+  function suppressSelection(e) {
+    if (canvas.hasAttribute('data-drawing') && !e.target.closest?.(editableSelector)) e.preventDefault();
+  }
+  for (const surface of [host, canvas]) {
+    for (const type of ['selectstart', 'contextmenu']) {
+      surface.addEventListener(type, suppressSelection, {capture: true});
+    }
+  }
+  canvas.addEventListener('touchstart', e => {
+    if (!canvas.hasAttribute('data-drawing') || !e.cancelable) return;
+    const stylus = Array.from(e.changedTouches).some(touch => touch.touchType === 'stylus');
+    if (finger || stylus || gesture?.pointerType === 'pen') e.preventDefault();
+  }, {passive: false});
 
   canvas.addEventListener('pointerdown', e => {
     if (e.button !== 0 || (e.pointerType === 'touch' && !finger)) return;
