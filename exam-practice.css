@@ -39,12 +39,12 @@
 #content .exam-practice .ep-source p{font-size:13px;font-weight:720;margin:0;color:var(--learning-brand)}
 #content .exam-practice .ep-source span{font-size:12px;color:var(--learning-muted-strong)}
 #content .exam-practice .ep-source-kind{display:inline}
-#content .exam-practice .ep-question h2{font-size:clamp(20px,1.65vw,24px);line-height:1.38;margin:0 0 13px;color:var(--learning-ink)}
+#content .exam-practice .ep-question h2{font-size:clamp(20px,1.65vw,24px);line-height:1.38;margin:0 0 13px;color:var(--learning-ink);word-break:normal}
 #content .exam-practice .ep-original-number{font-variant-numeric:tabular-nums;font-weight:750}
 #content .exam-practice .ep-source .ep-points{margin-left:auto;font-size:13px;white-space:nowrap;color:var(--learning-muted-strong)}
 #content .exam-practice .ep-underlined{text-decoration-line:underline;text-decoration-thickness:1px;text-underline-offset:.17em;text-decoration-skip-ink:auto;font-weight:inherit}
 #content .exam-practice .ep-reference{margin-right:2px}
-#content .exam-practice .ep-evidence{min-width:0;font-size:16px;line-height:1.58}
+#content .exam-practice .ep-evidence{min-width:0;font-size:16px;line-height:1.58;word-break:normal}
 #content .exam-practice .ep-evidence p{margin:0 0 9px}
 #content .exam-practice .ep-evidence p:last-child{margin:0}
 #content .exam-practice .ep-evidence .ep-definition-note{font-size:12px;line-height:1.5;color:#526174}
@@ -69,6 +69,12 @@
 #content .exam-practice .ep-choice-number{display:block;flex:none;width:22px;font-size:1.05em;line-height:inherit;font-weight:650}
 #content .exam-practice .ep-combination-choices{grid-template-columns:repeat(3,minmax(0,1fr))}
 #content .exam-practice .ep-choices button>span:nth-child(2){flex:1;min-width:0}
+#content .exam-practice .ep-evidence :is(p,.ep-material),
+#content .exam-practice .ep-choices:not(.ep-column-choices,.ep-combination-choices) button>span:nth-child(2){
+ text-align:justify;
+ text-align-last:start;
+ word-break:normal;
+}
 #content .exam-practice .ep-column-choices .ep-choice-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;align-items:center;text-align:center}
 #content .exam-practice .ep-column-choices .ep-choice-columns{display:flex;gap:9px;padding:0 11px 4px;font-size:15px;color:var(--learning-ink)}
 #content .exam-practice .ep-choice-columns>span:first-child{width:22px;flex:none}
